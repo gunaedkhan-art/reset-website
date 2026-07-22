@@ -48,6 +48,10 @@ import { sayNoScriptBuilderConfig } from "@/tools/config/say-no-script-builder.c
 import { whatsMyLeadDominoConfig } from "@/tools/config/whats-my-lead-domino.config";
 import { tooManyGoalsCalculatorConfig } from "@/tools/config/too-many-goals-calculator.config";
 import { fearOfChaosQuizConfig } from "@/tools/config/fear-of-chaos-quiz.config";
+import { batchShallowWorkPlannerConfig } from "@/tools/config/batch-shallow-work-planner.config";
+import { deepWorkEnvironmentChecklistConfig } from "@/tools/config/deep-work-environment-checklist.config";
+import { fixedScheduleProductivityCalculatorConfig } from "@/tools/config/fixed-schedule-productivity-calculator.config";
+import { whyCantIDoDeepWorkConfig } from "@/tools/config/why-cant-i-do-deep-work.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -102,6 +106,10 @@ const rawConfigs = [
   whatsMyLeadDominoConfig,
   tooManyGoalsCalculatorConfig,
   fearOfChaosQuizConfig,
+  batchShallowWorkPlannerConfig,
+  deepWorkEnvironmentChecklistConfig,
+  fixedScheduleProductivityCalculatorConfig,
+  whyCantIDoDeepWorkConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>
