@@ -22,6 +22,15 @@ import { iDontKnowMyPrioritiesConfig } from "@/tools/config/i-dont-know-my-prior
 import { iWasteTooMuchTimeConfig } from "@/tools/config/i-waste-too-much-time.config";
 import { amIAddictedToMyPhoneConfig } from "@/tools/config/am-i-addicted-to-my-phone.config";
 import { iCantStickToHabitsConfig } from "@/tools/config/i-cant-stick-to-habits.config";
+import { whatShouldIDoInsteadOfScrollingConfig } from "@/tools/config/what-should-i-do-instead-of-scrolling.config";
+import { whatShouldIDoFor15MinutesConfig } from "@/tools/config/what-should-i-do-for-15-minutes.config";
+import { helpMeStartMyHomeworkConfig } from "@/tools/config/help-me-start-my-homework.config";
+import { helpMeStopProcrastinatingConfig } from "@/tools/config/help-me-stop-procrastinating.config";
+import { giveMeOneSmallTaskConfig } from "@/tools/config/give-me-one-small-task.config";
+import { helpMeFocusNowConfig } from "@/tools/config/help-me-focus-now.config";
+import { whyAmIProcrastinatingConfig } from "@/tools/config/why-am-i-procrastinating.config";
+import { iFeelOverwhelmedWithWorkConfig } from "@/tools/config/i-feel-overwhelmed-with-work.config";
+import { iCantConcentrateTodayConfig } from "@/tools/config/i-cant-concentrate-today.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -50,6 +59,15 @@ const rawConfigs = [
   iWasteTooMuchTimeConfig,
   amIAddictedToMyPhoneConfig,
   iCantStickToHabitsConfig,
+  whatShouldIDoInsteadOfScrollingConfig,
+  whatShouldIDoFor15MinutesConfig,
+  helpMeStartMyHomeworkConfig,
+  helpMeStopProcrastinatingConfig,
+  giveMeOneSmallTaskConfig,
+  helpMeFocusNowConfig,
+  whyAmIProcrastinatingConfig,
+  iFeelOverwhelmedWithWorkConfig,
+  iCantConcentrateTodayConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>
