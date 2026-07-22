@@ -12,10 +12,10 @@ export const siteConfig = {
   url: getSiteUrl(),
   locale: "en_US",
   author: "Reset Team",
-  email: "hello@reset.tools",
+  email: "hello@resetgoals.com",
   social: {
-    twitter: "@resettools",
-    github: "reset-tools",
+    twitter: "@resetgoals",
+    github: "gunaedkhan-art/reset-website",
   },
   app: {
     name: "Reset App",

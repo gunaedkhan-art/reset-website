@@ -6,6 +6,12 @@ import { whyCantIFocusConfig } from "@/tools/config/why-cant-i-focus.config";
 import { instagramTimeCalculatorConfig } from "@/tools/config/instagram-time-calculator.config";
 import { procrastinationCostCalculatorConfig } from "@/tools/config/procrastination-cost-calculator.config";
 import { screenTimeCostCalculatorConfig } from "@/tools/config/screen-time-cost-calculator.config";
+import { meetingCostCalculatorConfig } from "@/tools/config/meeting-cost-calculator.config";
+import { contextSwitchCostCalculatorConfig } from "@/tools/config/context-switch-cost-calculator.config";
+import { socialMediaTimeCalculatorConfig } from "@/tools/config/social-media-time-calculator.config";
+import { whyDoIProcrastinateConfig } from "@/tools/config/why-do-i-procrastinate.config";
+import { howToFocusAtWorkConfig } from "@/tools/config/how-to-focus-at-work.config";
+import { weeklyPlanningScoreConfig } from "@/tools/config/weekly-planning-score.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -18,6 +24,12 @@ const rawConfigs = [
   instagramTimeCalculatorConfig,
   procrastinationCostCalculatorConfig,
   screenTimeCostCalculatorConfig,
+  meetingCostCalculatorConfig,
+  contextSwitchCostCalculatorConfig,
+  socialMediaTimeCalculatorConfig,
+  whyDoIProcrastinateConfig,
+  howToFocusAtWorkConfig,
+  weeklyPlanningScoreConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>

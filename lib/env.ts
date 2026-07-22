@@ -15,5 +15,5 @@ export function getSiteUrl(): string {
     return `https://${process.env.VERCEL_URL.replace(/\/$/, "")}`;
   }
 
-  return "https://reset.tools";
+  return "https://www.resetgoals.com";
 }
