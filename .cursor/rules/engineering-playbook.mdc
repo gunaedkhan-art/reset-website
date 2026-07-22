@@ -1,0 +1,46 @@
+---
+description: Mandatory engineering standards — read docs/ENGINEERING_PLAYBOOK.md before any code change
+alwaysApply: true
+---
+
+# Reset Engineering Playbook (mandatory)
+
+**Full document:** `docs/ENGINEERING_PLAYBOOK.md` — read it before writing or modifying code.
+
+## Quick rules (non-negotiable)
+
+### Architecture
+- One codebase, reusable `ToolTemplate` — never fork tool layouts
+- Pages in `app/`; UI in `components/`; logic in `lib/`; types in `types/`
+- New tools: `lib/tools/[name]/calculate.ts` + `tools/[slug]/[Name]Tool.tsx` + registry entry in `lib/tools/registry.ts`
+- **Never** create `app/tools/[slug]/page.tsx` per tool — dynamic route handles it
+- No AI in tool logic; deterministic calculations only
+- Tailwind + `components/ui` only — no MUI/Bootstrap
+
+### Tool layout order (global — do not reorder)
+Tool → Results → **App download** (tool-specific `appCta`, theme `#209EBB`, button `#023047` white uppercase, Google Play only) → **Newsletter** (centered) → Related tools → FAQ
+
+### Tool requirements
+- `appCta: { title, description }` must be **specific to the tool**
+- Guidance `<Callout>` when inputs are non-obvious
+- Pure calculation functions in `lib/` — no React in calculate.ts
+- Pass `path`, `metadata`, `relatedTools`, `categoryName` from `ToolPageProps`
+
+### SEO (every tool)
+- Register with `title`, `description`, `keywords`, `category`, `slug`
+- Use `createMetadata` via dynamic page — no per-tool metadata files
+- FAQ ≥3 items for indexable tools; schema must match visible FAQ
+
+### Code quality
+- TypeScript strict; no `any`; use `@/` imports
+- Minimal diff — match existing conventions
+- Run `npm run lint` and `npm run build` before finishing
+- Do not commit unless user explicitly asks
+
+### Categories (only these)
+`focus` | `productivity` | `planning` | `calculators`
+
+### Slugs
+kebab-case, intent/keyword-driven: `notification-cost-calculator`
+
+When unsure, read `docs/ENGINEERING_PLAYBOOK.md` in full.

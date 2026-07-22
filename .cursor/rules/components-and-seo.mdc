@@ -1,0 +1,27 @@
+---
+description: Component, accessibility, and SEO standards for components/** and app/**
+globs: components/**/*,app/**/*
+alwaysApply: false
+---
+
+# Components & SEO rules
+
+## Components
+- Server Components by default; `"use client"` only for interactivity
+- Use `cn()` from `@/lib/utils` for class merging
+- Use design system from `components/ui/` — extend there if a primitive is missing globally
+- Tool shell changes (`components/tool/`) affect ALL tools — justify globally
+
+## Accessibility
+- Labels on all inputs; `aria-invalid` + `role="alert"` for errors
+- Visible focus states; keyboard-accessible buttons
+- `aria-live="polite"` on dynamic results (use `ToolResultsSection`)
+- Semantic HTML: one H1 per page, no skipped heading levels
+
+## SEO
+- Pages: export metadata via `createMetadata()` from `@/lib/seo`
+- Tools: metadata generated in `app/tools/[slug]/page.tsx` from registry — do not duplicate
+- JSON-LD via `JsonLd` component + helpers in `lib/seo/json-ld.ts`
+- Canonical URLs via `getSiteUrl()` / `absoluteUrl()` — never hardcode domain
+
+See `docs/ENGINEERING_PLAYBOOK.md` §5–7.

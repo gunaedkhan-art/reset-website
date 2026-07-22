@@ -1,0 +1,56 @@
+---
+description: Rules when creating or editing tools (tools/**, lib/tools/**)
+globs: tools/**/*,lib/tools/**/*
+alwaysApply: false
+---
+
+# Tool authoring rules
+
+Applies when editing `tools/**` or `lib/tools/**`.
+
+## New tool checklist
+
+**Preferred — config-driven:**
+
+1. Create `tools/config/your-slug.config.ts` (copy from existing config)
+2. Add slug to `configSlugs` in `lib/tools/registry.ts`
+3. Run `npm run validate:tools && npm run build`
+
+**Legacy — component-driven:**
+
+1. `lib/tools/[name]/calculate.ts` — pure functions
+2. `tools/[slug]/[PascalCase]Tool.tsx` — `"use client"`, wraps `ToolTemplate`
+3. Entry in `componentRegistrations` inside `lib/tools/registry.ts`
+
+## ToolTemplate props (required)
+
+```tsx
+<ToolTemplate
+  path={`/tools/${metadata.slug}`}
+  title={metadata.title}
+  description={metadata.description}
+  category={categoryName}
+  relatedTools={relatedTools}
+  onSubmit={handleSubmit}
+  inputArea={...}
+  calculate={{ label: "Calculate" }}
+  resultsEmpty={!result}
+  resultsArea={...}
+  appCta={{ title: "...", description: "..." }}  // tool-specific
+  faq={[...]}  // min 3 items
+/>
+```
+
+## Validation pattern
+
+- Validate in `handleSubmit`; set field errors; `return` early
+- Call `calculate*()` from lib — never inline formulas in TSX
+- Show comparisons/trivia in results area (amber callout pattern)
+
+## Do not
+
+- Register `tools/_template/` — copy only
+- Pass functions through server→client props (metadata only)
+- Duplicate SEO metadata in tool TSX files
+
+See `docs/ENGINEERING_PLAYBOOK.md` §4 for full spec.

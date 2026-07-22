@@ -1,65 +1,164 @@
-import Image from "next/image";
+import Link from "next/link";
+import { CTACard } from "@/components/ui/CTACard";
+import { InfoCard } from "@/components/ui/InfoCard";
+import { PageHeading } from "@/components/ui/PageHeading";
+import { Section } from "@/components/ui/Section";
+import { siteConfig } from "@/lib/site";
+import {
+  getCategoryBySlug,
+  getFeaturedTools,
+  getToolCanonicalPath,
+  toolCategories,
+} from "@/lib/tools";
 
-export default function Home() {
+export default function HomePage() {
+  const featuredTools = getFeaturedTools(6);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      <Section spacing="lg" className="border-b border-neutral-100">
+        <PageHeading
+          eyebrow="Free online tools"
+          title="Work smarter with simple, fast tools"
+          description="Reset is building a library of free productivity, focus, and planning tools — designed to load instantly, work on any device, and stay out of your way."
+          align="center"
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Link
+            href="/tools"
+            className="inline-flex h-12 items-center justify-center rounded-xl bg-neutral-900 px-6 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+          >
+            Browse tools
+          </Link>
+          <Link
+            href="/about"
+            className="inline-flex h-12 items-center justify-center rounded-xl border border-neutral-200 bg-white px-6 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+          >
+            Learn more
+          </Link>
+        </div>
+      </Section>
+
+      {featuredTools.length > 0 && (
+        <Section spacing="md" className="border-b border-neutral-100 bg-neutral-50/50">
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">
+                Popular tools
+              </h2>
+              <p className="mt-2 max-w-2xl text-neutral-600">
+                Interactive guides and calculators — free, no signup required.
+              </p>
+            </div>
+            <Link
+              href="/tools"
+              className="text-sm font-medium text-[#209EBB] hover:text-[#023047] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#209EBB] focus-visible:ring-offset-2"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              View all tools →
+            </Link>
+          </div>
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {featuredTools.map((tool) => {
+              const category = getCategoryBySlug(tool.category);
+              return (
+                <li key={tool.slug}>
+                  <InfoCard
+                    title={tool.title}
+                    description={tool.description}
+                    href={getToolCanonicalPath(tool.slug)}
+                    eyebrow={category?.name}
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        </Section>
+      )}
+
+      <Section spacing="md">
+        <div className="mb-10 text-center">
+          <h2 className="text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">
+            Built for how you work
+          </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
+            Every tool shares the same clean template, accessible design, and
+            SEO-friendly structure — so you get a consistent experience across
+            hundreds of utilities.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            {
+              title: "Lightning fast",
+              description:
+                "Server-rendered pages, optimized assets, and minimal JavaScript keep load times low.",
+            },
+            {
+              title: "Fully accessible",
+              description:
+                "Keyboard navigation, semantic HTML, and WCAG-minded components throughout.",
+            },
+            {
+              title: "SEO ready",
+              description:
+                "Metadata, structured data, sitemaps, and canonical URLs built in from day one.",
+            },
+            {
+              title: "Infinitely scalable",
+              description:
+                "A central registry and reusable template support 1000+ tools without rework.",
+            },
+          ].map((feature) => (
+            <li key={feature.title}>
+              <InfoCard title={feature.title} description={feature.description} />
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section spacing="md" className="bg-neutral-50/80">
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">
+            Tool categories
+          </h2>
+          <p className="mt-2 text-neutral-600">
+            Organized for discovery — new tools plug into categories as they launch.
+          </p>
         </div>
-      </main>
-    </div>
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {toolCategories.map((category) => (
+            <li key={category.slug}>
+              <InfoCard
+                title={category.name}
+                description={category.description}
+                href={`/tools?category=${category.slug}`}
+              />
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {siteConfig.features.showAppDownload ? (
+        <Section spacing="md">
+          <CTACard
+            variant="dark"
+            title="Take Reset everywhere"
+            description="The Reset app brings your favorite tools offline, with sync and focus modes built in."
+            primaryAction={{ label: "Download the app", href: "/app" }}
+            secondaryAction={{ label: "Contact us", href: "/contact" }}
+          />
+        </Section>
+      ) : (
+        <Section spacing="md">
+          <CTACard
+            variant="dark"
+            title="More tools on the way"
+            description="We're building new productivity and focus tools every week. Browse what's live or get in touch."
+            primaryAction={{ label: "Browse tools", href: "/tools" }}
+            secondaryAction={{ label: "Contact us", href: "/contact" }}
+          />
+        </Section>
+      )}
+    </>
   );
 }
