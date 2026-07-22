@@ -42,7 +42,13 @@ const relatedClusterMap: Record<string, string[]> = {
   "focus-problems": ["phone-checking", "doomscrolling", "phone-distraction", "context-switch"],
   "meeting-cost": ["context-switch", "procrastination"],
   "context-switch": ["meeting-cost", "focus-problems", "phone-distraction"],
-  "weekly-planning": ["stop-procrastinating", "procrastination"],
+  "weekly-planning": ["stop-procrastinating", "procrastination", "getting-started"],
+  "getting-started": ["weekly-planning", "stop-procrastinating", "overwhelm"],
+  overwhelm: ["getting-started", "weekly-planning", "motivation"],
+  motivation: ["overwhelm", "stop-procrastinating", "habits"],
+  "time-waste": ["phone-addiction", "doomscrolling", "context-switch"],
+  "phone-addiction": ["phone-checking", "phone-distraction", "time-waste"],
+  habits: ["motivation", "stop-procrastinating", "weekly-planning"],
 };
 
 /** @deprecated Use getAllTools() instead */

@@ -12,6 +12,16 @@ import { socialMediaTimeCalculatorConfig } from "@/tools/config/social-media-tim
 import { whyDoIProcrastinateConfig } from "@/tools/config/why-do-i-procrastinate.config";
 import { howToFocusAtWorkConfig } from "@/tools/config/how-to-focus-at-work.config";
 import { weeklyPlanningScoreConfig } from "@/tools/config/weekly-planning-score.config";
+import { iCantFocusConfig } from "@/tools/config/i-cant-focus.config";
+import { imOverwhelmedConfig } from "@/tools/config/im-overwhelmed.config";
+import { iDontKnowWhereToStartConfig } from "@/tools/config/i-dont-know-where-to-start.config";
+import { iKeepProcrastinatingConfig } from "@/tools/config/i-keep-procrastinating.config";
+import { iDontFeelMotivatedConfig } from "@/tools/config/i-dont-feel-motivated.config";
+import { iCantStopScrollingConfig } from "@/tools/config/i-cant-stop-scrolling.config";
+import { iDontKnowMyPrioritiesConfig } from "@/tools/config/i-dont-know-my-priorities.config";
+import { iWasteTooMuchTimeConfig } from "@/tools/config/i-waste-too-much-time.config";
+import { amIAddictedToMyPhoneConfig } from "@/tools/config/am-i-addicted-to-my-phone.config";
+import { iCantStickToHabitsConfig } from "@/tools/config/i-cant-stick-to-habits.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -30,6 +40,16 @@ const rawConfigs = [
   whyDoIProcrastinateConfig,
   howToFocusAtWorkConfig,
   weeklyPlanningScoreConfig,
+  iCantFocusConfig,
+  imOverwhelmedConfig,
+  iDontKnowWhereToStartConfig,
+  iKeepProcrastinatingConfig,
+  iDontFeelMotivatedConfig,
+  iCantStopScrollingConfig,
+  iDontKnowMyPrioritiesConfig,
+  iWasteTooMuchTimeConfig,
+  amIAddictedToMyPhoneConfig,
+  iCantStickToHabitsConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>
