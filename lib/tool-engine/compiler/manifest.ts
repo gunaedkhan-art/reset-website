@@ -40,6 +40,10 @@ import { whyDeepWorkConfig } from "@/tools/config/why-deep-work.config";
 import { whyDeepWorkFeelsImpossibleToStartConfig } from "@/tools/config/why-deep-work-feels-impossible-to-start.config";
 import { whatAreDeepWorkBlocksConfig } from "@/tools/config/what-are-deep-work-blocks.config";
 import { whenToDoDeepWorkConfig } from "@/tools/config/when-to-do-deep-work.config";
+import { theFocusingQuestionConfig } from "@/tools/config/the-focusing-question.config";
+import { goalSettingToTheNowConfig } from "@/tools/config/goal-setting-to-the-now.config";
+import { fourThievesProductivityQuizConfig } from "@/tools/config/four-thieves-productivity-quiz.config";
+import { protectYourOneThingTimeBlockConfig } from "@/tools/config/protect-your-one-thing-time-block.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -86,6 +90,10 @@ const rawConfigs = [
   whyDeepWorkFeelsImpossibleToStartConfig,
   whatAreDeepWorkBlocksConfig,
   whenToDoDeepWorkConfig,
+  theFocusingQuestionConfig,
+  goalSettingToTheNowConfig,
+  fourThievesProductivityQuizConfig,
+  protectYourOneThingTimeBlockConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>

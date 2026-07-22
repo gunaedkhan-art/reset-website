@@ -52,6 +52,7 @@ const relatedClusterMap: Record<string, string[]> = {
   "micro-time": ["getting-started", "doomscrolling", "micro-time"],
   homework: ["stop-procrastinating", "getting-started", "focus-problems"],
   "deep-work": ["focus-problems", "context-switch", "weekly-planning", "meeting-cost"],
+  "one-thing": ["weekly-planning", "getting-started", "deep-work", "overwhelm"],
 };
 
 /** @deprecated Use getAllTools() instead */
