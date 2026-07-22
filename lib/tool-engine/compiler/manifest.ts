@@ -44,6 +44,10 @@ import { theFocusingQuestionConfig } from "@/tools/config/the-focusing-question.
 import { goalSettingToTheNowConfig } from "@/tools/config/goal-setting-to-the-now.config";
 import { fourThievesProductivityQuizConfig } from "@/tools/config/four-thieves-productivity-quiz.config";
 import { protectYourOneThingTimeBlockConfig } from "@/tools/config/protect-your-one-thing-time-block.config";
+import { sayNoScriptBuilderConfig } from "@/tools/config/say-no-script-builder.config";
+import { whatsMyLeadDominoConfig } from "@/tools/config/whats-my-lead-domino.config";
+import { tooManyGoalsCalculatorConfig } from "@/tools/config/too-many-goals-calculator.config";
+import { fearOfChaosQuizConfig } from "@/tools/config/fear-of-chaos-quiz.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -94,6 +98,10 @@ const rawConfigs = [
   goalSettingToTheNowConfig,
   fourThievesProductivityQuizConfig,
   protectYourOneThingTimeBlockConfig,
+  sayNoScriptBuilderConfig,
+  whatsMyLeadDominoConfig,
+  tooManyGoalsCalculatorConfig,
+  fearOfChaosQuizConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>
