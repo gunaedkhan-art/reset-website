@@ -31,6 +31,11 @@ import { helpMeFocusNowConfig } from "@/tools/config/help-me-focus-now.config";
 import { whyAmIProcrastinatingConfig } from "@/tools/config/why-am-i-procrastinating.config";
 import { iFeelOverwhelmedWithWorkConfig } from "@/tools/config/i-feel-overwhelmed-with-work.config";
 import { iCantConcentrateTodayConfig } from "@/tools/config/i-cant-concentrate-today.config";
+import { howToDoDeepWorkConfig } from "@/tools/config/how-to-do-deep-work.config";
+import { deepWorkScheduleQuizConfig } from "@/tools/config/deep-work-schedule-quiz.config";
+import { shallowWorkAuditConfig } from "@/tools/config/shallow-work-audit.config";
+import { deepOrShallowWorkQuizConfig } from "@/tools/config/deep-or-shallow-work-quiz.config";
+import { shutdownRitualBuilderConfig } from "@/tools/config/shutdown-ritual-builder.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -68,6 +73,11 @@ const rawConfigs = [
   whyAmIProcrastinatingConfig,
   iFeelOverwhelmedWithWorkConfig,
   iCantConcentrateTodayConfig,
+  howToDoDeepWorkConfig,
+  deepWorkScheduleQuizConfig,
+  shallowWorkAuditConfig,
+  deepOrShallowWorkQuizConfig,
+  shutdownRitualBuilderConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>
