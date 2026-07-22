@@ -36,6 +36,10 @@ import { deepWorkScheduleQuizConfig } from "@/tools/config/deep-work-schedule-qu
 import { shallowWorkAuditConfig } from "@/tools/config/shallow-work-audit.config";
 import { deepOrShallowWorkQuizConfig } from "@/tools/config/deep-or-shallow-work-quiz.config";
 import { shutdownRitualBuilderConfig } from "@/tools/config/shutdown-ritual-builder.config";
+import { whyDeepWorkConfig } from "@/tools/config/why-deep-work.config";
+import { whyDeepWorkFeelsImpossibleToStartConfig } from "@/tools/config/why-deep-work-feels-impossible-to-start.config";
+import { whatAreDeepWorkBlocksConfig } from "@/tools/config/what-are-deep-work-blocks.config";
+import { whenToDoDeepWorkConfig } from "@/tools/config/when-to-do-deep-work.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -78,6 +82,10 @@ const rawConfigs = [
   shallowWorkAuditConfig,
   deepOrShallowWorkQuizConfig,
   shutdownRitualBuilderConfig,
+  whyDeepWorkConfig,
+  whyDeepWorkFeelsImpossibleToStartConfig,
+  whatAreDeepWorkBlocksConfig,
+  whenToDoDeepWorkConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>

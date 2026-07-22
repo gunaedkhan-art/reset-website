@@ -15,6 +15,8 @@ export const howToDoDeepWorkConfig = {
       "start deep work",
       "deep work routine",
       "cal newport deep work",
+      "deep work for beginners",
+      "begin deep work",
     ],
     searchIntent: "how-to" as const,
     canonicalPath: "/how-to-do-deep-work",
