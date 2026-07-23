@@ -24,7 +24,7 @@ export function InfoCard({
     <Card hover={!!href} className={cn("h-full", className)} {...props}>
       <CardHeader>
         {eyebrow && (
-          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-[#209EBB]">
+          <p className="mb-2 text-xs font-medium uppercase tracking-wide text-primary">
             {eyebrow}
           </p>
         )}

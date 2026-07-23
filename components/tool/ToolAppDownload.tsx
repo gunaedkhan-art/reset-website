@@ -44,7 +44,7 @@ export function ToolAppDownload({
           >
             {title}
           </h2>
-          <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-white/90">
+          <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed opacity-80">
             {description}
           </p>
           <div className="mt-6 flex justify-center">

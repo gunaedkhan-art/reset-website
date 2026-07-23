@@ -30,7 +30,7 @@ export function Navigation() {
                   "inline-flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2",
                   isActive
-                    ? "bg-neutral-100 text-neutral-900"
+                    ? "bg-primary-muted text-primary-dark"
                     : "text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900",
                 )}
                 aria-current={isActive ? "page" : undefined}

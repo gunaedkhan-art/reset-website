@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 const variants = {
   primary:
-    "bg-neutral-900 text-white hover:bg-neutral-800 focus-visible:ring-neutral-900",
+    "bg-primary text-on-primary hover:bg-primary-dark focus-visible:ring-primary",
   secondary:
     "bg-white text-neutral-900 border border-neutral-200 hover:bg-neutral-50 focus-visible:ring-neutral-400",
   ghost:

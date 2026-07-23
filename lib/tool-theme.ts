@@ -1,9 +1,9 @@
 /** Default thematic accent for tool page CTAs (app download, etc.) */
 export const toolTheme = {
-  primary: "#209EBB",
-  primaryDark: "#1A8099",
-  primaryMuted: "#E8F6FA",
-  onPrimary: "#FFFFFF",
+  primary: "#00C3FF",
+  primaryDark: "#00A3D9",
+  primaryMuted: "#E5F9FF",
+  onPrimary: "#023047",
   downloadButton: "#023047",
 } as const;
 

@@ -26,7 +26,7 @@ export default function HomePage() {
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
             href="/tools"
-            className="inline-flex h-12 items-center justify-center rounded-xl bg-neutral-900 px-6 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+            className="inline-flex h-12 items-center justify-center rounded-xl bg-primary px-6 text-sm font-medium text-on-primary transition-colors hover:bg-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             Browse tools
           </Link>
@@ -52,7 +52,7 @@ export default function HomePage() {
             </div>
             <Link
               href="/tools"
-              className="text-sm font-medium text-[#209EBB] hover:text-[#023047] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#209EBB] focus-visible:ring-offset-2"
+              className="text-sm font-medium text-primary hover:text-primary-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               View all tools →
             </Link>
