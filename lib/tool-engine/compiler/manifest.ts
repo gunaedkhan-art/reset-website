@@ -52,6 +52,10 @@ import { batchShallowWorkPlannerConfig } from "@/tools/config/batch-shallow-work
 import { deepWorkEnvironmentChecklistConfig } from "@/tools/config/deep-work-environment-checklist.config";
 import { fixedScheduleProductivityCalculatorConfig } from "@/tools/config/fixed-schedule-productivity-calculator.config";
 import { whyCantIDoDeepWorkConfig } from "@/tools/config/why-cant-i-do-deep-work.config";
+import { embraceBoredomQuizConfig } from "@/tools/config/embrace-boredom-quiz.config";
+import { deepWorkVsPomodoroConfig } from "@/tools/config/deep-work-vs-pomodoro.config";
+import { whatShouldIDoInADeepWorkSessionConfig } from "@/tools/config/what-should-i-do-in-a-deep-work-session.config";
+import { helpMeStartDeepWorkConfig } from "@/tools/config/help-me-start-deep-work.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -110,6 +114,10 @@ const rawConfigs = [
   deepWorkEnvironmentChecklistConfig,
   fixedScheduleProductivityCalculatorConfig,
   whyCantIDoDeepWorkConfig,
+  embraceBoredomQuizConfig,
+  deepWorkVsPomodoroConfig,
+  whatShouldIDoInADeepWorkSessionConfig,
+  helpMeStartDeepWorkConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>
