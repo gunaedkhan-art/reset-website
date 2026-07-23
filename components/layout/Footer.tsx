@@ -1,7 +1,6 @@
 import Link from "next/link";
+import { LogoMark } from "@/components/brand/LogoMark";
 import { siteConfig } from "@/lib/site";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -15,9 +14,7 @@ export function Footer() {
               href="/"
               className="inline-flex items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-neutral-900 text-sm font-bold text-white">
-                R
-              </span>
+              <LogoMark size={32} />
               <span className="text-lg font-semibold text-neutral-900">
                 {siteConfig.name}
               </span>
@@ -29,6 +26,29 @@ export function Footer() {
 
           <div>
             <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-900">
+              Explore
+            </h2>
+            <ul className="space-y-2">
+              {siteConfig.navigation.main
+                .filter(
+                  (item) =>
+                    siteConfig.features.showAppDownload || item.href !== "/app",
+                )
+                .map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="rounded text-sm text-neutral-600 transition-colors hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+            </ul>
+          </div>
+
+          <div>
+            <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-900">
               Legal
             </h2>
             <ul className="space-y-2">
@@ -36,41 +56,13 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-neutral-600 transition-colors hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 rounded"
+                    className="rounded text-sm text-neutral-600 transition-colors hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
                   >
                     {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div>
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-neutral-900">
-              Newsletter
-            </h2>
-            <p className="mb-4 text-sm text-neutral-600">
-              Get new tools and productivity tips in your inbox. No spam, ever.
-            </p>
-            <form
-              className="space-y-3"
-              action="#"
-              aria-label="Newsletter signup placeholder"
-            >
-              <Input
-                type="email"
-                name="email"
-                placeholder="you@example.com"
-                aria-label="Email address"
-                autoComplete="email"
-              />
-              <Button type="submit" size="sm" fullWidth>
-                Subscribe
-              </Button>
-              <p className="text-xs text-neutral-500">
-                Placeholder form — wire up your email provider when ready.
-              </p>
-            </form>
           </div>
         </div>
 

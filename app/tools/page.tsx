@@ -16,16 +16,24 @@ import {
 } from "@/lib/tools";
 import { cn } from "@/lib/utils";
 
-export const metadata: Metadata = createMetadata({
-  title: "Tools",
-  description:
-    "Browse free productivity, focus, planning, and calculator tools. Fast, accessible, and always free.",
-  path: "/tools",
-  keywords: ["free tools", "productivity", "focus", "planning", "calculators"],
-});
-
 interface ToolsPageProps {
   searchParams: Promise<{ category?: string; q?: string }>;
+}
+
+export async function generateMetadata({
+  searchParams,
+}: ToolsPageProps): Promise<Metadata> {
+  const { category, q } = await searchParams;
+  const hasFilters = Boolean(category || q?.trim());
+
+  return createMetadata({
+    title: "Tools",
+    description:
+      "Browse free productivity, focus, planning, and calculator tools. Fast, accessible, and always free.",
+    path: "/tools",
+    keywords: ["free tools", "productivity", "focus", "planning", "calculators"],
+    noIndex: hasFilters,
+  });
 }
 
 function buildToolsUrl(options: { category?: string; q?: string }): string {

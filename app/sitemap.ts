@@ -8,15 +8,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = siteConfig.url.replace(/\/$/, "");
   const now = new Date();
 
+  /** Only indexable static pages — exclude placeholders (blog, app, contact). */
   const staticRoutes: MetadataRoute.Sitemap = [
     "",
     "/tools",
-    "/blog",
     "/about",
-    "/contact",
     "/privacy",
     "/terms",
-    "/app",
   ].map((path) => ({
     url: `${baseUrl}${path}`,
     lastModified: now,

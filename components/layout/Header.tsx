@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { LogoMark } from "@/components/brand/LogoMark";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { Navigation } from "./Navigation";
@@ -17,9 +18,7 @@ export function Header() {
           className="flex items-center gap-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
           aria-label={`${siteConfig.name} home`}
         >
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-on-primary">
-            R
-          </span>
+          <LogoMark size={32} />
           <span className="text-lg font-semibold tracking-tight text-neutral-900">
             {siteConfig.name}
           </span>

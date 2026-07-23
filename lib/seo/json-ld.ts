@@ -17,7 +17,7 @@ export function organizationSchema(
   const org: OrganizationSchema = {
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: absoluteUrl("/logo.png"),
+    logo: absoluteUrl("/logo.svg"),
     description: siteConfig.description,
     email: siteConfig.email,
     sameAs: [],

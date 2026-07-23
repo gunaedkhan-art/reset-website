@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
+import Link from "next/link";
+import { CTACard } from "@/components/ui/CTACard";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { Section } from "@/components/ui/Section";
-import { Textarea } from "@/components/ui/Textarea";
 import { createMetadata } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
@@ -11,6 +10,7 @@ export const metadata: Metadata = createMetadata({
   title: "Contact",
   description: `Get in touch with the ${siteConfig.name} team. Questions, feedback, and partnership inquiries welcome.`,
   path: "/contact",
+  noIndex: true,
 });
 
 export default function ContactPage() {
@@ -56,37 +56,27 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <form
-            className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8"
-            action="#"
-            aria-label="Contact form placeholder"
-          >
-            <div className="space-y-5">
-              <Input label="Name" name="name" required autoComplete="name" />
-              <Input
-                label="Email"
-                name="email"
-                type="email"
-                required
-                autoComplete="email"
-              />
-              <Textarea
-                label="Message"
-                name="message"
-                required
-                rows={5}
-                placeholder="How can we help?"
-              />
-              <Button type="submit" fullWidth>
-                Send message
-              </Button>
-              <p className="text-xs text-neutral-500">
-                Placeholder form — connect to your backend or form service when
-                ready.
-              </p>
-            </div>
-          </form>
+          <CTACard
+            title="Send us an email"
+            description="The fastest way to reach us. Include as much detail as you can — tool ideas, bug reports, or partnership proposals are all welcome."
+            primaryAction={{
+              label: `Email ${siteConfig.email}`,
+              href: `mailto:${siteConfig.email}`,
+            }}
+            secondaryAction={{ label: "Browse tools", href: "/tools" }}
+          />
         </div>
+
+        <p className="mt-10 text-center text-sm text-neutral-600">
+          Looking for free productivity tools?{" "}
+          <Link
+            href="/tools"
+            className="font-medium text-primary underline-offset-2 hover:underline"
+          >
+            Browse the full library
+          </Link>
+          .
+        </p>
       </Section>
     </>
   );

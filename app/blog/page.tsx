@@ -13,6 +13,7 @@ export const metadata: Metadata = createMetadata({
     "Productivity tips, focus strategies, and planning guides from the Reset team.",
   path: "/blog",
   keywords: ["productivity blog", "focus tips", "planning guides"],
+  noIndex: true,
 });
 
 export default function BlogPage() {
@@ -24,7 +25,7 @@ export default function BlogPage() {
         <PageHeading
           eyebrow="Insights"
           title="Blog"
-          description="Practical articles on productivity, deep work, and intentional planning. Markdown-ready architecture — articles ship when you're ready."
+          description="Practical articles on productivity, deep work, and intentional planning."
         />
       </Section>
 
@@ -43,16 +44,16 @@ export default function BlogPage() {
         </div>
 
         {posts.length === 0 ? (
-          <Callout title="No articles yet">
-            The blog structure is in place at{" "}
-            <code className="rounded bg-neutral-200/60 px-1.5 py-0.5 text-xs">
-              lib/blog/
-            </code>{" "}
-            and{" "}
-            <code className="rounded bg-neutral-200/60 px-1.5 py-0.5 text-xs">
-              content/blog/
-            </code>
-            . Add markdown posts to publish your first article.
+          <Callout title="Articles coming soon">
+            We&apos;re preparing guides on productivity, deep work, and focus.
+            In the meantime, browse our{" "}
+            <Link
+              href="/tools"
+              className="font-medium text-neutral-900 underline underline-offset-2"
+            >
+              free tools
+            </Link>
+            .
           </Callout>
         ) : (
           <ul className="space-y-6">
