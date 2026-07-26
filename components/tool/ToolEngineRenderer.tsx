@@ -5,6 +5,7 @@ import type { RelatedTool } from "@/types/tool";
 import { CalculatorEngine } from "./engine/CalculatorEngine";
 import { DecisionTreeEngine } from "./engine/DecisionTreeEngine";
 import { ProjectionCalculatorEngine } from "./engine/ProjectionCalculatorEngine";
+import { SavingsPathEngine } from "./engine/SavingsPathEngine";
 
 interface ToolEngineRendererProps {
   config: ToolConfig;
@@ -21,6 +22,16 @@ export function ToolEngineRenderer({
     if (config.flow.engine === "projection") {
       return (
         <ProjectionCalculatorEngine
+          config={config}
+          relatedTools={relatedTools}
+          categoryName={categoryName}
+        />
+      );
+    }
+
+    if (config.flow.engine === "savings-path") {
+      return (
+        <SavingsPathEngine
           config={config}
           relatedTools={relatedTools}
           categoryName={categoryName}

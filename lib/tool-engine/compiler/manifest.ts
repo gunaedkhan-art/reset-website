@@ -64,6 +64,7 @@ import { requiredReturnCalculatorConfig } from "@/tools/config/required-return-c
 import { initialInvestmentCalculatorConfig } from "@/tools/config/initial-investment-calculator.config";
 import { investmentDoublingCalculatorConfig } from "@/tools/config/investment-doubling-calculator.config";
 import { investmentWithdrawalCalculatorConfig } from "@/tools/config/investment-withdrawal-calculator.config";
+import { savingsPathTrackerConfig } from "@/tools/config/savings-path-tracker.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -134,6 +135,7 @@ const rawConfigs = [
   initialInvestmentCalculatorConfig,
   investmentDoublingCalculatorConfig,
   investmentWithdrawalCalculatorConfig,
+  savingsPathTrackerConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>

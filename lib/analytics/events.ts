@@ -15,6 +15,10 @@ export type ToolAnalyticsEvent =
       tool_slug: string;
     }
   | {
+      name: "savings_path_checkin";
+      tool_slug: string;
+    }
+  | {
       name: "newsletter_signup";
       source: string;
       tool_slug?: string;

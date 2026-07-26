@@ -101,9 +101,9 @@ export const resultTemplateSchema = z.object({
 export const calculatorFlowSchema = z
   .object({
     type: z.literal("calculator"),
-    engine: z.enum(["expression", "projection"]).default("expression"),
+    engine: z.enum(["expression", "projection", "savings-path"]).default("expression"),
     calculatorProfile: calculatorProfileSchema.optional(),
-    inputs: z.array(inputFieldSchema).min(1),
+    inputs: z.array(inputFieldSchema),
     constants: z.record(z.string(), z.number()).optional(),
     expressions: z.record(z.string(), z.string()).optional(),
     resultTemplateId: z.string().default("default"),
@@ -123,6 +123,25 @@ export const calculatorFlowSchema = z
         code: "custom",
         message: "Projection calculators require calculatorProfile",
         path: ["calculatorProfile"],
+      });
+    }
+    if (flow.engine === "savings-path") {
+      if (flow.expressions && Object.keys(flow.expressions).length > 0) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Savings path tools do not use expressions",
+          path: ["expressions"],
+        });
+      }
+    }
+    if (
+      (flow.engine === "expression" || flow.engine === "projection") &&
+      flow.inputs.length === 0
+    ) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Calculator requires at least one input field",
+        path: ["inputs"],
       });
     }
   });

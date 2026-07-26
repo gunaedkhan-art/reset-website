@@ -39,6 +39,15 @@ for (const config of toolConfigManifest.filter((c) => c.status === "published"))
 
   if (config.mode === "calculator" && config.flow.type === "calculator") {
     const flow = config.flow;
+    if (flow.engine === "savings-path") {
+      test("savings path config is registered", () => {
+        assert.equal(config.mode, "calculator");
+        assert.ok(config.results.emptyMessage);
+        assert.ok(config.results.templates.length > 0);
+      });
+      continue;
+    }
+
     if (flow.engine === "projection" && flow.calculatorProfile) {
       test("projection calculator runs with default inputs", () => {
         const raw = buildInvestmentInputDefaults(flow.inputs);
