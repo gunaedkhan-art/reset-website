@@ -244,16 +244,6 @@ export const toolConfigSchema = z.object({
       title: z.string().min(1),
       description: z.string().min(1),
     }),
-    goals: z
-      .object({
-        title: z.string().min(1),
-        description: z.string().min(1),
-        primaryLabel: z.string().min(1),
-        primaryHref: z.string().regex(/^\//),
-        secondaryLabel: z.string().optional(),
-        secondaryHref: z.string().regex(/^\//).optional(),
-      })
-      .optional(),
     newsletter: z
       .object({
         title: z.string().optional(),

@@ -1,7 +1,6 @@
 import {
   INVESTMENT_APP_CTA,
   INVESTMENT_DISCLAIMER,
-  INVESTMENT_GOALS_CTA,
   sharedInvestmentFields,
 } from "./investment-shared";
 
@@ -121,7 +120,6 @@ export const investmentWithdrawalCalculatorConfig = {
 
   ctas: {
     app: INVESTMENT_APP_CTA,
-    goals: INVESTMENT_GOALS_CTA,
   },
 
   faq: [

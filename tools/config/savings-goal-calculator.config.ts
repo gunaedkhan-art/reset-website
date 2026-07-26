@@ -1,7 +1,6 @@
 import {
   INVESTMENT_APP_CTA,
   INVESTMENT_DISCLAIMER,
-  SAVINGS_GOAL_NEXT_CTA,
   sharedInvestmentFields,
 } from "./investment-shared";
 
@@ -129,7 +128,6 @@ export const savingsGoalCalculatorConfig = {
 
   ctas: {
     app: INVESTMENT_APP_CTA,
-    goals: SAVINGS_GOAL_NEXT_CTA,
   },
 
   faq: [

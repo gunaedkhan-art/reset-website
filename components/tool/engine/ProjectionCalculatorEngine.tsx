@@ -357,7 +357,6 @@ export function ProjectionCalculatorEngine({
         )
       }
       appCta={config.ctas.app}
-      goalsCta={config.ctas.goals}
       faq={config.faq}
       newsletterTitle={config.ctas.newsletter?.title}
       newsletterDescription={config.ctas.newsletter?.description}

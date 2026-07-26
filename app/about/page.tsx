@@ -8,7 +8,7 @@ import { createMetadata } from "@/lib/seo";
 export const metadata: Metadata = createMetadata({
   title: "About",
   description:
-    "Reset builds free productivity, focus, and planning tools designed for speed, accessibility, and scale.",
+    "Reset builds free productivity, focus, and planning tools designed to help you work smarter — no accounts required.",
   path: "/about",
 });
 
@@ -28,22 +28,8 @@ export default function AboutPage() {
           <p>
             We believe the best tools are invisible. They load instantly, work
             everywhere, and help you move forward without friction. Reset is
-            building a platform where hundreds of focused utilities share one
-            consistent, accessible design system.
-          </p>
-          <h2>What we optimize for</h2>
-          <ul>
-            <li>Sub-second page loads on real-world connections</li>
-            <li>WCAG-minded accessibility on every page and component</li>
-            <li>Search-friendly structure with rich metadata and schema</li>
-            <li>A codebase that stays maintainable at 1000+ tools</li>
-          </ul>
-          <h2>How tools are built</h2>
-          <p>
-            Every tool uses the same{" "}
-            <strong>ToolTemplate</strong> — a reusable layout with hero, input,
-            results, FAQ, related tools, and CTAs. New tools only need to
-            register metadata and supply their unique logic.
+            building a library of focused utilities for productivity, planning,
+            and everyday decisions — all free to use in your browser.
           </p>
         </div>
 

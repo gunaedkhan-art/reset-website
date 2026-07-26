@@ -189,10 +189,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
                 .
               </>
             ) : (
-              <>
-                The infrastructure is ready. Individual tools will appear here as they
-                are published.
-              </>
+              <>Check back soon — new tools are added regularly.</>
             )}
           </Callout>
         ) : (

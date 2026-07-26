@@ -66,12 +66,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-neutral-200 pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 border-t border-neutral-200 pt-8">
           <p className="text-sm text-neutral-500">
             © {year} {siteConfig.name}. All rights reserved.
-          </p>
-          <p className="text-sm text-neutral-500">
-            Built for speed, accessibility, and scale.
           </p>
         </div>
       </div>

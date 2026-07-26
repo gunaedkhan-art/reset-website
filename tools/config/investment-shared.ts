@@ -3,34 +3,11 @@ import type { InputField } from "@/lib/tool-engine/schema/tool-config";
 export const INVESTMENT_DISCLAIMER =
   "This calculator provides estimates for educational purposes only. It is not investment advice, tax advice, or a recommendation to buy or sell any security. Past growth rates do not guarantee future results.";
 
-/** App download copy when `siteConfig.features.showAppDownload` is enabled. */
+/** App download CTA for investment tools (shown when `siteConfig.features.showAppDownload` is enabled). */
 export const INVESTMENT_APP_CTA = {
   title: "Set financial goals in Reset",
   description:
-    "Track savings targets, review progress, and stay on plan — without distraction pulling you off course.",
-} as const;
-
-/**
- * Visible goals CTA on investment tool pages while app download is hidden globally.
- * Primary action routes to the savings-goal calculator.
- */
-export const INVESTMENT_GOALS_CTA = {
-  title: "Turn this estimate into a goal",
-  description:
-    "Pick a target amount and timeline, then work backwards to a monthly savings plan you can stick to.",
-  primaryLabel: "Set a savings goal",
-  primaryHref: "/savings-goal-calculator",
-} as const;
-
-/** Goals CTA for the savings-goal calculator itself (next step in the cluster). */
-export const SAVINGS_GOAL_NEXT_CTA = {
-  title: "See how your goal fits your timeline",
-  description:
-    "You have a monthly target — check whether your timeline and growth assumptions still line up.",
-  primaryLabel: "Calculate time to goal",
-  primaryHref: "/investment-time-calculator",
-  secondaryLabel: "Project full growth",
-  secondaryHref: "/investment-growth-calculator",
+    "Define savings targets, track progress, and stay on plan — without distraction pulling you off course.",
 } as const;
 
 export const contributionFrequencyOptions = [

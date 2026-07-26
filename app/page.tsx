@@ -75,54 +75,13 @@ export default function HomePage() {
         </Section>
       )}
 
-      <Section spacing="md">
-        <div className="mb-10 text-center">
-          <h2 className="text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">
-            Built for how you work
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-neutral-600">
-            Every tool shares the same clean template, accessible design, and
-            SEO-friendly structure — so you get a consistent experience across
-            hundreds of utilities.
-          </p>
-        </div>
-        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              title: "Lightning fast",
-              description:
-                "Server-rendered pages, optimized assets, and minimal JavaScript keep load times low.",
-            },
-            {
-              title: "Fully accessible",
-              description:
-                "Keyboard navigation, semantic HTML, and WCAG-minded components throughout.",
-            },
-            {
-              title: "SEO ready",
-              description:
-                "Metadata, structured data, sitemaps, and canonical URLs built in from day one.",
-            },
-            {
-              title: "Infinitely scalable",
-              description:
-                "A central registry and reusable template support 1000+ tools without rework.",
-            },
-          ].map((feature) => (
-            <li key={feature.title}>
-              <InfoCard title={feature.title} description={feature.description} />
-            </li>
-          ))}
-        </ul>
-      </Section>
-
       <Section spacing="md" className="bg-neutral-50/80">
         <div className="mb-8">
           <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">
             Tool categories
           </h2>
           <p className="mt-2 text-neutral-600">
-            Organized for discovery — new tools plug into categories as they launch.
+            Browse by topic to find the right tool for what you need today.
           </p>
         </div>
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

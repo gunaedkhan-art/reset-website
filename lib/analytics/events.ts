@@ -15,11 +15,6 @@ export type ToolAnalyticsEvent =
       tool_slug: string;
     }
   | {
-      name: "goals_cta_click";
-      tool_slug: string;
-      target: "primary" | "secondary";
-    }
-  | {
       name: "newsletter_signup";
       source: string;
       tool_slug?: string;

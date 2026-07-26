@@ -2,13 +2,13 @@ import { getSiteUrl } from "@/lib/env";
 
 export const siteConfig = {
   name: "Reset",
-  /** Set `showAppDownload` to true when the mobile app ships on Google Play. Investment tools show a goals CTA instead while this is false. */
+  /** Set `showAppDownload` to true when the mobile app ships on Google Play. */
   features: {
     showAppDownload: false,
   },
   tagline: "Free productivity, focus, and planning tools",
   description:
-    "Reset offers free online productivity, focus, planning, and calculator tools designed to help you work smarter. Fast, accessible, and built for scale.",
+    "Reset offers free online productivity, focus, planning, and calculator tools designed to help you work smarter.",
   url: getSiteUrl(),
   locale: "en_US",
   author: "Reset Team",

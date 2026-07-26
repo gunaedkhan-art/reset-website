@@ -13,7 +13,6 @@ import {
 import { cn } from "@/lib/utils";
 import type { ToolTemplateProps } from "@/types/tool";
 import { ToolAppDownload } from "./ToolAppDownload";
-import { ToolGoalsCta } from "./ToolGoalsCta";
 import { ToolCalculateButton } from "./ToolCalculateButton";
 import {
   ToolContainer,
@@ -42,7 +41,6 @@ export function ToolTemplate({
   showNewsletter = true,
   showAppCta = siteConfig.features.showAppDownload,
   appCta,
-  goalsCta,
   legalDisclaimer,
   themeColor = toolTheme.primary,
   newsletterTitle,
@@ -173,15 +171,6 @@ export function ToolTemplate({
         <ToolAppDownload
           title={appCtaTitle}
           description={appCtaDescription}
-          themeColor={themeColor}
-          toolSlug={toolSlug}
-        />
-      )}
-
-      {/* Financial goals — shown when app download is hidden (investment cluster) */}
-      {!showAppCta && goalsCta && (
-        <ToolGoalsCta
-          goalsCta={goalsCta}
           themeColor={themeColor}
           toolSlug={toolSlug}
         />
