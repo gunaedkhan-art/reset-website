@@ -69,6 +69,50 @@ describe("evaluateExpression", () => {
     assert.equal(evaluateExpression("scores.loop >= 3", baseCtx), false);
     assert.equal(evaluateExpression("calcs.missing + 5", baseCtx), 5);
   });
+
+  it("evaluates projection fields for investment calculators", () => {
+    const ctx = {
+      ...baseCtx,
+      projection: {
+        requiredContribution: 500,
+        totalGrowth: 12000,
+        totalContributions: 8000,
+      },
+    };
+
+    assert.equal(evaluateExpression("projection.requiredContribution == 500", ctx), true);
+    assert.equal(evaluateExpression("projection.totalGrowth > 0", ctx), true);
+    assert.equal(
+      evaluateExpression("projection.totalGrowth > projection.totalContributions", ctx),
+      true,
+    );
+    assert.equal(evaluateExpression("projection.missingField == 0", ctx), true);
+  });
+
+  it("evaluates string input comparisons", () => {
+    const ctx = {
+      ...baseCtx,
+      inputs: {
+        ...baseCtx.inputs,
+        contribution_frequency: "monthly",
+        contribution_timing: "end",
+        compounding_frequency: "monthly",
+      },
+    };
+
+    assert.equal(
+      evaluateExpression('inputs.contribution_frequency == "monthly"', ctx),
+      true,
+    );
+    assert.equal(
+      evaluateExpression('inputs.contribution_timing == "beginning"', ctx),
+      false,
+    );
+    assert.equal(
+      evaluateExpression('inputs.compounding_frequency == "monthly"', ctx),
+      true,
+    );
+  });
 });
 
 describe("runExpressions", () => {

@@ -11,6 +11,13 @@ import {
   createDecisionTreeState,
 } from "../lib/tool-engine/modes/decision-tree";
 import { evaluateCondition } from "../lib/tool-engine/expression/evaluate";
+import { buildInvestmentInputDefaults } from "../tools/config/investment-shared";
+import { parseInvestmentInputs, runCalculatorProfile } from "../lib/investment/profiles";
+import {
+  evaluateComparisonRules,
+  renderTemplate,
+  type TemplateContext,
+} from "../lib/tool-engine/template/render";
 
 let passed = 0;
 let failed = 0;
@@ -32,6 +39,57 @@ for (const config of toolConfigManifest.filter((c) => c.status === "published"))
 
   if (config.mode === "calculator" && config.flow.type === "calculator") {
     const flow = config.flow;
+    if (flow.engine === "projection" && flow.calculatorProfile) {
+      test("projection calculator runs with default inputs", () => {
+        const raw = buildInvestmentInputDefaults(flow.inputs);
+        const fieldIds = flow.inputs.map((field) => field.id);
+        const parsed = parseInvestmentInputs(raw, fieldIds);
+        const projection = runCalculatorProfile(flow.calculatorProfile!, parsed);
+
+        const ctx: TemplateContext = {
+          inputs: {
+            starting_balance: parsed.starting_balance,
+            target_amount: parsed.target_amount ?? 0,
+            annual_return_rate: parsed.annual_return_rate,
+            years: parsed.years,
+            contribution_amount: parsed.contribution_amount,
+            contribution_frequency: parsed.contribution_frequency,
+            contribution_timing: parsed.contribution_timing,
+            compounding_frequency: parsed.compounding_frequency,
+            withdrawal_amount: parsed.withdrawal_amount ?? 0,
+          },
+          scores: {},
+          calcs: {},
+          constants: flow.constants ?? {},
+          answers: {},
+          projection,
+        };
+
+        const template = config.results.templates.find(
+          (t) => t.id === flow.resultTemplateId,
+        );
+        assert.ok(template, `Missing result template: ${flow.resultTemplateId}`);
+
+        for (const card of template.cards ?? []) {
+          renderTemplate(card.valueTemplate, ctx);
+          if (card.descriptionTemplate) {
+            renderTemplate(card.descriptionTemplate, ctx);
+          }
+        }
+
+        for (const line of template.summaryTemplates ?? []) {
+          renderTemplate(line, ctx);
+        }
+
+        evaluateComparisonRules(
+          template.comparisonRules ?? [],
+          ctx,
+          template.fallbackComparison,
+        );
+      });
+      continue;
+    }
+
     test("calculator runs with sample inputs", () => {
       const inputs: Record<string, string> = {};
       for (const field of flow.inputs) {

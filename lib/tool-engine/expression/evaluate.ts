@@ -1,3 +1,5 @@
+import type { ProjectionResult } from "@/lib/investment/types";
+
 export type EvalValue = number | string | boolean;
 
 export interface EvalContext {
@@ -6,6 +8,10 @@ export interface EvalContext {
   calcs: Record<string, number>;
   constants: Record<string, number>;
 }
+
+type ExpressionContext = EvalContext & {
+  projection?: ProjectionResult | Record<string, unknown>;
+};
 
 export class ExpressionError extends Error {
   constructor(message: string) {
@@ -22,7 +28,8 @@ type Token =
   | { type: "op"; value: string }
   | { type: "paren"; value: "(" | ")" };
 
-const IDENT_PATTERN = /^(inputs|scores|calcs|constants)\.[a-zA-Z_][a-zA-Z0-9_]*/;
+const IDENT_PATTERN =
+  /^(inputs|scores|calcs|constants|projection)\.[a-zA-Z_][a-zA-Z0-9_]*/;
 const FUNC_PATTERN = /^(floor|min|max)(?=\s*\()/;
 
 export function tokenize(expression: string): Token[] {
@@ -126,7 +133,7 @@ export function tokenize(expression: string): Token[] {
   return tokens;
 }
 
-function resolveIdent(path: string, ctx: EvalContext): EvalValue {
+function resolveIdent(path: string, ctx: ExpressionContext): EvalValue {
   const [scope, key] = path.split(".");
   if (!key) throw new ExpressionError(`Invalid identifier: ${path}`);
 
@@ -143,6 +150,11 @@ function resolveIdent(path: string, ctx: EvalContext): EvalValue {
     case "constants":
       if (!(key in ctx.constants)) throw new ExpressionError(`Unknown constant: ${key}`);
       return ctx.constants[key]!;
+    case "projection": {
+      const value = (ctx.projection as Record<string, unknown> | undefined)?.[key];
+      if (typeof value === "number") return value;
+      return 0;
+    }
     default:
       throw new ExpressionError(`Unknown scope: ${scope}`);
   }
@@ -156,7 +168,10 @@ function toNumber(value: EvalValue): number {
   return parsed;
 }
 
-export function evaluateExpression(expression: string, ctx: EvalContext): EvalValue {
+export function evaluateExpression(
+  expression: string,
+  ctx: ExpressionContext,
+): EvalValue {
   const tokens = tokenize(expression);
   let pos = 0;
 
@@ -201,15 +216,22 @@ export function evaluateExpression(expression: string, ctx: EvalContext): EvalVa
       if (token?.type === "op" && [">=", "<=", ">", "<", "=="].includes(token.value)) {
         pos++;
         const right = parseAddSub();
-        const l = typeof left === "boolean" ? left : toNumber(left);
-        const r = typeof right === "boolean" ? right : toNumber(right);
-      if (token.value === ">=") left = Number(l) >= Number(r);
-      else if (token.value === "<=") left = Number(l) <= Number(r);
-      else if (token.value === ">") left = Number(l) > Number(r);
-      else if (token.value === "<") left = Number(l) < Number(r);
-      else if (typeof left === "string" || typeof right === "string") {
-        left = String(left) === String(right);
-      } else left = l === r;
+        if (token.value === "==") {
+          if (typeof left === "string" || typeof right === "string") {
+            left = String(left) === String(right);
+          } else if (typeof left === "boolean" || typeof right === "boolean") {
+            left = Boolean(left) === Boolean(right);
+          } else {
+            left = Number(left) === Number(right);
+          }
+        } else {
+          const l = typeof left === "boolean" ? left : toNumber(left);
+          const r = typeof right === "boolean" ? right : toNumber(right);
+          if (token.value === ">=") left = Number(l) >= Number(r);
+          else if (token.value === "<=") left = Number(l) <= Number(r);
+          else if (token.value === ">") left = Number(l) > Number(r);
+          else left = Number(l) < Number(r);
+        }
       } else {
         break;
       }
@@ -218,13 +240,16 @@ export function evaluateExpression(expression: string, ctx: EvalContext): EvalVa
   }
 
   function parseAddSub(): EvalValue {
-    let left = toNumber(parseMulDiv());
+    let left = parseMulDiv();
     while (pos < tokens.length) {
       const token = tokens[pos];
       if (token?.type === "op" && (token.value === "+" || token.value === "-")) {
         pos++;
-        const right = toNumber(parseMulDiv());
-        left = token.value === "+" ? left + right : left - right;
+        const right = parseMulDiv();
+        left =
+          token.value === "+"
+            ? toNumber(left) + toNumber(right)
+            : toNumber(left) - toNumber(right);
       } else {
         break;
       }
@@ -233,13 +258,16 @@ export function evaluateExpression(expression: string, ctx: EvalContext): EvalVa
   }
 
   function parseMulDiv(): EvalValue {
-    let left = toNumber(parseUnary());
+    let left = parseUnary();
     while (pos < tokens.length) {
       const token = tokens[pos];
       if (token?.type === "op" && (token.value === "*" || token.value === "/")) {
         pos++;
-        const right = toNumber(parseUnary());
-        left = token.value === "*" ? left * right : left / right;
+        const right = parseUnary();
+        left =
+          token.value === "*"
+            ? toNumber(left) * toNumber(right)
+            : toNumber(left) / toNumber(right);
       } else {
         break;
       }
@@ -333,7 +361,10 @@ export function evaluateExpression(expression: string, ctx: EvalContext): EvalVa
   return result;
 }
 
-export function evaluateCondition(expression: string, ctx: EvalContext): boolean {
+export function evaluateCondition(
+  expression: string,
+  ctx: ExpressionContext,
+): boolean {
   const result = evaluateExpression(expression, ctx);
   if (typeof result === "boolean") return result;
   return Boolean(result);
