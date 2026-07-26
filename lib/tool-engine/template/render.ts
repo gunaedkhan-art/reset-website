@@ -1,8 +1,11 @@
 import type { EvalContext } from "../expression/evaluate";
 import { evaluateCondition } from "../expression/evaluate";
+import { formatYears } from "@/lib/investment/format";
+import type { ProjectionResult } from "@/lib/investment/types";
 
 export interface TemplateContext extends EvalContext {
   answers: Record<string, string | string[]>;
+  projection?: ProjectionResult;
 }
 
 export function renderTemplate(
@@ -31,6 +34,8 @@ function resolveTemplatePath(path: string, ctx: TemplateContext): unknown {
       return ctx.constants[key];
     case "answers":
       return ctx.answers[key];
+    case "projection":
+      return ctx.projection?.[key as keyof ProjectionResult];
     default:
       return undefined;
   }
@@ -62,6 +67,13 @@ function formatTemplateValue(value: unknown, format?: string): string {
           maximumFractionDigits: 1,
           minimumFractionDigits: value < 10 ? 1 : 0,
         });
+      case "percent":
+        return `${value.toLocaleString("en-US", {
+          maximumFractionDigits: 1,
+          minimumFractionDigits: 1,
+        })}%`;
+      case "years":
+        return formatYears(value);
       default:
         if (Number.isInteger(value)) {
           return value.toLocaleString("en-US");

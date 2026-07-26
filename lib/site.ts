@@ -2,7 +2,7 @@ import { getSiteUrl } from "@/lib/env";
 
 export const siteConfig = {
   name: "Reset",
-  /** Set `showAppDownload` to true when the mobile app ships on Google Play. */
+  /** Set `showAppDownload` to true when the mobile app ships on Google Play. Investment tools show a goals CTA instead while this is false. */
   features: {
     showAppDownload: false,
   },

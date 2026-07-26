@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Callout } from "@/components/ui/Callout";
 import { InfoCard } from "@/components/ui/InfoCard";
 import { Section } from "@/components/ui/Section";
 import { siteConfig } from "@/lib/site";
@@ -12,6 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { ToolTemplateProps } from "@/types/tool";
 import { ToolAppDownload } from "./ToolAppDownload";
+import { ToolGoalsCta } from "./ToolGoalsCta";
 import { ToolCalculateButton } from "./ToolCalculateButton";
 import {
   ToolContainer,
@@ -40,6 +42,8 @@ export function ToolTemplate({
   showNewsletter = true,
   showAppCta = siteConfig.features.showAppDownload,
   appCta,
+  goalsCta,
+  legalDisclaimer,
   themeColor = toolTheme.primary,
   newsletterTitle,
   newsletterDescription,
@@ -154,11 +158,30 @@ export function ToolTemplate({
         </ToolContainer>
       </Section>
 
+      {legalDisclaimer && (
+        <Section spacing="sm">
+          <ToolContainer maxWidth="md">
+            <Callout variant="warning" title="Disclaimer">
+              {legalDisclaimer}
+            </Callout>
+          </ToolContainer>
+        </Section>
+      )}
+
       {/* Download app — immediately after tool */}
       {showAppCta && (
         <ToolAppDownload
           title={appCtaTitle}
           description={appCtaDescription}
+          themeColor={themeColor}
+          toolSlug={toolSlug}
+        />
+      )}
+
+      {/* Financial goals — shown when app download is hidden (investment cluster) */}
+      {!showAppCta && goalsCta && (
+        <ToolGoalsCta
+          goalsCta={goalsCta}
           themeColor={themeColor}
           toolSlug={toolSlug}
         />

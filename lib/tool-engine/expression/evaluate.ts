@@ -16,6 +16,7 @@ export class ExpressionError extends Error {
 
 type Token =
   | { type: "number"; value: number }
+  | { type: "string"; value: string }
   | { type: "ident"; value: string }
   | { type: "func"; value: "floor" | "min" | "max" }
   | { type: "op"; value: string }
@@ -108,6 +109,17 @@ export function tokenize(expression: string): Token[] {
       continue;
     }
 
+    const stringMatch = src.slice(i).match(/^"([^"\\]|\\.)*"|^'([^'\\]|\\.)*'/);
+    if (stringMatch) {
+      const quoted = stringMatch[0];
+      tokens.push({
+        type: "string",
+        value: quoted.slice(1, -1),
+      });
+      i += quoted.length;
+      continue;
+    }
+
     throw new ExpressionError(`Unexpected token at position ${i}: "${src.slice(i, i + 10)}"`);
   }
 
@@ -191,11 +203,13 @@ export function evaluateExpression(expression: string, ctx: EvalContext): EvalVa
         const right = parseAddSub();
         const l = typeof left === "boolean" ? left : toNumber(left);
         const r = typeof right === "boolean" ? right : toNumber(right);
-        if (token.value === ">=") left = Number(l) >= Number(r);
-        else if (token.value === "<=") left = Number(l) <= Number(r);
-        else if (token.value === ">") left = Number(l) > Number(r);
-        else if (token.value === "<") left = Number(l) < Number(r);
-        else left = l === r;
+      if (token.value === ">=") left = Number(l) >= Number(r);
+      else if (token.value === "<=") left = Number(l) <= Number(r);
+      else if (token.value === ">") left = Number(l) > Number(r);
+      else if (token.value === "<") left = Number(l) < Number(r);
+      else if (typeof left === "string" || typeof right === "string") {
+        left = String(left) === String(right);
+      } else left = l === r;
       } else {
         break;
       }
@@ -247,6 +261,11 @@ export function evaluateExpression(expression: string, ctx: EvalContext): EvalVa
     if (!token) throw new ExpressionError("Unexpected end of expression");
 
     if (token.type === "number") {
+      pos++;
+      return token.value;
+    }
+
+    if (token.type === "string") {
       pos++;
       return token.value;
     }

@@ -58,6 +58,10 @@ export function runCalculatorFlow(
     constants,
   };
 
+  if (!flow.expressions || Object.keys(flow.expressions).length === 0) {
+    throw new Error("Expression calculator flow is missing expressions");
+  }
+
   const calcs = runExpressions(flow.expressions, baseContext);
 
   return {

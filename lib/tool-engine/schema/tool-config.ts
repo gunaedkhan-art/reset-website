@@ -34,18 +34,45 @@ export const guidanceBlockSchema = z.object({
   list: z.array(z.string()).optional(),
 });
 
-export const inputFieldSchema = z.object({
-  id: z.string().regex(/^[a-z][a-z0-9_]*$/),
-  type: z.enum(["number", "text", "integer"]),
+export const calculatorProfileSchema = z.enum([
+  "future-value",
+  "compound-growth",
+  "savings-goal",
+  "time-to-goal",
+  "required-return",
+  "initial-investment",
+  "doubling-time",
+  "withdrawal-duration",
+]);
+
+export const selectOptionSchema = z.object({
+  value: z.string().min(1),
   label: z.string().min(1),
-  placeholder: z.string().optional(),
-  hint: z.string().optional(),
-  min: z.number().optional(),
-  max: z.number().optional(),
-  step: z.number().optional(),
-  required: z.boolean().default(true),
-  integer: z.boolean().optional(),
 });
+
+export const inputFieldSchema = z
+  .object({
+    id: z.string().regex(/^[a-z][a-z0-9_]*$/),
+    type: z.enum(["number", "text", "integer", "select"]),
+    label: z.string().min(1),
+    placeholder: z.string().optional(),
+    hint: z.string().optional(),
+    min: z.number().optional(),
+    max: z.number().optional(),
+    step: z.number().optional(),
+    required: z.boolean().default(true),
+    integer: z.boolean().optional(),
+    defaultValue: z.string().optional(),
+    options: z.array(selectOptionSchema).optional(),
+  })
+  .superRefine((field, ctx) => {
+    if (field.type === "select" && (!field.options || field.options.length === 0)) {
+      ctx.addIssue({
+        code: "custom",
+        message: `Select field "${field.id}" must include options`,
+      });
+    }
+  });
 
 export const resultCardSchema = z.object({
   title: z.string().min(1),
@@ -61,22 +88,44 @@ export const comparisonRuleSchema = z.object({
 export const resultTemplateSchema = z.object({
   id: z.string().min(1),
   cards: z.array(resultCardSchema).optional(),
-  cardColumns: z.union([z.literal(2), z.literal(3)]).optional(),
+  cardColumns: z.union([z.literal(2), z.literal(3), z.literal(4)]).optional(),
   summaryTemplates: z.array(z.string()).optional(),
   comparisonTitle: z.string().optional(),
   comparisonRules: z.array(comparisonRuleSchema).optional(),
   fallbackComparison: z.string().optional(),
+  showChart: z.boolean().optional(),
+  showTable: z.boolean().optional(),
+  tableVariant: z.enum(["growth", "withdrawal"]).optional(),
 });
 
-export const calculatorFlowSchema = z.object({
-  type: z.literal("calculator"),
-  inputs: z.array(inputFieldSchema).min(1),
-  constants: z.record(z.string(), z.number()).optional(),
-  expressions: z
-    .record(z.string(), z.string())
-    .refine((obj) => Object.keys(obj).length > 0, "At least one expression required"),
-  resultTemplateId: z.string().default("default"),
-});
+export const calculatorFlowSchema = z
+  .object({
+    type: z.literal("calculator"),
+    engine: z.enum(["expression", "projection"]).default("expression"),
+    calculatorProfile: calculatorProfileSchema.optional(),
+    inputs: z.array(inputFieldSchema).min(1),
+    constants: z.record(z.string(), z.number()).optional(),
+    expressions: z.record(z.string(), z.string()).optional(),
+    resultTemplateId: z.string().default("default"),
+  })
+  .superRefine((flow, ctx) => {
+    if (flow.engine === "expression") {
+      if (!flow.expressions || Object.keys(flow.expressions).length === 0) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Expression calculators require at least one expression",
+          path: ["expressions"],
+        });
+      }
+    }
+    if (flow.engine === "projection" && !flow.calculatorProfile) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Projection calculators require calculatorProfile",
+        path: ["calculatorProfile"],
+      });
+    }
+  });
 
 export const questionOptionSchema = z.object({
   id: z.string().min(1),
@@ -195,6 +244,16 @@ export const toolConfigSchema = z.object({
       title: z.string().min(1),
       description: z.string().min(1),
     }),
+    goals: z
+      .object({
+        title: z.string().min(1),
+        description: z.string().min(1),
+        primaryLabel: z.string().min(1),
+        primaryHref: z.string().regex(/^\//),
+        secondaryLabel: z.string().optional(),
+        secondaryHref: z.string().regex(/^\//).optional(),
+      })
+      .optional(),
     newsletter: z
       .object({
         title: z.string().optional(),
@@ -204,6 +263,8 @@ export const toolConfigSchema = z.object({
   }),
 
   faq: z.array(faqItemSchema).default([]),
+
+  legalDisclaimer: z.string().optional(),
 
   theme: z
     .object({

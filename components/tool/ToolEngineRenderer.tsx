@@ -4,6 +4,7 @@ import type { ToolConfig } from "@/lib/tool-engine/schema/tool-config";
 import type { RelatedTool } from "@/types/tool";
 import { CalculatorEngine } from "./engine/CalculatorEngine";
 import { DecisionTreeEngine } from "./engine/DecisionTreeEngine";
+import { ProjectionCalculatorEngine } from "./engine/ProjectionCalculatorEngine";
 
 interface ToolEngineRendererProps {
   config: ToolConfig;
@@ -17,6 +18,16 @@ export function ToolEngineRenderer({
   categoryName,
 }: ToolEngineRendererProps) {
   if (config.mode === "calculator" && config.flow.type === "calculator") {
+    if (config.flow.engine === "projection") {
+      return (
+        <ProjectionCalculatorEngine
+          config={config}
+          relatedTools={relatedTools}
+          categoryName={categoryName}
+        />
+      );
+    }
+
     return (
       <CalculatorEngine
         config={config}

@@ -41,6 +41,15 @@ export interface ToolAppCta {
   description: string;
 }
 
+export interface ToolGoalsCta {
+  title: string;
+  description: string;
+  primaryLabel: string;
+  primaryHref: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
 export interface ToolTemplateProps {
   /** Page path for SEO, e.g. "/how-to-stop-procrastinating" */
   path?: string;
@@ -68,6 +77,10 @@ export interface ToolTemplateProps {
   showAppCta?: boolean;
   /** Tool-specific copy for the app download block (required when showAppCta is true) */
   appCta: ToolAppCta;
+  /** Financial-goals CTA — shown when app download is hidden (investment tools) */
+  goalsCta?: ToolGoalsCta;
+  /** Optional legal disclaimer shown below results (e.g. investment calculators) */
+  legalDisclaimer?: string;
   /** Thematic accent for the app download section */
   themeColor?: ToolThemeColor;
   newsletterTitle?: string;

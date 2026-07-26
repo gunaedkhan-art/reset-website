@@ -56,6 +56,14 @@ import { embraceBoredomQuizConfig } from "@/tools/config/embrace-boredom-quiz.co
 import { deepWorkVsPomodoroConfig } from "@/tools/config/deep-work-vs-pomodoro.config";
 import { whatShouldIDoInADeepWorkSessionConfig } from "@/tools/config/what-should-i-do-in-a-deep-work-session.config";
 import { helpMeStartDeepWorkConfig } from "@/tools/config/help-me-start-deep-work.config";
+import { compoundGrowthCalculatorConfig } from "@/tools/config/compound-growth-calculator.config";
+import { investmentGrowthCalculatorConfig } from "@/tools/config/investment-growth-calculator.config";
+import { savingsGoalCalculatorConfig } from "@/tools/config/savings-goal-calculator.config";
+import { investmentTimeCalculatorConfig } from "@/tools/config/investment-time-calculator.config";
+import { requiredReturnCalculatorConfig } from "@/tools/config/required-return-calculator.config";
+import { initialInvestmentCalculatorConfig } from "@/tools/config/initial-investment-calculator.config";
+import { investmentDoublingCalculatorConfig } from "@/tools/config/investment-doubling-calculator.config";
+import { investmentWithdrawalCalculatorConfig } from "@/tools/config/investment-withdrawal-calculator.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -118,6 +126,14 @@ const rawConfigs = [
   deepWorkVsPomodoroConfig,
   whatShouldIDoInADeepWorkSessionConfig,
   helpMeStartDeepWorkConfig,
+  compoundGrowthCalculatorConfig,
+  investmentGrowthCalculatorConfig,
+  savingsGoalCalculatorConfig,
+  investmentTimeCalculatorConfig,
+  requiredReturnCalculatorConfig,
+  initialInvestmentCalculatorConfig,
+  investmentDoublingCalculatorConfig,
+  investmentWithdrawalCalculatorConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>
