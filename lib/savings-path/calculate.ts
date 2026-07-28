@@ -219,6 +219,7 @@ export function parseIncomeSourceInput(
   amountRaw: string,
   dateRaw: string,
   labelRaw: string,
+  id?: string,
 ): IncomeSource {
   const amount = Number.parseFloat(amountRaw);
   if (Number.isNaN(amount) || amount <= 0) {
@@ -229,9 +230,33 @@ export function parseIncomeSourceInput(
   }
 
   return {
-    id: crypto.randomUUID(),
+    id: id ?? crypto.randomUUID(),
     amount,
     date: dateRaw,
     label: labelRaw.trim(),
   };
+}
+
+export function parseIncomeRows(
+  rows: { id: string; amount: string; date: string; label: string }[],
+  goal?: SavingsGoal,
+): IncomeSource[] {
+  const completeRows = rows.filter((row) => row.amount.trim() && row.date.trim());
+
+  return completeRows.map((row) => {
+    const source = parseIncomeSourceInput(
+      row.amount,
+      row.date,
+      row.label || "Income",
+      row.id,
+    );
+
+    if (goal && (source.date < goal.startDate || source.date > goal.targetDate)) {
+      throw new Error(
+        "Each income date must fall between your start date and target date.",
+      );
+    }
+
+    return source;
+  });
 }

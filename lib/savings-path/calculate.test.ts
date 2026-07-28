@@ -5,6 +5,7 @@ import {
   buildProgressLine,
   expectedAmountAtDate,
   getTrackStatus,
+  parseIncomeRows,
   parseSavingsPathInput,
 } from "./calculate";
 
@@ -83,6 +84,31 @@ describe("buildChartModel", () => {
   });
 });
 
+describe("parseIncomeRows", () => {
+  it("skips incomplete rows and validates dates within the plan", () => {
+    const sources = parseIncomeRows(
+      [
+        { id: "a", amount: "500", date: "2026-03-01", label: "Pay" },
+        { id: "b", amount: "", date: "2026-04-01", label: "Skip me" },
+      ],
+      goal,
+    );
+
+    assert.equal(sources.length, 1);
+    assert.equal(sources[0]?.amount, 500);
+  });
+
+  it("rejects income dates outside the goal window", () => {
+    assert.throws(
+      () =>
+        parseIncomeRows(
+          [{ id: "a", amount: "500", date: "2027-01-01", label: "Late" }],
+          goal,
+        ),
+      /between your start date and target date/,
+    );
+  });
+});
 describe("parseSavingsPathInput", () => {
   it("validates target exceeds start", () => {
     assert.throws(
