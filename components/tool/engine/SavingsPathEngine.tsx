@@ -115,6 +115,7 @@ export function SavingsPathEngine({
   const [incomeError, setIncomeError] = useState<string | null>(null);
   const [incomeSaved, setIncomeSaved] = useState(false);
   const [mobileView, setMobileView] = useState<MobileView>(initial.mobileView);
+  const [showHowItWorks, setShowHowItWorks] = useState(false);
 
   const [targetAmount, setTargetAmount] = useState(initial.targetAmount);
   const [targetDate, setTargetDate] = useState(initial.targetDate);
@@ -342,25 +343,6 @@ export function SavingsPathEngine({
   const editPanel = (
     <ToolFormSection className="h-full">
       <div className="space-y-8">
-        {config.content.explainer && (
-          <p className="text-sm leading-relaxed text-neutral-600">
-            {config.content.explainer}
-          </p>
-        )}
-
-        {config.guidance.map((block) => (
-          <Callout key={block.title} title={block.title}>
-            <p className="text-neutral-700">{block.body}</p>
-            {block.list && (
-              <ul className="mt-2 list-inside list-disc space-y-1.5 text-neutral-700">
-                {block.list.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            )}
-          </Callout>
-        ))}
-
         <div className="space-y-4">
           <h3 className="text-sm font-semibold text-neutral-900">Your goal</h3>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
@@ -540,6 +522,49 @@ export function SavingsPathEngine({
         )}
 
         <ToolCalculateButton label="Build my path" type="submit" />
+
+        <div className="rounded-2xl border border-neutral-200 bg-white shadow-sm">
+          <button
+            type="button"
+            onClick={() => setShowHowItWorks((open) => !open)}
+            aria-expanded={showHowItWorks}
+            className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left text-sm font-semibold text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-neutral-900 sm:px-5"
+          >
+            How it works
+            <span
+              aria-hidden="true"
+              className={cn(
+                "text-neutral-400 transition-transform duration-200",
+                showHowItWorks && "rotate-180",
+              )}
+            >
+              ▾
+            </span>
+          </button>
+
+          {showHowItWorks && (
+            <div className="space-y-4 border-t border-neutral-200 px-4 py-4 sm:px-5">
+              {config.content.explainer && (
+                <p className="text-sm leading-relaxed text-neutral-600">
+                  {config.content.explainer}
+                </p>
+              )}
+
+              {config.guidance.map((block) => (
+                <Callout key={block.title} title={block.title}>
+                  <p className="text-neutral-700">{block.body}</p>
+                  {block.list && (
+                    <ul className="mt-2 list-inside list-disc space-y-1.5 text-neutral-700">
+                      {block.list.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  )}
+                </Callout>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </ToolFormSection>
   );
