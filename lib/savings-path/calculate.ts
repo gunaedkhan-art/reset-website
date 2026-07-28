@@ -77,6 +77,46 @@ export function buildProgressLine(
   return points;
 }
 
+export interface BalanceHistoryRow {
+  kind: "start" | "update" | "target";
+  label: string;
+  date: string;
+  amount: number;
+}
+
+export function buildBalanceHistoryRows(
+  goal: SavingsGoal,
+  checkIns: BalanceCheckIn[],
+): BalanceHistoryRow[] {
+  const updates = checkIns
+    .filter(
+      (checkIn) =>
+        checkIn.date >= goal.startDate && checkIn.date <= goal.targetDate,
+    )
+    .sort((a, b) => a.date.localeCompare(b.date));
+
+  return [
+    {
+      kind: "start",
+      label: "Start",
+      date: goal.startDate,
+      amount: goal.startAmount,
+    },
+    ...updates.map((checkIn) => ({
+      kind: "update" as const,
+      label: "Balance update",
+      date: checkIn.date,
+      amount: checkIn.amount,
+    })),
+    {
+      kind: "target",
+      label: "Target",
+      date: goal.targetDate,
+      amount: goal.targetAmount,
+    },
+  ];
+}
+
 export function buildIncomeMarkers(
   goal: SavingsGoal,
   incomeSources: IncomeSource[],

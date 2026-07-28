@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
+  buildBalanceHistoryRows,
   buildChartModel,
   buildProgressLine,
   expectedAmountAtDate,
@@ -120,6 +121,21 @@ describe("parseIncomeRows", () => {
     );
   });
 });
+describe("buildBalanceHistoryRows", () => {
+  it("lists start, updates, and target in order", () => {
+    const rows = buildBalanceHistoryRows(goal, [
+      { id: "1", amount: 2_500, date: "2026-04-01" },
+      { id: "2", amount: 4_000, date: "2026-08-01" },
+    ]);
+
+    assert.equal(rows.length, 4);
+    assert.equal(rows[0]?.kind, "start");
+    assert.equal(rows[1]?.kind, "update");
+    assert.equal(rows[2]?.kind, "update");
+    assert.equal(rows.at(-1)?.kind, "target");
+  });
+});
+
 describe("parseCheckInInput", () => {
   it("rejects check-in dates outside the goal window", () => {
     assert.throws(

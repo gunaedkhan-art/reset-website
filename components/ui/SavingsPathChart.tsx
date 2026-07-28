@@ -17,6 +17,51 @@ export interface SavingsPathChartProps {
   height?: number;
 }
 
+interface ChartMarkerProps {
+  cx: number;
+  cy: number;
+  r: number;
+  fill: string;
+  stroke?: string;
+  strokeWidth?: number;
+  label: string;
+  date: string;
+  amount: number;
+  currency: SavingsGoal["currency"];
+}
+
+function ChartMarker({
+  cx,
+  cy,
+  r,
+  fill,
+  stroke,
+  strokeWidth,
+  label,
+  date,
+  amount,
+  currency,
+}: ChartMarkerProps) {
+  const tooltip = `${label}: ${formatCurrency(amount, currency, { precise: true })} on ${formatChartDate(date)}`;
+
+  return (
+    <g>
+      <circle cx={cx} cy={cy} r={Math.max(r + 6, 12)} fill="transparent" pointerEvents="all">
+        <title>{tooltip}</title>
+      </circle>
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r}
+        fill={fill}
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        pointerEvents="none"
+      />
+    </g>
+  );
+}
+
 export function SavingsPathChart({
   model,
   goal,
@@ -103,29 +148,45 @@ export function SavingsPathChart({
           />
         )}
 
-        {model.progressLine.map((point, index) => (
-          <circle
-            key={`progress-${point.date}-${point.amount}-${index}`}
-            cx={xForDate(point.date)}
-            cy={yForAmount(point.amount)}
-            r={5}
-            fill="#BAE6FD"
-            stroke="#0284C7"
-            strokeWidth={1.5}
-          />
-        ))}
+        {model.progressLine.map((point, index) => {
+          if (index === 0) return null;
 
-        <circle
+          return (
+            <ChartMarker
+              key={`progress-${point.date}-${point.amount}-${index}`}
+              cx={xForDate(point.date)}
+              cy={yForAmount(point.amount)}
+              r={5}
+              fill="#BAE6FD"
+              stroke="#0284C7"
+              strokeWidth={1.5}
+              label="Balance update"
+              date={point.date}
+              amount={point.amount}
+              currency={goal.currency}
+            />
+          );
+        })}
+
+        <ChartMarker
           cx={xForDate(model.start.date)}
           cy={yForAmount(model.start.amount)}
           r={6}
           fill="#00A3D9"
+          label="Start"
+          date={model.start.date}
+          amount={model.start.amount}
+          currency={goal.currency}
         />
-        <circle
+        <ChartMarker
           cx={xForDate(model.target.date)}
           cy={yForAmount(model.target.amount)}
           r={6}
           fill="#023047"
+          label="Target"
+          date={model.target.date}
+          amount={model.target.amount}
+          currency={goal.currency}
         />
 
         {model.incomeMarkers.map((marker) => {
@@ -194,6 +255,7 @@ export function SavingsPathChart({
           </span>
           Income dates
         </span>
+        <span className="text-neutral-500">Hover a point for amount and date.</span>
       </figcaption>
     </figure>
   );

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Callout } from "@/components/ui/Callout";
 import { InfoCard } from "@/components/ui/InfoCard";
+import { DataTable } from "@/components/ui/DataTable";
 import { Input } from "@/components/ui/Input";
 import { SavingsPathChart } from "@/components/ui/SavingsPathChart";
 import { Section } from "@/components/ui/Section";
@@ -26,11 +27,13 @@ import {
 } from "@/lib/seo";
 import {
   buildChartModel,
+  buildBalanceHistoryRows,
   parseCheckInInput,
   parseIncomeRows,
   parseSavingsPathInput,
 } from "@/lib/savings-path/calculate";
 import {
+  formatChartDate,
   formatCurrency,
   todayIsoDate,
 } from "@/lib/savings-path/format";
@@ -163,6 +166,11 @@ export function SavingsPathEngine({
 
   const chartModel = useMemo(
     () => (plan ? buildChartModel(plan) : null),
+    [plan],
+  );
+
+  const balanceHistoryRows = useMemo(
+    () => (plan ? buildBalanceHistoryRows(plan.goal, plan.checkIns) : []),
     [plan],
   );
 
@@ -382,6 +390,33 @@ export function SavingsPathEngine({
             >
               Plot update
             </button>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="text-sm font-semibold text-neutral-900">Balance history</h3>
+            <DataTable
+              caption="Savings path balance history"
+              columns={[
+                { key: "label", header: "Milestone" },
+                {
+                  key: "date",
+                  header: "Date",
+                  format: (value) => formatChartDate(String(value)),
+                },
+                {
+                  key: "amount",
+                  header: "Balance",
+                  align: "right",
+                  format: (value) =>
+                    formatCurrency(Number(value), plan.goal.currency, { precise: true }),
+                },
+              ]}
+              rows={balanceHistoryRows.map((row) => ({
+                label: row.label,
+                date: row.date,
+                amount: row.amount,
+              }))}
+            />
           </div>
 
           <Callout variant="info" title="Saved on this device">
