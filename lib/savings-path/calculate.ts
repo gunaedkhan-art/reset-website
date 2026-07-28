@@ -55,23 +55,26 @@ export function buildProgressLine(
   goal: SavingsGoal,
   checkIns: BalanceCheckIn[],
 ): ChartPoint[] {
-  const points: ChartPoint[] = [
-    { date: goal.startDate, amount: goal.startAmount },
-    ...checkIns
-      .filter(
-        (checkIn) =>
-          checkIn.date >= goal.startDate && checkIn.date <= goal.targetDate,
-      )
-      .map((checkIn) => ({ date: checkIn.date, amount: checkIn.amount }))
-      .sort((a, b) => a.date.localeCompare(b.date)),
-  ];
+  const validCheckIns = checkIns
+    .filter(
+      (checkIn) =>
+        checkIn.date >= goal.startDate && checkIn.date <= goal.targetDate,
+    )
+    .sort((a, b) => a.date.localeCompare(b.date));
 
-  const deduped = new Map<string, ChartPoint>();
-  for (const point of points) {
-    deduped.set(point.date, point);
+  if (validCheckIns.length === 0) {
+    return [{ date: goal.startDate, amount: goal.startAmount }];
   }
 
-  return [...deduped.values()].sort((a, b) => a.date.localeCompare(b.date));
+  const points: ChartPoint[] = [
+    { date: goal.startDate, amount: goal.startAmount },
+    ...validCheckIns.map((checkIn) => ({
+      date: checkIn.date,
+      amount: checkIn.amount,
+    })),
+  ];
+
+  return points;
 }
 
 export function buildIncomeMarkers(
@@ -199,13 +202,23 @@ export function parseSavingsPathInput(
   };
 }
 
-export function parseCheckInInput(amountRaw: string, dateRaw: string): BalanceCheckIn {
+export function parseCheckInInput(
+  amountRaw: string,
+  dateRaw: string,
+  goal?: SavingsGoal,
+): BalanceCheckIn {
   const amount = Number.parseFloat(amountRaw);
   if (Number.isNaN(amount) || amount < 0) {
     throw new Error("Check-in amount cannot be negative.");
   }
   if (!dateRaw) {
     throw new Error("Check-in date is required.");
+  }
+
+  if (goal && (dateRaw < goal.startDate || dateRaw > goal.targetDate)) {
+    throw new Error(
+      "Check-in date must fall between your start date and target date.",
+    );
   }
 
   return {

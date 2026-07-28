@@ -5,6 +5,7 @@ import {
   buildProgressLine,
   expectedAmountAtDate,
   getTrackStatus,
+  parseCheckInInput,
   parseIncomeRows,
   parseSavingsPathInput,
 } from "./calculate";
@@ -42,6 +43,16 @@ describe("buildProgressLine", () => {
     assert.equal(line[0]?.date, "2026-01-01");
     assert.equal(line[0]?.amount, 1_000);
     assert.equal(line.at(-1)?.amount, 4_000);
+  });
+
+  it("keeps the start anchor when a check-in lands on the start date", () => {
+    const line = buildProgressLine(goal, [
+      { id: "1", amount: 2_500, date: "2026-01-01" },
+    ]);
+
+    assert.equal(line.length, 2);
+    assert.equal(line[0]?.amount, 1_000);
+    assert.equal(line[1]?.amount, 2_500);
   });
 });
 
@@ -109,6 +120,15 @@ describe("parseIncomeRows", () => {
     );
   });
 });
+describe("parseCheckInInput", () => {
+  it("rejects check-in dates outside the goal window", () => {
+    assert.throws(
+      () => parseCheckInInput("2500", "2027-01-01", goal),
+      /between your start date and target date/,
+    );
+  });
+});
+
 describe("parseSavingsPathInput", () => {
   it("validates target exceeds start", () => {
     assert.throws(

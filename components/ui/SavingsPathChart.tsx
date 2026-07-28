@@ -103,9 +103,9 @@ export function SavingsPathChart({
           />
         )}
 
-        {model.progressLine.map((point) => (
+        {model.progressLine.map((point, index) => (
           <circle
-            key={`progress-${point.date}-${point.amount}`}
+            key={`progress-${point.date}-${point.amount}-${index}`}
             cx={xForDate(point.date)}
             cy={yForAmount(point.amount)}
             r={5}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Callout } from "@/components/ui/Callout";
@@ -70,26 +70,6 @@ function createIncomeRow(): IncomeFormRow {
 
 function getInitialState() {
   const today = todayIsoDate();
-  const saved = typeof window !== "undefined" ? loadSavingsPathPlan() : null;
-
-  if (saved) {
-    return {
-      plan: saved,
-      targetAmount: String(saved.goal.targetAmount),
-      targetDate: saved.goal.targetDate,
-      startAmount: String(saved.goal.startAmount),
-      startDate: saved.goal.startDate,
-      currency: saved.goal.currency,
-      incomeRows: saved.incomeSources.map((source) => ({
-        id: source.id,
-        amount: String(source.amount),
-        date: source.date,
-        label: source.label,
-      })),
-      checkInDate: today,
-      mobileView: "chart" as MobileView,
-    };
-  }
 
   return {
     plan: null as SavingsPathPlan | null,
@@ -104,29 +84,66 @@ function getInitialState() {
   };
 }
 
+function getSavedState() {
+  const saved = loadSavingsPathPlan();
+  if (!saved) return null;
+
+  const today = todayIsoDate();
+  return {
+    plan: saved,
+    targetAmount: String(saved.goal.targetAmount),
+    targetDate: saved.goal.targetDate,
+    startAmount: String(saved.goal.startAmount),
+    startDate: saved.goal.startDate,
+    currency: saved.goal.currency,
+    incomeRows: saved.incomeSources.map((source) => ({
+      id: source.id,
+      amount: String(source.amount),
+      date: source.date,
+      label: source.label,
+    })),
+    checkInDate: today,
+    mobileView: "chart" as MobileView,
+  };
+}
+
+function readPersistedState() {
+  if (typeof window === "undefined") {
+    return getInitialState();
+  }
+
+  return getSavedState() ?? getInitialState();
+}
+
 export function SavingsPathEngine({
   config,
   relatedTools,
   categoryName,
 }: SavingsPathEngineProps) {
-  const initial = getInitialState();
-  const [plan, setPlan] = useState<SavingsPathPlan | null>(initial.plan);
+  const persisted = useSyncExternalStore(
+    () => () => {},
+    readPersistedState,
+    getInitialState,
+  );
+
+  const [plan, setPlan] = useState<SavingsPathPlan | null>(persisted.plan);
   const [formError, setFormError] = useState<string | null>(null);
   const [incomeError, setIncomeError] = useState<string | null>(null);
   const [incomeSaved, setIncomeSaved] = useState(false);
-  const [mobileView, setMobileView] = useState<MobileView>(initial.mobileView);
+  const [mobileView, setMobileView] = useState<MobileView>(persisted.mobileView);
   const [showHowItWorks, setShowHowItWorks] = useState(false);
 
-  const [targetAmount, setTargetAmount] = useState(initial.targetAmount);
-  const [targetDate, setTargetDate] = useState(initial.targetDate);
-  const [startAmount, setStartAmount] = useState(initial.startAmount);
-  const [startDate, setStartDate] = useState(initial.startDate);
-  const [currency, setCurrency] = useState(initial.currency);
-  const [incomeRows, setIncomeRows] = useState<IncomeFormRow[]>(initial.incomeRows);
+  const [targetAmount, setTargetAmount] = useState(persisted.targetAmount);
+  const [targetDate, setTargetDate] = useState(persisted.targetDate);
+  const [startAmount, setStartAmount] = useState(persisted.startAmount);
+  const [startDate, setStartDate] = useState(persisted.startDate);
+  const [currency, setCurrency] = useState(persisted.currency);
+  const [incomeRows, setIncomeRows] = useState<IncomeFormRow[]>(persisted.incomeRows);
 
   const [checkInAmount, setCheckInAmount] = useState("");
-  const [checkInDate, setCheckInDate] = useState(initial.checkInDate);
+  const [checkInDate, setCheckInDate] = useState(persisted.checkInDate);
   const [checkInError, setCheckInError] = useState<string | null>(null);
+  const [checkInSaved, setCheckInSaved] = useState(false);
 
   const toolPath = config.seo.canonicalPath;
   const breadcrumbItems = [
@@ -209,9 +226,10 @@ export function SavingsPathEngine({
   const handleAddCheckIn = () => {
     if (!plan) return;
     setCheckInError(null);
+    setCheckInSaved(false);
 
     try {
-      const checkIn = parseCheckInInput(checkInAmount, checkInDate);
+      const checkIn = parseCheckInInput(checkInAmount, checkInDate, plan.goal);
       const withoutDate = plan.checkIns.filter((item) => item.date !== checkIn.date);
       const nextPlan: SavingsPathPlan = {
         ...plan,
@@ -223,12 +241,23 @@ export function SavingsPathEngine({
       setPlan(nextPlan);
       saveSavingsPathPlan(nextPlan);
       setCheckInAmount("");
+      setCheckInSaved(true);
+      setMobileView("chart");
       trackEvent({
         name: "savings_path_checkin",
         tool_slug: config.slug,
       });
     } catch (error) {
       setCheckInError(error instanceof Error ? error.message : "Invalid check-in");
+    }
+  };
+
+  const handleCheckInFieldKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleAddCheckIn();
     }
   };
 
@@ -308,18 +337,33 @@ export function SavingsPathEngine({
                 step={1}
                 inputMode="decimal"
                 value={checkInAmount}
-                onChange={(e) => setCheckInAmount(e.target.value)}
+                onChange={(e) => {
+                  setCheckInSaved(false);
+                  setCheckInAmount(e.target.value);
+                }}
+                onKeyDown={handleCheckInFieldKeyDown}
               />
               <Input
                 label="As of date"
                 type="date"
+                min={plan.goal.startDate}
+                max={plan.goal.targetDate}
                 value={checkInDate}
-                onChange={(e) => setCheckInDate(e.target.value)}
+                onChange={(e) => {
+                  setCheckInSaved(false);
+                  setCheckInDate(e.target.value);
+                }}
+                onKeyDown={handleCheckInFieldKeyDown}
               />
             </div>
             {checkInError && (
               <p className="mt-2 text-xs text-red-600" role="alert">
                 {checkInError}
+              </p>
+            )}
+            {checkInSaved && !checkInError && (
+              <p className="mt-2 text-xs text-emerald-700">
+                Balance update plotted on your chart.
               </p>
             )}
             <button
