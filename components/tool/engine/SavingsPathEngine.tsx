@@ -107,12 +107,21 @@ function getSavedState() {
   };
 }
 
-function readPersistedState() {
-  if (typeof window === "undefined") {
-    return getInitialState();
+type EngineState = ReturnType<typeof getInitialState>;
+
+const serverSnapshot: EngineState = getInitialState();
+let clientSnapshotCache: EngineState | null = null;
+
+function getClientSnapshot(): EngineState {
+  if (clientSnapshotCache === null) {
+    clientSnapshotCache = getSavedState() ?? getInitialState();
   }
 
-  return getSavedState() ?? getInitialState();
+  return clientSnapshotCache;
+}
+
+function getServerSnapshot(): EngineState {
+  return serverSnapshot;
 }
 
 export function SavingsPathEngine({
@@ -122,8 +131,8 @@ export function SavingsPathEngine({
 }: SavingsPathEngineProps) {
   const persisted = useSyncExternalStore(
     () => () => {},
-    readPersistedState,
-    getInitialState,
+    getClientSnapshot,
+    getServerSnapshot,
   );
 
   const [plan, setPlan] = useState<SavingsPathPlan | null>(persisted.plan);
