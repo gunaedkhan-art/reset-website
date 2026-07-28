@@ -366,6 +366,7 @@ export function SavingsPathEngine({
                 min={plan.goal.startDate}
                 max={plan.goal.targetDate}
                 value={checkInDate}
+                hint="Click the field to open the calendar."
                 onChange={(e) => {
                   setCheckInSaved(false);
                   setCheckInDate(e.target.value);
@@ -451,6 +452,7 @@ export function SavingsPathEngine({
               type="date"
               value={targetDate}
               onChange={(e) => setTargetDate(e.target.value)}
+              hint="Click the field to open the calendar."
               required
             />
             <Input
@@ -470,6 +472,7 @@ export function SavingsPathEngine({
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
+              hint="Click the field to open the calendar."
               required
             />
             <Select

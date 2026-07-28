@@ -1,4 +1,4 @@
-import { forwardRef, type InputHTMLAttributes } from "react";
+import { forwardRef, type InputHTMLAttributes, type MouseEvent } from "react";
 import { cn } from "@/lib/utils";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -8,8 +8,20 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, hint, id, ...props }, ref) => {
+  ({ className, label, error, hint, id, onClick, type, ...props }, ref) => {
     const inputId = id ?? props.name;
+    const isDateInput = type === "date";
+
+    const handleClick = (event: MouseEvent<HTMLInputElement>) => {
+      onClick?.(event);
+      if (isDateInput && !event.defaultPrevented && "showPicker" in event.currentTarget) {
+        try {
+          event.currentTarget.showPicker();
+        } catch {
+          // Some browsers reject showPicker if not allowed for this gesture.
+        }
+      }
+    };
 
     return (
       <div className="w-full space-y-1.5">
@@ -24,11 +36,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={ref}
           id={inputId}
+          type={type}
+          onClick={isDateInput ? handleClick : onClick}
           className={cn(
             "flex h-11 w-full rounded-xl border border-neutral-200 bg-white px-4 text-sm text-neutral-900",
             "placeholder:text-neutral-400",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-1",
             "disabled:cursor-not-allowed disabled:opacity-50",
+            isDateInput &&
+              "cursor-pointer [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-80 hover:[&::-webkit-calendar-picker-indicator]:opacity-100",
             error && "border-red-400 focus-visible:ring-red-500",
             className,
           )}
