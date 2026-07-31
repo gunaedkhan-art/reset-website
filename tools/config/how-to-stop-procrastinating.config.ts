@@ -30,6 +30,28 @@ export const howToStopProcrastinatingConfig = {
     h1: "How to Stop Procrastinating",
     intro:
       "Answer a few quick questions and get a personalized rescue plan based on what's actually blocking you — not generic advice.",
+    icon: "clock",
+    proseTitle: "About this plan",
+    sections: [
+      {
+        id: "problem",
+        heading: "When generic advice fails",
+        framework: "pas",
+        body: "You've tried timers, lists, and guilt — still avoiding the work. Procrastination usually has a specific trigger: fear, overwhelm, boredom, fatigue, or unclear next steps. A generic fix misses the real blocker.",
+      },
+      {
+        id: "concept",
+        heading: "Match the fix to the trigger",
+        framework: "concept",
+        body: "Behavior change sticks when the intervention fits the cause. An anxious task needs lower stakes; an unclear task needs a defined next action; a boring task needs structure — not the same lecture about discipline.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A personalized rescue plan from five quick questions — matched steps, not a one-size-fits-all productivity lecture.",
+      },
+    ],
     eyebrow: "Interactive tool",
   },
 

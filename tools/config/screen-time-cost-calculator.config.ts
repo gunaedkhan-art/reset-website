@@ -33,6 +33,28 @@ export const screenTimeCostCalculatorConfig = {
     h1: "Screen Time Cost Calculator",
     intro:
       "See how your daily screen time adds up in days per year — and how many years of your life you may spend on screens.",
+    icon: "phone",
+    proseTitle: "About this calculator",
+    sections: [
+      {
+        id: "problem",
+        heading: "Two hours a day doesn't feel like much",
+        framework: "pas",
+        body: "A couple of hours on your phone seems harmless — until you multiply by 365. Suddenly it's weeks per year and years over a lifetime spent on a glowing rectangle instead of what you say matters.",
+      },
+      {
+        id: "concept",
+        heading: "Make the invisible visible",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) recommends measuring digital habits before changing them — in [Digital Minimalism](https://calnewport.com/books/digital-minimalism/), clarity about time cost precedes intentional use.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "outcome",
+        body: "Days per year on screens, lifetime hours at your current rate, and a clear picture of what you're trading for feed time.",
+      },
+    ],
   },
 
   mode: "calculator" as const,

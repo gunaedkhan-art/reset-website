@@ -37,6 +37,28 @@ export const compoundGrowthCalculatorConfig = {
     h1: "Compound Growth Calculator",
     intro:
       "See how a starting balance grows when earnings are reinvested and compounded over time. Adjust growth rate, timeline, and compounding schedule to compare scenarios.",
+    icon: "chart",
+    proseTitle: "About compounding",
+    sections: [
+      {
+        id: "problem",
+        heading: "Why lump sums are hard to intuit",
+        framework: "pas",
+        body: "A 7% annual return doesn't feel dramatic year one — but over decades, reinvested earnings dominate the final balance. Without running the numbers, it's easy to underestimate time or overestimate short-term swings.",
+      },
+      {
+        id: "concept",
+        heading: "Compound growth explained",
+        framework: "concept",
+        body: "Compounding means each period's growth applies to prior earnings too — not just the original deposit. Frequency (monthly vs annual) and timeline both change the curve materially.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Projected ending balance, growth breakdown, chart, and year-by-year table — compare rates, timelines, and compounding schedules side by side.",
+      },
+    ],
     eyebrow: "Investment",
   },
 

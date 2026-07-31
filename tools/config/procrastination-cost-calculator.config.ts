@@ -30,7 +30,29 @@ export const procrastinationCostCalculatorConfig = {
   content: {
     h1: "Procrastination Cost Calculator",
     intro:
-      "Find out how much procrastination actually costs you — in dollars per week and over a full year — based on your salary and lost work hours.",
+      "Find out how much procrastination costs you — in dollars per week and over a full year — based on your salary and lost work hours.",
+    icon: "calculator",
+    proseTitle: "About this calculator",
+    sections: [
+      {
+        id: "problem",
+        heading: "Procrastination feels free until you run the math",
+        framework: "pas",
+        body: "An hour avoided doesn't show up on a receipt — but it shows up in salary, deadlines, and stress. Without a number, delay feels abstract and easy to repeat.",
+      },
+      {
+        id: "agitation",
+        heading: "Opportunity cost is real",
+        framework: "pas",
+        body: "Every procrastinated hour is an hour not spent on high-value work, rest, or relationships. Quantifying the cost turns vague guilt into a decision you can act on.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "aida",
+        body: "Weekly and annual dollar cost from lost hours at your salary — a concrete reason to fix the trigger, not just feel bad about it.",
+      },
+    ],
   },
 
   mode: "calculator" as const,

@@ -30,9 +30,29 @@ export const goalSettingToTheNowConfig = {
   content: {
     h1: "Goal Setting to the Now",
     intro:
-      "Big goals fail when they never reach today. Keller's ladder connects Someday → 5-year → 1-year → monthly → weekly → daily — each step answers the Focusing Question for that horizon. Four questions to find where your ladder breaks and fix it.",
-    explainer:
-      "Think of goals as a ladder — each rung is a Focusing Question. If today's action doesn't connect to someday, motivation leaks.",
+      "Big goals fail when they never reach today. Four questions to find where your goal ladder breaks — and reconnect someday to this week's ONE Thing.",
+    icon: "target",
+    proseTitle: "About the goal ladder",
+    sections: [
+      {
+        id: "problem",
+        heading: "When someday never becomes today",
+        framework: "pas",
+        body: "You have a vision but daily tasks feel disconnected. Motivation leaks because today's to-do list doesn't obviously build toward the life you want — so urgent noise wins over important progress.",
+      },
+      {
+        id: "concept",
+        heading: "Keller's Goal Setting to the Now",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) connects Someday → 5-year → 1-year → monthly → weekly → daily through the [Focusing Question](https://www.the1thing.com/) at each rung. Each answer must connect to the level above or the ladder breaks.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Diagnosis of where your ladder breaks — missing rung, weak link, or today's action disconnected from the top — plus steps to reconnect goals to now.",
+      },
+    ],
     eyebrow: "Goal ladder",
   },
 

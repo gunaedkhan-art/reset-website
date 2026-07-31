@@ -31,6 +31,28 @@ export const howToStopDoomscrollingConfig = {
     h1: "How to Stop Doomscrolling",
     intro:
       "Answer a few quick questions about when and why you scroll — and get a rescue plan tailored to your trigger, not generic \"put your phone away\" advice.",
+    icon: "phone",
+    proseTitle: "About doomscrolling",
+    sections: [
+      {
+        id: "problem",
+        heading: "When the feed wins again",
+        framework: "pas",
+        body: "You open one app for a second and surface an hour later — tired, anxious, and no closer to what you actually wanted. Doomscrolling isn't a willpower failure; it's a designed loop that exploits boredom, stress, and bedtime vulnerability.",
+      },
+      {
+        id: "concept",
+        heading: "Digital minimalism, not abstinence",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) argues in [Digital Minimalism](https://calnewport.com/books/digital-minimalism/) that the fix is intentional technology use — matching each app to a value you care about — not trying to white-knuckle through every urge.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A trigger-matched plan for when you scroll — bedtime, boredom, anxiety, or habit drift — with concrete environment and friction changes.",
+      },
+    ],
     eyebrow: "Interactive tool",
   },
 

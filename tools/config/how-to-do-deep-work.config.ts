@@ -33,6 +33,28 @@ export const howToDoDeepWorkConfig = {
     h1: "How to Do Deep Work",
     intro:
       "Deep work is distraction-free concentration on hard, valuable tasks — not longer hours. Four questions to find your biggest blocker and a plan you can start tomorrow.",
+    icon: "brain",
+    proseTitle: "About deep work",
+    sections: [
+      {
+        id: "problem",
+        heading: "When shallow work owns the calendar",
+        framework: "pas",
+        body: "Email, messages, and meetings fill the day while the cognitively demanding work — writing, building, strategizing — gets the leftover scraps. You end the week busy but without meaningful depth.",
+      },
+      {
+        id: "concept",
+        heading: "Deep work is a skill and a schedule",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) defines [Deep Work](https://calnewport.com/books/deep-work/) as professional activity in distraction-free concentration that pushes your limits. It's not motivation — it's protected blocks, environment design, and shallow-work boundaries.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A plan matched to your blocker — scheduling, environment, shallow-work cuts, or ritual — plus steps for your first protected focus block.",
+      },
+    ],
     eyebrow: "Interactive tool",
   },
 
