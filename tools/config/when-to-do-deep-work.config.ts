@@ -30,7 +30,29 @@ export const whenToDoDeepWorkConfig = {
   content: {
     h1: "When to Do Deep Work",
     intro:
-      "Deep work timing isn't one-size-fits-all. The best slot depends on when your brain peaks, when meetings hit, and whether you're a morning or evening focuser. Four questions to place your block where it will actually survive.",
+      "Four questions about your energy, calendar, and chronotype — get the best time of day and week for your first protected block.",
+    icon: "clock",
+    proseTitle: "About timing deep work",
+    sections: [
+      {
+        id: "problem",
+        heading: "The right block at the wrong time dies",
+        framework: "pas",
+        body: "You scheduled deep work at 4pm — after meetings, lunch slump, and inbox backlog. The block existed on paper but never had a chance. Timing matters as much as intention.",
+      },
+      {
+        id: "concept",
+        heading: "Match depth to peak energy",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) recommends rhythmic scheduling — same deep window daily when possible — placed before shallow obligations consume attention. Morning blocks survive better for most knowledge workers; your chronotype and calendar may differ.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Recommended time of day, day of week, and placement strategy — before meetings, after warmup, or in protected gaps — sized to your actual constraints.",
+      },
+    ],
     eyebrow: "Timing finder",
   },
 

@@ -30,7 +30,29 @@ export const deepWorkVsPomodoroConfig = {
   content: {
     h1: "Deep Work vs Pomodoro",
     intro:
-      "Pomodoro (25 min + break) and deep work (45–120 min uninterrupted) solve different problems. Four questions about your task, calendar, and experience — get the technique that fits today.",
+      "Four questions about your task, calendar, and experience — get the technique that fits today, with block length and break rules.",
+    icon: "clock",
+    proseTitle: "About focus techniques",
+    sections: [
+      {
+        id: "problem",
+        heading: "Wrong technique, wrong task",
+        framework: "pas",
+        body: "Pomodoro on a 90-minute writing block breaks flow mid-thought. A two-hour deep session on admin email wastes recovery time. Using the wrong structure makes focus feel harder than it needs to be.",
+      },
+      {
+        id: "concept",
+        heading: "Two tools, different jobs",
+        framework: "concept",
+        body: "Pomodoro (25 minutes + break) trains starting and sustains momentum on medium tasks. [Deep Work](https://calnewport.com/books/deep-work/) blocks (45–120 minutes) protect cognitively demanding work that needs uninterrupted concentration — [Cal Newport](https://calnewport.com/) reserves them for hard problems, not inbox triage.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A technique recommendation for today's task — Pomodoro, hybrid, or full deep block — with specific duration and break rules.",
+      },
+    ],
     eyebrow: "Technique picker",
   },
 

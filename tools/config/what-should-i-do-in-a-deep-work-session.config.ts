@@ -30,7 +30,29 @@ export const whatShouldIDoInADeepWorkSessionConfig = {
   content: {
     h1: "What Should I Do in a Deep Work Session?",
     intro:
-      "The first 15 minutes decide whether a deep work session succeeds. Four questions about your task, block length, and where you left off — get a session opener and structure for the rest of the block.",
+      "Four questions about your task, block length, and where you left off — get a session opener and structure for the rest of the block.",
+    icon: "checklist",
+    proseTitle: "About session structure",
+    sections: [
+      {
+        id: "problem",
+        heading: "The first fifteen minutes decide everything",
+        framework: "pas",
+        body: "You blocked 90 minutes, sat down, and spent twenty minutes deciding what to do, checking one thing, and warming up badly. Without a session opener, the block dissolves before real depth begins.",
+      },
+      {
+        id: "concept",
+        heading: "Structure the entry, not just the calendar",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) treats deep work as ritualized concentration — clear task, defined done criteria, environment set before the timer starts. The first minutes should be mechanical: open file, read last note, write one line — not renegotiate the goal.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A first-15-minutes plan and session structure matched to whether you're continuing, starting fresh, or tackling something unfamiliar.",
+      },
+    ],
     eyebrow: "Session planner",
   },
 

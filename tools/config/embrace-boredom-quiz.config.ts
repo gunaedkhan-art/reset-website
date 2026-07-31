@@ -30,7 +30,29 @@ export const embraceBoredomQuizConfig = {
   content: {
     h1: "Embrace Boredom Quiz",
     intro:
-      "Newport's second deep work rule: embrace boredom. If you reach for stimulation every idle moment, your brain won't tolerate the lack of novelty deep work requires. Four questions — see your boredom reflex and how to retrain it.",
+      "Four questions to see your boredom reflex and how to retrain it — so idle moments don't automatically become phone moments.",
+    icon: "brain",
+    proseTitle: "About embracing boredom",
+    sections: [
+      {
+        id: "problem",
+        heading: "A brain trained for constant stimulation",
+        framework: "pas",
+        body: "Waiting in line, between tasks, mid-meeting lull — you reach for the phone before boredom registers. That reflex makes the quiet concentration deep work requires feel unbearable within minutes.",
+      },
+      {
+        id: "concept",
+        heading: "Newport's Rule #2",
+        framework: "concept",
+        body: "In [Deep Work](https://calnewport.com/books/deep-work/), [Cal Newport](https://calnewport.com/) lists \"embrace boredom\" as a core rule: don't take breaks from distraction to focus — take breaks from focus to distraction. Retrain idle moments and depth becomes tolerable again.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your boredom tolerance score, where your reflex is strongest, and a retraining plan to stop reaching for stimulation in idle gaps.",
+      },
+    ],
     eyebrow: "Boredom diagnostic",
   },
 

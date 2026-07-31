@@ -33,6 +33,28 @@ export const contextSwitchCostCalculatorConfig = {
     h1: "Context Switch Cost Calculator",
     intro:
       "Every time you jump tasks, tabs, or tools, your brain pays a refocus tax. Estimate how much time that costs you per day and per year.",
+    icon: "blocks",
+    proseTitle: "About context switching",
+    sections: [
+      {
+        id: "problem",
+        heading: "The hidden tax on every tab hop",
+        framework: "pas",
+        body: "A quick Slack check mid-document feels harmless — but [UC Irvine interruption research](https://www.ics.uci.edu/~gmark/chi08.pdf) shows recovery can take far longer than the interruption itself. Multiply that by dozens of switches daily and hours vanish into refocus, not work.",
+      },
+      {
+        id: "concept",
+        heading: "Attention residue",
+        framework: "concept",
+        body: "When you switch tasks, part of your attention stays on the previous task — cognitive scientists call this attention residue. Deep work requires sustained single-task focus; reactive switching is its opposite.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "outcome",
+        body: "Daily and annual hours lost to refocus, equivalent work days, illustrative salary cost, and how many Pomodoro sessions that time could have bought.",
+      },
+    ],
   },
 
   mode: "calculator" as const,

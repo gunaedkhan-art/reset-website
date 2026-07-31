@@ -30,7 +30,29 @@ export const helpMeStartDeepWorkConfig = {
   content: {
     h1: "Help Me Start Deep Work",
     intro:
-      "Not a system — a start. Three questions about right now: energy, task, and friction. You get one 5-minute action and a minimal deep block plan you can begin before motivation fades.",
+      "Three questions about right now: energy, task, and friction. You get one 5-minute action and a minimal deep block plan you can begin before motivation fades.",
+    icon: "focus",
+    proseTitle: "About starting now",
+    sections: [
+      {
+        id: "problem",
+        heading: "The gap between knowing and starting",
+        framework: "pas",
+        body: "You understand deep work matters — you just can't sit down. Avoidance, restlessness, or an unclear task turns the next hour into busywork while the hard thing waits again.",
+      },
+      {
+        id: "concept",
+        heading: "Activation beats planning",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) treats depth as a practice you schedule and begin — not a mood you wait for. A physical 5-minute start lowers the activation energy; the system can come after motion.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "One immediate physical action for the next 5 minutes plus a minimal block plan matched to whether you're avoiding, ready-ish, or restless.",
+      },
+    ],
     eyebrow: "Start now",
   },
 

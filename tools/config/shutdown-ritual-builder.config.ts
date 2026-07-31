@@ -30,7 +30,29 @@ export const shutdownRitualBuilderConfig = {
   content: {
     h1: "Shutdown Ritual Builder",
     intro:
-      "Cal Newport's shutdown ritual signals your brain that work is done — capturing open loops so they don't follow you home. Four questions to build a ritual that fits how your day actually ends.",
+      "Four questions to build an end-of-day ritual that captures open loops — so work thoughts don't follow you home.",
+    icon: "shield",
+    proseTitle: "About the shutdown ritual",
+    sections: [
+      {
+        id: "problem",
+        heading: "When work never actually ends",
+        framework: "pas",
+        body: "You close the laptop but replay tomorrow's tasks at dinner. Open loops — unfinished drafts, vague worries, unread pings — keep your brain in work mode long after you stop.",
+      },
+      {
+        id: "concept",
+        heading: "Newport's shutdown ritual",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) describes a fixed end-of-day shutdown in [Deep Work](https://calnewport.com/books/deep-work/): review tasks, capture next actions, say a phrase that signals \"work is done.\" The ritual tells your mind it's safe to disengage — and makes tomorrow's start faster.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A personalized shutdown checklist matched to what keeps you mentally \"at work\" — open loops, tomorrow anxiety, or boundary leaks — plus steps to run it in under 10 minutes.",
+      },
+    ],
     eyebrow: "Interactive tool",
   },
 

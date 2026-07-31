@@ -30,7 +30,29 @@ export const deepWorkScheduleQuizConfig = {
   content: {
     h1: "Deep Work Schedule Quiz",
     intro:
-      "Cal Newport describes four ways to fit deep work into life — monastic, bimodal, rhythmic, and journalistic. Four questions to see which philosophy fits your job, constraints, and personality.",
+      "Four questions to see which scheduling philosophy fits your job, constraints, and personality — monastic, bimodal, rhythmic, or journalistic.",
+    icon: "calendar",
+    proseTitle: "About scheduling philosophies",
+    sections: [
+      {
+        id: "problem",
+        heading: "One-size-fits-all schedules fail",
+        framework: "pas",
+        body: "Copying a creator's 4-hour morning block doesn't work when you have standups at 9 and kids at 3. Without a philosophy matched to your constraints, deep work stays aspirational — something you'll start \"when things calm down.\"",
+      },
+      {
+        id: "concept",
+        heading: "Newport's four philosophies",
+        framework: "concept",
+        body: "In [Deep Work](https://calnewport.com/books/deep-work/), [Cal Newport](https://calnewport.com/) describes four ways to fit depth into life: monastic (eliminate shallow), bimodal (long deep stretches), rhythmic (daily at the same time), and journalistic (grab gaps when they appear). Each fits different roles and life stages.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your best-fit philosophy plus a playbook — concrete steps for protecting blocks, handling shallow obligations, and graduating to a stronger schedule over time.",
+      },
+    ],
     eyebrow: "Interactive tool",
   },
 

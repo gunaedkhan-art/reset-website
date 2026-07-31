@@ -30,7 +30,29 @@ export const deepWorkEnvironmentChecklistConfig = {
   content: {
     h1: "Deep Work Environment Checklist",
     intro:
-      "Newport's fourth deep work rule: your environment must support focus. Four questions about your space, phone, noise, and signals — get an environment score and fixes ranked by impact.",
+      "Four questions about your space, phone, noise, and boundaries — get an environment score and fixes ranked by impact.",
+    icon: "checklist",
+    proseTitle: "About your environment",
+    sections: [
+      {
+        id: "problem",
+        heading: "Willpower loses to a bad setup",
+        framework: "pas",
+        body: "Phone on the desk, Slack badges glowing, open-plan noise — your environment is designed for interruption. Trying to focus harder while signals scream for attention is fighting physics with guilt.",
+      },
+      {
+        id: "concept",
+        heading: "Make depth the path of least resistance",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) treats environment as a deep work rule: remove cues for distraction before the session starts. Phone in another room, notifications off, visible task note — friction should block shallow, not depth.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "An environment score across phone, noise, space, and boundary signals — plus ranked fixes for the highest-impact leaks first.",
+      },
+    ],
     eyebrow: "Environment score",
   },
 

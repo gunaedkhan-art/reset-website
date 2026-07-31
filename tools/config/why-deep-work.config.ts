@@ -32,9 +32,29 @@ export const whyDeepWorkConfig = {
   content: {
     h1: "Why Deep Work?",
     intro:
-      "Cal Newport's case for deep work is simple: hard, uninterrupted focus produces disproportionate value — and most knowledge work barely protects it. Enter your numbers to see how much depth you're getting and what you'd gain by protecting more.",
-    explainer:
-      "Deep work is cognitively demanding labor done without distraction. Shallow work keeps things running but rarely compounds. The gap between them is where career leverage lives.",
+      "Enter your focus hours and shallow load — see your depth ratio, what you're leaving on the table, and whether your work rewards concentration.",
+    icon: "brain",
+    proseTitle: "About this calculator",
+    sections: [
+      {
+        id: "problem",
+        heading: "Busy without building",
+        framework: "pas",
+        body: "You finish weeks exhausted but can't point to output that moved your career forward. Meetings, inbox, and admin fill the calendar while the cognitively hard work — writing, building, learning — gets whatever scraps remain.",
+      },
+      {
+        id: "concept",
+        heading: "Why depth compounds",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) argues in [Deep Work](https://calnewport.com/books/deep-work/) that the ability to focus without distraction on hard tasks is becoming both rarer and more valuable. Shallow work keeps things running; deep work is where skill and leverage grow.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "outcome",
+        body: "Your depth ratio, shallow percentage, and what you'd reclaim by protecting even a few more hours weekly — expressed in books-worth of focused time per year.",
+      },
+    ],
   },
 
   mode: "calculator" as const,

@@ -30,7 +30,29 @@ export const batchShallowWorkPlannerConfig = {
   content: {
     h1: "Batch Shallow Work Planner",
     intro:
-      "Newport's rule: drain the shallows by batching email, Slack, and admin — not sprinkling them through deep work. Four questions to place your shallow windows so deep work survives.",
+      "Four questions to place your email, Slack, and admin windows so deep work survives — not sprinkled through the day.",
+    icon: "calendar",
+    proseTitle: "About batching shallow work",
+    sections: [
+      {
+        id: "problem",
+        heading: "Death by a thousand inbox checks",
+        framework: "pas",
+        body: "Email at 8:02, Slack at 8:17, admin at 8:45 — shallow work fragments the day into unusable scraps. Deep blocks can't survive when reactive tasks bleed into every gap.",
+      },
+      {
+        id: "concept",
+        heading: "Drain the shallows by batching",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) recommends fixed shallow windows in [Deep Work](https://calnewport.com/books/deep-work/) — process comms in batches, protect mornings for depth, and treat availability as a choice rather than a default.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Recommended shallow-work windows around your role and schedule — when to check email, batch Slack, and handle admin without cannibalizing deep time.",
+      },
+    ],
     eyebrow: "Shallow batch planner",
   },
 

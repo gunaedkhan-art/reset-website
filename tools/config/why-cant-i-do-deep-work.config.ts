@@ -30,7 +30,29 @@ export const whyCantIDoDeepWorkConfig = {
   content: {
     h1: "Why Can't I Do Deep Work?",
     intro:
-      "Deep work fails for different reasons — some people never find time, others can't sustain focus, others drown in shallow work. Four questions to name your pattern and fix the system, not just try harder.",
+      "Deep work fails for different reasons. Four questions to name your pattern — time, drift, avoidance, or shallow overload — and fix the system, not just try harder.",
+    icon: "brain",
+    proseTitle: "About this diagnostic",
+    sections: [
+      {
+        id: "problem",
+        heading: "When depth keeps slipping away",
+        framework: "pas",
+        body: "You've read the books and blocked calendar time — yet sessions still collapse. Without naming whether the blocker is schedule, environment, habits, or shallow overload, every fix is a guess.",
+      },
+      {
+        id: "concept",
+        heading: "Diagnose before optimizing",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) separates deep work failure modes: never finding time, drifting mid-session, avoiding hard tasks, or drowning in reactive work. Each needs a different intervention — batching, environment, ritual, or calendar surgery.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your primary failure pattern plus matched recommendations — and links to companion tools like the shallow work audit or environment checklist where relevant.",
+      },
+    ],
     eyebrow: "Deep work diagnostic",
   },
 

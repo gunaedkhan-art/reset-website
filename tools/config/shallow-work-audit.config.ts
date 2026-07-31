@@ -32,7 +32,34 @@ export const shallowWorkAuditConfig = {
   content: {
     h1: "Shallow Work Audit",
     intro:
-      "Cal Newport's \"drain the shallows\" starts with a honest count. Enter your meetings, messaging, and admin time — see what percentage of your workday is shallow versus deep.",
+      "Enter your meetings, messaging, and admin time — see what percentage of your workday is shallow versus deep.",
+    icon: "chart",
+    proseTitle: "About this audit",
+    sections: [
+      {
+        id: "problem",
+        heading: "You can't fix what you haven't measured",
+        framework: "pas",
+        body: "Most people guess at their shallow load and underestimate it by a third. Email bleeds into mornings, Slack fills gaps, and meetings multiply — until deep work only happens by accident.",
+      },
+      {
+        id: "concept",
+        heading: "Drain the shallows first",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) recommends auditing shallow work before adding more productivity hacks. In [Deep Work](https://calnewport.com/books/deep-work/), \"drain the shallows\" means batching comms, cutting optional meetings, and capping admin — not eliminating collaboration entirely.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "outcome",
+        body: "Shallow vs deep hours per week, percentage of your workday that's reactive, and whether you have enough depth left for a real 90-minute block.",
+        list: [
+          "Meetings, email/Slack, and admin counted separately",
+          "Annual shallow hours in full work-week equivalents",
+          "Newport-style verdict on your current ratio",
+        ],
+      },
+    ],
   },
 
   mode: "calculator" as const,

@@ -30,9 +30,29 @@ export const whatAreDeepWorkBlocksConfig = {
   content: {
     h1: "What Are Deep Work Blocks?",
     intro:
-      "A deep work block (or session) is a pre-scheduled stretch of distraction-free time for one hard task — usually 45–120 minutes. \"Blocks\" and \"sessions\" mean the same thing. Answer four questions to size yours.",
-    explainer:
-      "Deep work blocks are calendar events you treat like meetings with yourself: one task, no inbox, phone away, timer running. They're not \"work until tired\" — they have a defined start, end, and outcome.",
+      "Answer four questions to size your first block — length, frequency, and an example schedule that fits your calendar.",
+    icon: "blocks",
+    proseTitle: "About deep work blocks",
+    sections: [
+      {
+        id: "problem",
+        heading: "Vague intentions don't protect time",
+        framework: "pas",
+        body: "\"I'll do deep work tomorrow\" isn't a block — it's a wish. Without a defined length, start time, and single task, the hours get absorbed by whatever pings first.",
+      },
+      {
+        id: "concept",
+        heading: "Blocks are calendar events with rules",
+        framework: "concept",
+        body: "A deep work block is a pre-scheduled stretch of distraction-free time for one hard task — usually 45–120 minutes. [Cal Newport](https://calnewport.com/) treats them like meetings with yourself: one outcome, phone away, inbox closed, timer running.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Recommended block length, weekly frequency, and an example schedule — sized to your experience level and calendar constraints, not an idealized creator routine.",
+      },
+    ],
     eyebrow: "Block sizer",
   },
 

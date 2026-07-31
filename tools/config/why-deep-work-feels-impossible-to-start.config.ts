@@ -30,7 +30,29 @@ export const whyDeepWorkFeelsImpossibleToStartConfig = {
   content: {
     h1: "Why Deep Work Feels Impossible to Start",
     intro:
-      "Wanting deep work and starting deep work are different problems. You don't need a better system yet — you need to know what's blocking the first five minutes. Four questions, then a starter ritual matched to your friction.",
+      "Four questions to name what's blocking the first five minutes — then a starter ritual matched to your friction, not another lecture.",
+    icon: "focus",
+    proseTitle: "About activation friction",
+    sections: [
+      {
+        id: "problem",
+        heading: "The task looms larger than the clock",
+        framework: "pas",
+        body: "You want to write, build, or learn — but opening the file triggers dread, vagueness, or perfectionism. The block stays empty while easier work fills the gap.",
+      },
+      {
+        id: "concept",
+        heading: "Shrink the start, not the ambition",
+        framework: "concept",
+        body: "Activation friction is different from scheduling friction. [Cal Newport](https://calnewport.com/) still begins with a defined entry ritual — ugly draft permission, one-sentence task, environment set — because the first five minutes determine whether the block happens at all.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your primary blocker — dread, vagueness, perfectionism, or low energy — plus a first-5-minutes ritual designed for that specific friction.",
+      },
+    ],
     eyebrow: "Activation diagnostic",
   },
 

@@ -32,7 +32,29 @@ export const fixedScheduleProductivityCalculatorConfig = {
   content: {
     h1: "Fixed Schedule Productivity Calculator",
     intro:
-      "Newport's fixed-schedule productivity: fix when work ends, then fit everything else inside — deep work included. Enter your day length and shallow load to see your deep work budget.",
+      "Fix when work ends, then see how many deep work hours fit inside — and what shallow load must shrink to leave on time.",
+    icon: "calculator",
+    proseTitle: "About fixed-schedule productivity",
+    sections: [
+      {
+        id: "problem",
+        heading: "When work expands to fill all hours",
+        framework: "pas",
+        body: "Without a hard stop, shallow work creeps into evenings and deep work gets \"whatever's left.\" The calendar grows; boundaries dissolve; burnout follows even when output doesn't improve.",
+      },
+      {
+        id: "concept",
+        heading: "Fix the finish line first",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) practices fixed-schedule productivity: choose when work ends, then reverse-engineer what fits. Depth becomes a budget line item — not a reward for finishing everything else.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "outcome",
+        body: "Your deep work hour budget given your day length and shallow load — plus what must get cut, batched, or delegated to honor a fixed end time.",
+      },
+    ],
   },
 
   mode: "calculator" as const,
