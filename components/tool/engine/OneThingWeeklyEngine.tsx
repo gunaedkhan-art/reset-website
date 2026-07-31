@@ -25,7 +25,7 @@ import {
   archiveAndStartWeek,
   buildHistoryTrends,
   buildWeekSummary,
-  buildWeekSummaryText,
+  buildWeeklyExportText,
   buildWeekVisual,
   buildSmartNudge,
   buildTimeBlockUrl,
@@ -389,9 +389,15 @@ export function OneThingWeeklyEngine({
   const handleCopySummary = async () => {
     if (!activePlan) return;
 
+    const includesTrends = historyTrends.weeks.length >= 2;
+
     try {
-      await navigator.clipboard.writeText(buildWeekSummaryText(activePlan, today));
-      setCopyMessage("Copied to clipboard");
+      await navigator.clipboard.writeText(
+        buildWeeklyExportText(store, activePlan, today),
+      );
+      setCopyMessage(
+        includesTrends ? "Copied week summary + trends" : "Copied to clipboard",
+      );
       window.setTimeout(() => setCopyMessage(null), 2500);
     } catch {
       setCopyMessage("Could not copy — try again or select text manually");

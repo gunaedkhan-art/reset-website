@@ -24,3 +24,20 @@ describe("isRepeatUseTool", () => {
     assert.equal(isRepeatUseTool("the-focusing-question"), false);
   });
 });
+
+describe("procrastination journey", () => {
+  it("starts with diagnostic and ends with chronic loop breaker", () => {
+    const journey = getClusterJourney("procrastination");
+    assert.ok(journey);
+    assert.equal(journey.steps[0]?.slug, "why-am-i-procrastinating");
+    assert.equal(journey.steps.at(-1)?.slug, "i-keep-procrastinating");
+  });
+});
+
+describe("phone-and-focus journey", () => {
+  it("starts with notification cost calculator", () => {
+    const journey = getClusterJourney("phone-and-focus");
+    assert.ok(journey);
+    assert.equal(journey.steps[0]?.slug, "notification-cost-calculator");
+  });
+});

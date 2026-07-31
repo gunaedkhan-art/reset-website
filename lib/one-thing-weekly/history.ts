@@ -1,5 +1,6 @@
 import {
   buildWeekSummary,
+  buildWeekSummaryText,
   getWeekEndDate,
   isWeekEnded,
 } from "./calculate";
@@ -147,4 +148,50 @@ export function buildHistoryTrends(
     topBlocker,
     topBlockerLabel,
   };
+}
+
+/** Plain-text trends block for clipboard export when 2+ weeks exist. */
+export function buildHistoryTrendsText(trends: HistoryTrends): string {
+  if (trends.weeks.length < 2) return "";
+
+  const lines = [
+    `Trends (${trends.weeks.length} weeks)`,
+    "",
+    `Avg protected days/week: ${trends.avgYesDays ?? "—"}`,
+  ];
+
+  if (trends.avgScorePercent !== null) {
+    lines.push(`Avg week score: ${trends.avgScorePercent}%`);
+  }
+
+  lines.push(`Best streak: ${trends.bestStreakDays} days`);
+
+  if (trends.topBlockerLabel) {
+    lines.push(`Most common blocker: ${trends.topBlockerLabel}`);
+  }
+
+  lines.push("", "Recent weeks:");
+  for (const week of trends.weeks) {
+    const score =
+      week.scorePercent !== null ? `${week.scorePercent}%` : "in progress";
+    lines.push(
+      `- ${week.weekLabel}: ${week.yesCount}/${week.eligibleDays} protected (${score}) — ${week.oneThing}`,
+    );
+  }
+
+  return lines.join("\n");
+}
+
+/** Week summary plus multi-week trends for clipboard export. */
+export function buildWeeklyExportText(
+  store: OneThingWeeklyStore,
+  activePlan: WeeklyPlan,
+  asOfDate?: string,
+): string {
+  const today = asOfDate ?? todayIsoDate();
+  const weekText = buildWeekSummaryText(activePlan, today);
+  const trendsText = buildHistoryTrendsText(buildHistoryTrends(store, today));
+
+  if (!trendsText) return weekText;
+  return `${weekText}\n\n${trendsText}`;
 }

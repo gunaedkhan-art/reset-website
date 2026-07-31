@@ -99,6 +99,70 @@ const clusterJourneys: Record<string, ClusterJourney> = {
       },
     ],
   },
+  procrastination: {
+    title: "Recommended path",
+    description:
+      "Name why you delay, see what it costs, get a matched plan, then break the loop with one small start.",
+    steps: [
+      {
+        slug: "why-am-i-procrastinating",
+        title: "Diagnose the real reason",
+        description: "Four questions — fear, overwhelm, fatigue, boredom, or unclear next step.",
+      },
+      {
+        slug: "procrastination-cost-calculator",
+        title: "Quantify the delay",
+        description: "See hours and money lost to putting important work off.",
+      },
+      {
+        slug: "how-to-stop-procrastinating",
+        title: "Get a matched rescue plan",
+        description: "Five questions → personalized steps for your trigger, not generic advice.",
+      },
+      {
+        slug: "give-me-one-small-task",
+        title: "Break the freeze",
+        description: "One tiny task when the whole project feels too heavy to start.",
+      },
+      {
+        slug: "i-keep-procrastinating",
+        title: "Break the chronic loop",
+        description: "When delay repeats week after week — name the pattern and interrupt it.",
+      },
+    ],
+  },
+  "phone-and-focus": {
+    title: "Recommended path",
+    description:
+      "Measure what distractions cost, then work through checking, scrolling, and focus rescue in order.",
+    steps: [
+      {
+        slug: "notification-cost-calculator",
+        title: "Cost of every ping",
+        description: "Interruptions per year, recovery hours, and illustrative earnings impact.",
+      },
+      {
+        slug: "screen-time-cost-calculator",
+        title: "Annual screen time cost",
+        description: "Hours on your phone translated into work-days and focus lost.",
+      },
+      {
+        slug: "how-to-stop-checking-your-phone",
+        title: "Break the checking habit",
+        description: "Matched plan for compulsive phone checks between tasks.",
+      },
+      {
+        slug: "how-to-stop-doomscrolling",
+        title: "Escape scroll loops",
+        description: "Diagnose your scroll trigger and swap in a concrete replacement.",
+      },
+      {
+        slug: "help-me-focus-now",
+        title: "Focus rescue right now",
+        description: "Stuck mid-day? One concrete focus step in under a minute.",
+      },
+    ],
+  },
 };
 
 export function getClusterJourney(hubSlug: string): ClusterJourney | undefined {
