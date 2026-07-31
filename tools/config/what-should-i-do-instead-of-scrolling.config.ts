@@ -31,6 +31,28 @@ export const whatShouldIDoInsteadOfScrollingConfig = {
     h1: "What Should I Do Instead of Scrolling?",
     intro:
       "You caught the urge — good. Three questions and you'll get one concrete replacement that fits your energy, time, and location.",
+    icon: "checklist",
+    proseTitle: "About scroll replacements",
+    sections: [
+      {
+        id: "problem",
+        heading: "The urge without a plan",
+        framework: "pas",
+        body: "You know you shouldn't scroll — but boredom, anxiety, or habit leaves a void. Without a ready alternative, the feed wins by default because it's always there.",
+      },
+      {
+        id: "concept",
+        heading: "Replace, don't just resist",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) recommends high-quality leisure alternatives in [Digital Minimalism](https://calnewport.com/books/digital-minimalism/) — activities that satisfy the same need (rest, connection, stimulation) without the infinite feed.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "One specific replacement activity matched to how much time you have, your energy, and where you are — something you can do in the next few minutes.",
+      },
+    ],
     eyebrow: "Scroll swap picker",
   },
 

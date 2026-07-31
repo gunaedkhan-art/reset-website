@@ -30,7 +30,29 @@ export const iCantConcentrateTodayConfig = {
   content: {
     h1: "I Can't Concentrate Today",
     intro:
-      "Some days concentration just isn't there. Four questions to find today's blocker and a realistic plan — not \"try harder,\" but fix what's actually wrong.",
+      "Four questions to find today's blocker and a realistic same-day plan — not \"try harder,\" but fix what's actually wrong.",
+    icon: "brain",
+    proseTitle: "About today's concentration",
+    sections: [
+      {
+        id: "problem",
+        heading: "When today is off",
+        framework: "pas",
+        body: "Some days your brain simply won't cooperate — fog, anxiety, poor sleep, or emotional weight. Pushing through with guilt makes it worse; naming the cause lets you choose a realistic response.",
+      },
+      {
+        id: "concept",
+        heading: "Same-day triage",
+        framework: "concept",
+        body: "Not every day deserves deep work. Sleep debt, stress, and illness need recovery or shallow work — not heroic focus sessions. Match expectations to capacity, then protect tomorrow's peak window.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Today's likely blocker — sleep, stress, environment, or overload — plus a same-day fix: rest, movement, admin-only mode, or a shortened focus sprint.",
+      },
+    ],
     eyebrow: "Same-day fix",
   },
 

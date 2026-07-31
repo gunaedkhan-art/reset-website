@@ -30,7 +30,29 @@ export const howToFocusAtWorkConfig = {
   content: {
     h1: "How to Focus at Work",
     intro:
-      "Work focus fails for different reasons — noisy offices, back-to-back meetings, Slack overload, or WFH isolation. Four questions to get a plan that fits your setup.",
+      "Four questions to get a plan that fits your setup — open office, remote, meeting-heavy days, or Slack overload.",
+    icon: "focus",
+    proseTitle: "About workplace focus",
+    sections: [
+      {
+        id: "problem",
+        heading: "When the office works against you",
+        framework: "pas",
+        body: "Open plans, Slack badges, and back-to-back meetings make concentration a fight. Remote work brings its own leaks — household noise, flexible hours that never end, isolation without structure.",
+      },
+      {
+        id: "concept",
+        heading: "Focus is environmental at work",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) treats workplace depth as a scheduling and boundary problem — batch comms, protect blocks, negotiate availability — not a personal failing for being \"distractible.\"",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A plan matched to your work context — noise, meetings, messaging load, or WFH setup — with practical steps you can use this week.",
+      },
+    ],
     eyebrow: "Interactive tool",
   },
 

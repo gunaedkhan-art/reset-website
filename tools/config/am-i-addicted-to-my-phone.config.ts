@@ -30,7 +30,29 @@ export const amIAddictedToMyPhoneConfig = {
   content: {
     h1: "Am I Addicted to My Phone?",
     intro:
-      "This isn't a clinical diagnosis — it's an honest check on control, distress, and daily impact. Four questions, then a plan matched to your level.",
+      "Four honest questions on control, distress, and daily impact — then a plan matched to your level. Not a clinical diagnosis.",
+    icon: "phone",
+    proseTitle: "About this assessment",
+    sections: [
+      {
+        id: "problem",
+        heading: "When the phone stops feeling optional",
+        framework: "pas",
+        body: "You've tried to cut back and failed. Anxiety spikes when the battery dies. Real life waits while the feed keeps going — and you wonder if this is normal use or something stronger.",
+      },
+      {
+        id: "concept",
+        heading: "Control, distress, and function",
+        framework: "concept",
+        body: "Problematic use shows up as failed attempts to cut back, distress when unavailable, and impact on sleep, work, or relationships. [Cal Newport](https://calnewport.com/) treats intentional technology design — not shame — as the path back to control.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A clear read on habit severity plus a recovery plan scaled to your level — from friction tweaks to structured digital declutter steps.",
+      },
+    ],
     eyebrow: "Self-assessment",
   },
 

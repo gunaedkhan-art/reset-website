@@ -30,7 +30,29 @@ export const iCantStopScrollingConfig = {
   content: {
     h1: "I Can't Stop Scrolling",
     intro:
-      "When one more swipe becomes an hour, the feed is winning. Four questions to find your scroll pattern and a plan to interrupt it.",
+      "Four questions to find your scroll pattern and a plan to interrupt the feed loop.",
+    icon: "phone",
+    proseTitle: "About compulsive scrolling",
+    sections: [
+      {
+        id: "problem",
+        heading: "One more swipe becomes an hour",
+        framework: "pas",
+        body: "You open the app for a second and surface later — anxious, numb, or behind on everything else. The algorithm and autoplay are designed to remove stopping cues; willpower alone rarely wins.",
+      },
+      {
+        id: "concept",
+        heading: "Interrupt the loop",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) treats social feeds as low-quality leisure that crowds out depth and rest. Breaking the loop means friction at entry — app limits, logged-out browsers, phone in another room — plus a replacement for the emotional trigger.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your scroll pattern — bedtime, boredom, stress, or habit — plus an interrupt plan with environment changes and bounded breaks instead of open-ended feeds.",
+      },
+    ],
     eyebrow: "Scroll interrupt plan",
   },
 

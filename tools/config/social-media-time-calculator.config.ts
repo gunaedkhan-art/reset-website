@@ -32,7 +32,29 @@ export const socialMediaTimeCalculatorConfig = {
   content: {
     h1: "Social Media Time Calculator",
     intro:
-      "Add up Instagram, TikTok, X, Facebook, and every other feed — see how many days and work weeks you spend scrolling each year.",
+      "Add up all your feeds — see how many days and work weeks you spend scrolling each year.",
+    icon: "chart",
+    proseTitle: "About this calculator",
+    sections: [
+      {
+        id: "problem",
+        heading: "Death by a thousand feeds",
+        framework: "pas",
+        body: "Instagram, TikTok, X, Reddit — each alone seems manageable. Combined, they eat evenings, mornings, and gaps between tasks until the year disappears into scroll time.",
+      },
+      {
+        id: "concept",
+        heading: "Total social cost",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) distinguishes intentional technology use from default consumption — knowing your total social media hours is the first step toward choosing which platforms earn that time.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "outcome",
+        body: "Total daily and annual social media hours, days per year on feeds, and work-week equivalents across all platforms combined.",
+      },
+    ],
   },
 
   mode: "calculator" as const,

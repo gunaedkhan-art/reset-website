@@ -30,7 +30,29 @@ export const howToStopCheckingYourPhoneConfig = {
   content: {
     h1: "How to Stop Checking Your Phone",
     intro:
-      "Answer a few quick questions about how often and why you reach for your phone — and get a rescue plan built for your pattern, not a one-size-fits-all digital detox.",
+      "Four questions about how often and why you reach for your phone — get a plan built for your pattern, not a one-size-fits-all detox.",
+    icon: "phone",
+    proseTitle: "About compulsive checking",
+    sections: [
+      {
+        id: "problem",
+        heading: "The pocket reflex",
+        framework: "pas",
+        body: "You pick up the phone without a reason — in line, mid-task, between sentences. Each check feels instant; the cumulative cost is fractured attention and a brain trained for novelty on demand.",
+      },
+      {
+        id: "concept",
+        heading: "Design friction, not white-knuckling",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) argues in [Digital Minimalism](https://calnewport.com/books/digital-minimalism/) that phone habits change through environment and rules — grayscale, app limits, phone in another room — not vague intentions to \"use it less.\"",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A plan matched to your pickup frequency, trigger, and context — notification triage, friction adds, or replacement rituals for idle moments.",
+      },
+    ],
     eyebrow: "Interactive tool",
   },
 

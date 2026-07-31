@@ -30,7 +30,29 @@ export const whyDoIProcrastinateConfig = {
   content: {
     h1: "Why Do I Procrastinate?",
     intro:
-      "Procrastination isn't laziness — it's usually a mismatch between the task and your brain's needs. Four questions to find your pattern and fix it.",
+      "Four questions to find your pattern — fear, overwhelm, boredom, or habit — and a fix matched to the cause, not the guilt.",
+    icon: "quiz",
+    proseTitle: "About this diagnostic",
+    sections: [
+      {
+        id: "problem",
+        heading: "When delay feels like a character flaw",
+        framework: "pas",
+        body: "You call it laziness, but you work hard on the wrong things. Important tasks wait while email, organizing, or scrolling feel safer — and the shame makes the next delay worse.",
+      },
+      {
+        id: "concept",
+        heading: "Procrastination is emotional regulation",
+        framework: "concept",
+        body: "Research on task avoidance shows delay often protects you from anxiety, overwhelm, or boredom in the short term — at the cost of long-term stress. The fix depends on which emotion is driving avoidance.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your dominant pattern across task type, feeling, and substitute behavior — plus a personalized fix plan and link to the cost calculator if you want numbers.",
+      },
+    ],
     eyebrow: "Interactive diagnostic",
   },
 

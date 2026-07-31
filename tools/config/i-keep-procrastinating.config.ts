@@ -30,7 +30,29 @@ export const iKeepProcrastinatingConfig = {
   content: {
     h1: "I Keep Procrastinating",
     intro:
-      "If procrastination keeps winning, the pattern is repeating for a reason. Four questions to break the loop — not just today's task, but the habit.",
+      "Four questions to break the loop — not just today's task, but the repeating pattern.",
+    icon: "clock",
+    proseTitle: "About chronic delay",
+    sections: [
+      {
+        id: "problem",
+        heading: "When procrastination keeps winning",
+        framework: "pas",
+        body: "It's not one bad afternoon — it's the same delay on different tasks, week after week. Willpower spikes before deadlines, then the loop returns until the next panic sprint.",
+      },
+      {
+        id: "concept",
+        heading: "Patterns have triggers and replacements",
+        framework: "concept",
+        body: "Chronic procrastination usually follows a loop: discomfort → escape (phone, busywork, planning) → guilt → repeat. Breaking it means naming the trigger and swapping the routine — not trying harder on willpower alone.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your loop type — deadline adrenaline, screen escape, productive procrastination, start barrier, or chronic delay — plus a multi-day plan to interrupt it.",
+      },
+    ],
     eyebrow: "Pattern breaker",
   },
 

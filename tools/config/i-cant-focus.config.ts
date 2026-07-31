@@ -30,7 +30,29 @@ export const iCantFocusConfig = {
   content: {
     h1: "I Can't Focus",
     intro:
-      "When focus won't come, the fix depends on what's blocking you right now. Four quick questions — then a plan matched to this moment.",
+      "Four quick questions — then a plan matched to this moment, not a generic productivity lecture.",
+    icon: "focus",
+    proseTitle: "About this diagnostic",
+    sections: [
+      {
+        id: "problem",
+        heading: "Focus failed today",
+        framework: "pas",
+        body: "You're trying to work but attention slides away — phone, tabs, fog, or a buzzing mind. Right now you need a diagnosis for this moment, not a life overhaul.",
+      },
+      {
+        id: "concept",
+        heading: "Match the fix to now",
+        framework: "concept",
+        body: "Same-day focus failure has different causes: sleep debt, anxiety, unclear task, or environment. [Cal Newport](https://calnewport.com/) separates rescue protocols from long-term depth practice — start with what's blocking the next hour.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Today's blocker and an immediate fix — or a link to the focus protocol tool if you need steps for the next 25 minutes.",
+      },
+    ],
     eyebrow: "Right-now diagnostic",
   },
 

@@ -30,7 +30,29 @@ export const whyCantIFocusConfig = {
   content: {
     h1: "Why Can't I Focus?",
     intro:
-      "Answer a few quick questions about when, where, and how you lose focus — and get a diagnosis plus a fix plan matched to your actual blocker.",
+      "Four questions about when, where, and how you lose focus — get a diagnosis and fix plan matched to your actual blocker.",
+    icon: "focus",
+    proseTitle: "About focus problems",
+    sections: [
+      {
+        id: "problem",
+        heading: "When concentration won't hold",
+        framework: "pas",
+        body: "You sit down to work and within minutes you're elsewhere — phone, tabs, daydreams, or fatigue. Without naming whether the blocker is environment, energy, or overload, every fix is guesswork.",
+      },
+      {
+        id: "agitation",
+        heading: "Interruptions compound",
+        framework: "pas",
+        body: "[UC Irvine interruption research](https://www.ics.uci.edu/~gmark/chi08.pdf) found recovery from some interruptions can take far longer than the interruption itself — so a \"quick check\" costs more than the seconds it takes.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your primary focus blocker — phone, environment, sleep, meetings, or unclear tasks — plus matched steps and links to companion tools like the notification cost calculator.",
+      },
+    ],
     eyebrow: "Interactive diagnostic",
   },
 

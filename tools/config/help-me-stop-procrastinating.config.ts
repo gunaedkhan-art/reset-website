@@ -30,7 +30,29 @@ export const helpMeStopProcrastinatingConfig = {
   content: {
     h1: "Help Me Stop Procrastinating",
     intro:
-      "You asked for help — that's step one. Four quick questions and you'll get a rescue plan you can run in the next 10 minutes, not someday.",
+      "Four quick questions and you'll get a rescue plan you can run in the next 10 minutes, not someday.",
+    icon: "clock",
+    proseTitle: "About this rescue plan",
+    sections: [
+      {
+        id: "problem",
+        heading: "When you need help right now",
+        framework: "pas",
+        body: "The deadline is close, guilt is loud, and you're still on your phone or doing easier work. You don't need a lecture — you need the next ten minutes mapped out.",
+      },
+      {
+        id: "concept",
+        heading: "Rescue before redesign",
+        framework: "concept",
+        body: "Immediate procrastination help works differently from long-term habit change: shrink the task, remove the escape route, and start a timed sprint before motivation arrives. Pattern tools come later when you're calm.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A rescue mode matched to urgency and escape — phone lockdown, 2-minute shrink, fake-work stop, or physical unfreeze — with steps for the next 10 minutes.",
+      },
+    ],
     eyebrow: "Immediate rescue",
   },
 

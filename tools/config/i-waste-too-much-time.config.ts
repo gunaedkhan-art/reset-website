@@ -32,7 +32,29 @@ export const iWasteTooMuchTimeConfig = {
   content: {
     h1: "I Waste Too Much Time",
     intro:
-      "That vague guilt has a number. Estimate how much time you lose daily to distraction — and see what you'd get back in a year.",
+      "Estimate how much time you lose daily to distraction — and see what you'd get back in a year.",
+    icon: "clock",
+    proseTitle: "About this calculator",
+    sections: [
+      {
+        id: "problem",
+        heading: "Vague guilt, no number",
+        framework: "pas",
+        body: "\"I waste so much time\" is easy to say and hard to change. Without a daily estimate, you can't see whether it's 30 minutes of drift or three hours of lost life — and recovery plans stay abstract.",
+      },
+      {
+        id: "concept",
+        heading: "Measure before you optimize",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) recommends auditing digital and shallow time before changing habits — in [Digital Minimalism](https://calnewport.com/books/digital-minimalism/), clarity about cost precedes intentional tradeoffs.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "outcome",
+        body: "Hours lost per day and year, work-week equivalents, and what you could reclaim with even a modest daily reduction.",
+      },
+    ],
   },
 
   mode: "calculator" as const,

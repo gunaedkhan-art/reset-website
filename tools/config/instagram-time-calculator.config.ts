@@ -31,7 +31,29 @@ export const instagramTimeCalculatorConfig = {
   content: {
     h1: "Time Lost to Instagram Calculator",
     intro:
-      "See how many hours, days, and work weeks you spend on Instagram each year — and what else you could do with that time.",
+      "Enter your daily Instagram minutes — see hours, days, and work weeks per year, plus what else that time could buy.",
+    icon: "phone",
+    proseTitle: "About this calculator",
+    sections: [
+      {
+        id: "problem",
+        heading: "One app, invisible hours",
+        framework: "pas",
+        body: "Instagram checks feel like seconds — Reels autoplay, stories refresh, DMs ping. Daily minutes compound into weeks per year spent on one feed while goals wait in the background.",
+      },
+      {
+        id: "concept",
+        heading: "Platform-specific cost",
+        framework: "concept",
+        body: "General screen time hides how much one app owns. Measuring Instagram separately makes the tradeoff explicit — and easier to decide whether the habit matches what you say you value.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "outcome",
+        body: "Annual Instagram hours, full-day equivalents, work-week totals, and illustrative comparisons for what you could do with reclaimed time.",
+      },
+    ],
   },
 
   mode: "calculator" as const,
