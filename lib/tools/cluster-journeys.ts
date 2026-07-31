@@ -3,6 +3,8 @@ export interface ClusterJourneyStep {
   title: string;
   description: string;
   repeatUse?: boolean;
+  /** Cross-cluster or follow-on step — shown after the core path. */
+  optional?: boolean;
 }
 
 export interface ClusterJourney {
@@ -134,7 +136,7 @@ const clusterJourneys: Record<string, ClusterJourney> = {
   "phone-and-focus": {
     title: "Recommended path",
     description:
-      "Measure what distractions cost, then work through checking, scrolling, and focus rescue in order.",
+      "Measure what distractions cost, work through checking and scrolling, rescue focus mid-day — then optionally quantify meetings and task-switching.",
     steps: [
       {
         slug: "notification-cost-calculator",
@@ -160,6 +162,20 @@ const clusterJourneys: Record<string, ClusterJourney> = {
         slug: "help-me-focus-now",
         title: "Focus rescue right now",
         description: "Stuck mid-day? One concrete focus step in under a minute.",
+      },
+      {
+        slug: "context-switch-cost-calculator",
+        title: "Cost of task-switching",
+        description:
+          "Optional — tab hops and refocus time add up. See daily and annual hours lost to context switches.",
+        optional: true,
+      },
+      {
+        slug: "meeting-cost-calculator",
+        title: "Cost of your meeting load",
+        description:
+          "Optional — when the calendar fragments your day. Hours and salary spent in meetings each year.",
+        optional: true,
       },
     ],
   },

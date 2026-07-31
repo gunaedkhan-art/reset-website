@@ -111,6 +111,11 @@ export function ToolClusterHubView({ hub }: ToolClusterHubViewProps) {
                             Repeat-use
                           </span>
                         )}
+                        {step.optional && (
+                          <span className="rounded-full bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-700">
+                            Optional
+                          </span>
+                        )}
                       </span>
                       <span className="block text-sm leading-relaxed text-neutral-600">
                         {step.description}

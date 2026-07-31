@@ -40,4 +40,14 @@ describe("phone-and-focus journey", () => {
     assert.ok(journey);
     assert.equal(journey.steps[0]?.slug, "notification-cost-calculator");
   });
+
+  it("ends with optional workplace focus cost tools", () => {
+    const journey = getClusterJourney("phone-and-focus");
+    assert.ok(journey);
+    assert.equal(journey.steps.length, 7);
+    assert.equal(journey.steps[5]?.slug, "context-switch-cost-calculator");
+    assert.equal(journey.steps[5]?.optional, true);
+    assert.equal(journey.steps[6]?.slug, "meeting-cost-calculator");
+    assert.equal(journey.steps[6]?.optional, true);
+  });
 });
