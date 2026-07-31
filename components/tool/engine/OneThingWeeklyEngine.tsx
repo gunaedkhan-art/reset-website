@@ -23,6 +23,7 @@ import { trackEvent } from "@/lib/analytics/track-client";
 import { RichText } from "@/lib/content/rich-text";
 import {
   archiveAndStartWeek,
+  buildHistoryTrends,
   buildWeekSummary,
   buildWeekSummaryText,
   buildWeekVisual,
@@ -57,7 +58,6 @@ import type {
   CheckInStatus,
   OneThingWeeklyStore,
   WeekOutcome,
-  WeeklyPlan,
 } from "@/lib/one-thing-weekly";
 import { BLOCKER_OPTIONS } from "@/lib/one-thing-weekly";
 import { siteConfig } from "@/lib/site";
@@ -220,6 +220,11 @@ export function OneThingWeeklyEngine({
   const smartNudge = useMemo(
     () => buildSmartNudge(store, today, smartNudgeDismissedWeek),
     [store, today, smartNudgeDismissedWeek],
+  );
+
+  const historyTrends = useMemo(
+    () => buildHistoryTrends(store, today),
+    [store, today],
   );
 
   const theme = resolveToolTheme(config);
@@ -582,21 +587,69 @@ export function OneThingWeeklyEngine({
         </div>
       )}
 
-      {store.archivedWeeks.length > 0 && (
+      {historyTrends.weeks.length >= 2 && (
+        <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
+          <h3 className="text-sm font-semibold text-neutral-900">Your trends</h3>
+          <p className="mt-1 text-xs text-neutral-500">
+            Across your last {historyTrends.weeks.length} tracked week
+            {historyTrends.weeks.length === 1 ? "" : "s"}
+          </p>
+          <dl className="mt-4 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
+            <div>
+              <dt className="text-neutral-500">Avg protected days</dt>
+              <dd className="font-semibold text-neutral-900">
+                {historyTrends.avgYesDays ?? "—"}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-neutral-500">Avg week score</dt>
+              <dd className="font-semibold text-neutral-900">
+                {historyTrends.avgScorePercent !== null
+                  ? `${historyTrends.avgScorePercent}%`
+                  : "—"}
+              </dd>
+            </div>
+            <div>
+              <dt className="text-neutral-500">Best streak</dt>
+              <dd className="font-semibold text-neutral-900">
+                {historyTrends.bestStreakDays} days
+              </dd>
+            </div>
+            <div>
+              <dt className="text-neutral-500">Top blocker</dt>
+              <dd className="font-semibold text-neutral-900">
+                {historyTrends.topBlockerLabel ?? "—"}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      )}
+
+      {historyTrends.weeks.length > 0 && (
         <div className="rounded-2xl border border-neutral-200 bg-neutral-50/80 p-5">
-          <h3 className="text-sm font-semibold text-neutral-900">Recent weeks</h3>
-          <ul className="mt-3 space-y-2 text-sm text-neutral-600">
-            {store.archivedWeeks.slice(0, 4).map((week: WeeklyPlan) => {
-              const weekSummary = buildWeekSummary(week, getWeekEndDate(week.weekStart));
-              return (
-                <li key={week.id} className="flex items-start justify-between gap-3">
-                  <span className="line-clamp-2">{week.oneThing}</span>
+          <h3 className="text-sm font-semibold text-neutral-900">Week history</h3>
+          <ul className="mt-3 space-y-3 text-sm text-neutral-600">
+            {historyTrends.weeks.map((week) => (
+              <li key={week.id} className="border-b border-neutral-200/80 pb-3 last:border-0 last:pb-0">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-medium text-neutral-900">{week.weekLabel}</p>
+                    <p className="mt-0.5 line-clamp-2">{week.oneThing}</p>
+                  </div>
                   <span className="shrink-0 text-neutral-500">
-                    {weekSummary.yesCount}/{weekSummary.eligibleDays} yes
+                    {week.yesCount}/{week.eligibleDays} yes
                   </span>
-                </li>
-              );
-            })}
+                </div>
+                {week.scorePercent !== null && (
+                  <p className="mt-1 text-xs text-neutral-500">
+                    Score {week.scorePercent}%
+                    {week.topBlocker
+                      ? ` · top blocker: ${BLOCKER_OPTIONS.find((option) => option.value === week.topBlocker)?.label ?? week.topBlocker}`
+                      : ""}
+                  </p>
+                )}
+              </li>
+            ))}
           </ul>
         </div>
       )}

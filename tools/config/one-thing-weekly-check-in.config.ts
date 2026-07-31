@@ -102,6 +102,10 @@ export const oneThingWeeklyCheckInConfig = {
       body: "Two ended weeks below 50% triggers a nudge toward [Four Thieves](/four-thieves-productivity-quiz) or [Fear of Chaos](/fear-of-chaos-quiz) based on your blocker tags — meetings and inbox lean chaos; phone and energy lean the full thief quiz.",
     },
     {
+      title: "Week history and trends",
+      body: "After two or more tracked weeks, you'll see averages for protected days, week score, best streak, and your most common blocker — up to 12 weeks stored locally in your browser.",
+    },
+    {
       title: "Keep the ONE Thing small enough",
       body: "If you log partial or missed most days, the task may be too big for one week. Shrink to a lead domino — use [What's My Lead Domino](/whats-my-lead-domino) to find a smaller first move.",
     },

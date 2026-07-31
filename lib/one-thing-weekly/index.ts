@@ -1,3 +1,4 @@
+export * from "./history";
 export * from "./integrations";
 export * from "./calculate";
 export * from "./format";
