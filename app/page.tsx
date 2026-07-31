@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ActiveTrackersSection } from "@/components/home/ActiveTrackersSection";
 import {
   CategoryBrowseCard,
   ClusterHubCard,
@@ -59,6 +60,8 @@ export default function HomePage() {
           </Link>
         </div>
       </Section>
+
+      <ActiveTrackersSection />
 
       <Section spacing="md" className="border-b border-neutral-100 bg-neutral-50/50">
         <div className="mb-8">
