@@ -33,6 +33,28 @@ export const meetingCostCalculatorConfig = {
     h1: "Meeting Cost Calculator",
     intro:
       "See how much time and money your meeting load costs each year — and how many full work weeks disappear into calendars.",
+    icon: "calendar",
+    proseTitle: "About this calculator",
+    sections: [
+      {
+        id: "problem",
+        heading: "Death by calendar",
+        framework: "pas",
+        body: "Back-to-back meetings fragment the day. You finish \"busy\" but can't point to focused output — because the calendar owns your attention before you do.",
+      },
+      {
+        id: "concept",
+        heading: "Meetings are often shallow work",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) distinguishes shallow work — logistical, reactive tasks — from deep work that creates new value. Most meetings fall in the shallow bucket; the cost is what they displace.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "aida",
+        body: "Annual meeting hours, equivalent full work weeks, illustrative salary cost, and how many two-hour deep work blocks your calendar consumes.",
+      },
+    ],
   },
 
   mode: "calculator" as const,

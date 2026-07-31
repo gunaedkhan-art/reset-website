@@ -31,6 +31,28 @@ export const whyAmIProcrastinatingConfig = {
     h1: "Why Am I Procrastinating?",
     intro:
       "You're not lazy — there's usually a reason procrastination wins. Four questions to name yours and change the approach, not just try harder.",
+    icon: "clock",
+    proseTitle: "About this diagnostic",
+    sections: [
+      {
+        id: "problem",
+        heading: "When trying harder doesn't work",
+        framework: "pas",
+        body: "You care about the goal but still avoid starting. Guilt piles on, which makes the task feel heavier — and the cycle repeats. Willpower alone rarely fixes an emotional or environmental blocker.",
+      },
+      {
+        id: "concept",
+        heading: "Procrastination is usually a signal",
+        framework: "concept",
+        body: "Research on task avoidance shows delay is often driven by fear, overwhelm, unclear next steps, low energy, or habit — not character flaws. Match the fix to the trigger and progress becomes possible again.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A named reason you're delaying — fear, overwhelm, fatigue, boredom, unclear start, habit, or skill gap — plus a matched action plan for that specific trigger.",
+      },
+    ],
     eyebrow: "Reason finder",
   },
 

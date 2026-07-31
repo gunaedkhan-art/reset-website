@@ -31,6 +31,28 @@ export const giveMeOneSmallTaskConfig = {
     h1: "Give Me One Small Task",
     intro:
       "Big lists paralyze. One small task unsticks you. Three questions — we'll give you exactly one thing to do in the next 5 minutes.",
+    icon: "blocks",
+    proseTitle: "About this picker",
+    sections: [
+      {
+        id: "problem",
+        heading: "When the list is too big to start",
+        framework: "pas",
+        body: "Overwhelm doesn't mean you're lazy — your brain sees the whole project and freezes. Without a tiny entry point, you drift to easy stimulation instead of meaningful motion.",
+      },
+      {
+        id: "concept",
+        heading: "Momentum before motivation",
+        framework: "concept",
+        body: "Behavior researchers call this an implementation intention: one specific action, in a specific context, now. Small wins create the dopamine signal that makes the next task feel possible.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Exactly one 2–5 minute task matched to your location, energy, and the kind of win you need — order, body, work, or connection.",
+      },
+    ],
     eyebrow: "Micro-task picker",
   },
 

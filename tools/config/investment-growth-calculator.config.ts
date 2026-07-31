@@ -37,6 +37,33 @@ export const investmentGrowthCalculatorConfig = {
     h1: "Investment Growth Calculator",
     intro:
       "Estimate how much you could have in the future based on what you start with today, how much you add on a schedule, and an expected annual growth rate.",
+    icon: "coin",
+    proseTitle: "About this calculator",
+    sections: [
+      {
+        id: "problem",
+        heading: "Why guessing isn't enough",
+        framework: "pas",
+        body: "\"Save more\" and \"invest for the long term\" are easy to say and hard to picture. Without numbers, it's unclear whether small contribution changes or a few extra years matter more.",
+      },
+      {
+        id: "concept",
+        heading: "How compounding works",
+        framework: "concept",
+        body: "This calculator models monthly contributions plus compounded growth on your balance. Time and consistency typically matter as much as rate — especially when contributions continue through market ups and downs.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Projected ending balance, total contributions, growth from earnings, a chart, and a year-by-year table you can adjust with different assumptions.",
+        list: [
+          "Compare beginning vs end-of-period contribution timing",
+          "Stress-test with conservative vs optimistic growth rates",
+          "See when compounding exceeds what you deposited",
+        ],
+      },
+    ],
     eyebrow: "Investment",
   },
 

@@ -30,7 +30,29 @@ export const whatsMyLeadDominoConfig = {
   content: {
     h1: "What's My Lead Domino?",
     intro:
-      "Keller's domino effect: knock over one thing and the rest becomes easier. You're not looking for the whole project — just the first domino that starts the chain. Four questions to find it.",
+      "Knock over one thing and the rest becomes easier. Four questions to find the first domino — not the whole project, just the action that starts the chain.",
+    icon: "target",
+    proseTitle: "About the domino effect",
+    sections: [
+      {
+        id: "problem",
+        heading: "When the goal feels as big as the first step",
+        framework: "pas",
+        body: "You know where you want to end up, but nothing moves. The first action feels as heavy as the finish line — so you plan, research, or wait instead of starting.",
+      },
+      {
+        id: "concept",
+        heading: "Success is sequential",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) describes the domino effect in [The ONE Thing](https://www.the1thing.com/): extraordinary results come from lining up dominoes and knocking them over one at a time — not from simultaneous effort on everything.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A lead domino type matched to your blocker — micro-start, unblock, ugly-first draft, decision, or action — plus concrete steps to knock it over today.",
+      },
+    ],
     eyebrow: "Domino finder",
   },
 
@@ -242,7 +264,7 @@ export const whatsMyLeadDominoConfig = {
     {
       question: "What's a lead domino?",
       answer:
-        "The first action in a chain — the ONE Thing that makes subsequent tasks easier or unnecessary. From The ONE Thing: success is built sequentially, one domino at a time.",
+        "The first action in a chain — the ONE Thing that makes subsequent tasks easier or unnecessary. From [The ONE Thing](https://www.the1thing.com/) by [Gary Keller](https://www.the1thing.com/): success is built sequentially, one domino at a time.",
     },
     {
       question: "How is this different from the Focusing Question?",

@@ -30,7 +30,29 @@ export const deepOrShallowWorkQuizConfig = {
   content: {
     h1: "Deep or Shallow Work Quiz",
     intro:
-      "Not every task deserves your best brain. Describe one task on your list — four questions tell you whether to protect it for deep work, batch it, delegate it, or drop it.",
+      "Not every task deserves your best brain. Describe one task on your list — four questions tell you whether to protect it, batch it, delegate it, or drop it.",
+    icon: "brain",
+    proseTitle: "About deep vs shallow work",
+    sections: [
+      {
+        id: "problem",
+        heading: "When everything feels equally urgent",
+        framework: "pas",
+        body: "Email, Slack, and status updates fill the calendar while the work that actually moves your career or project forward never gets protected hours. Without a clear verdict, shallow tasks eat deep time by default.",
+      },
+      {
+        id: "concept",
+        heading: "Cal Newport's framework",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) defines [Deep Work](https://calnewport.com/books/deep-work/) as professional activities performed in distraction-free concentration that push cognitive limits. Shallow work is logistical — necessary, but not cognitively demanding.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A clear verdict on one task — deep, shallow, batch, delegate, or question — plus matched steps for how to handle it on your calendar.",
+      },
+    ],
     eyebrow: "Interactive tool",
   },
 

@@ -31,6 +31,33 @@ export const helpMeFocusNowConfig = {
     h1: "Help Me Focus Now",
     intro:
       "No time for a life overhaul — you need focus in the next 25 minutes. Four questions, then a protocol you can run immediately.",
+    icon: "focus",
+    proseTitle: "About this focus protocol",
+    sections: [
+      {
+        id: "problem",
+        heading: "When you need focus in the next hour",
+        framework: "pas",
+        body: "You know what you should be doing, but your brain won't lock in. Phone, tabs, fatigue, or vague tasks pull you off course — and another hour disappears without meaningful progress.",
+      },
+      {
+        id: "concept",
+        heading: "Protocols beat willpower",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) argues that depth requires rituals, not motivation — environment and sequence matter more than trying harder. This tool gives you a matched protocol for your blocker right now.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A step-by-step focus sprint matched to your blocker — phone, racing thoughts, fatigue, unclear task, or tab overload.",
+        list: [
+          "Immediate steps you can run in under 5 minutes",
+          "Timer-based sprint length matched to your energy",
+          "No account required — answer and go",
+        ],
+      },
+    ],
     eyebrow: "Focus protocol",
   },
 
