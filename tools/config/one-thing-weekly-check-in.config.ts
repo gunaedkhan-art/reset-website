@@ -91,7 +91,7 @@ export const oneThingWeeklyCheckInConfig = {
     },
     {
       title: "Pre-fill from other tools",
-      body: "Open from [The Focusing Question](/the-focusing-question) or [Goal Setting to the Now](/goal-setting-to-the-now) with `?oneThing=` and optional `?leadDomino=` in the URL — or use Track this week when those tools add the button.",
+      body: "Use **Track this week** on [The Focusing Question](/the-focusing-question), [Goal Setting to the Now](/goal-setting-to-the-now), or [What's My Lead Domino](/whats-my-lead-domino). You can also open with `?oneThing=` and optional `?leadDomino=` in the URL.",
     },
     {
       title: "Keep the ONE Thing small enough",

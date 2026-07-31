@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { shouldOfferWeeklyTracker } from "./integrations";
+import {
+  getWeeklyTrackerSuggestions,
+  shouldOfferWeeklyTracker,
+} from "./integrations";
 import type { DecisionTreeState } from "@/lib/tool-engine/modes/decision-tree";
+import type { ResultTemplate } from "@/lib/tool-engine/schema/tool-config";
 
 function completeState(
   overrides: Partial<DecisionTreeState> = {},
@@ -38,10 +42,55 @@ describe("shouldOfferWeeklyTracker", () => {
     );
   });
 
+  it("shows for lead domino tool when complete", () => {
+    assert.equal(
+      shouldOfferWeeklyTracker(
+        "whats-my-lead-domino",
+        completeState({ resultTemplateId: "shrink" }),
+      ),
+      true,
+    );
+  });
+
   it("hides for unrelated tools", () => {
     assert.equal(
       shouldOfferWeeklyTracker("why-am-i-procrastinating", completeState()),
       false,
     );
+  });
+});
+
+describe("getWeeklyTrackerSuggestions", () => {
+  const templateContext = {
+    inputs: {},
+    scores: {},
+    calcs: {},
+    constants: {},
+    answers: {},
+  };
+
+  it("prefills lead domino from whats-my-lead-domino ask card", () => {
+    const suggestions = getWeeklyTrackerSuggestions(
+      "whats-my-lead-domino",
+      {
+        id: "shrink",
+        cards: [
+          {
+            title: "Lead domino type",
+            valueTemplate: "Micro-domino",
+            descriptionTemplate: "Shrink until it fits in 5 minutes.",
+          },
+          {
+            title: "Ask",
+            valueTemplate: "What's the smallest physical start?",
+            descriptionTemplate: "Open the file, write the title, send one email.",
+          },
+        ],
+      } satisfies ResultTemplate,
+      templateContext,
+    );
+
+    assert.equal(suggestions.leadDomino, "Open the file, write the title, send one email.");
+    assert.equal(suggestions.oneThing, "");
   });
 });

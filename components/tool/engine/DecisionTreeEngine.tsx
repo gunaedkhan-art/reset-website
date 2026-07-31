@@ -19,7 +19,7 @@ import {
   renderTemplate,
 } from "@/lib/tool-engine/template/render";
 import { ProgressBar } from "@/components/ui/ProgressBar";
-import { shouldOfferWeeklyTracker } from "@/lib/one-thing-weekly/integrations";
+import { shouldOfferWeeklyTracker, getWeeklyTrackerSuggestions } from "@/lib/one-thing-weekly/integrations";
 import type { RelatedTool } from "@/types/tool";
 import { cn } from "@/lib/utils";
 
@@ -89,12 +89,10 @@ export function DecisionTreeEngine({
 
   const showWeeklyTracker = shouldOfferWeeklyTracker(config.slug, state);
 
-  const suggestedOneThing =
-    resultTemplate?.cards?.find((card) => /one thing/i.test(card.title)) ??
-    resultTemplate?.cards?.[0];
-
-  const suggestedLeadDomino = resultTemplate?.cards?.find((card) =>
-    /fix|lead|ask|today/i.test(card.title),
+  const weeklySuggestions = getWeeklyTrackerSuggestions(
+    config.slug,
+    resultTemplate,
+    templateContext,
   );
 
   const handleOption = (optionId: string) => {
@@ -208,19 +206,8 @@ export function DecisionTreeEngine({
               <TrackOneThingWeekPanel
                 key={state.resultTemplateId}
                 toolSlug={config.slug}
-                suggestedOneThing={
-                  suggestedOneThing
-                    ? renderTemplate(suggestedOneThing.valueTemplate, templateContext)
-                    : ""
-                }
-                suggestedLeadDomino={
-                  suggestedLeadDomino?.descriptionTemplate
-                    ? renderTemplate(
-                        suggestedLeadDomino.descriptionTemplate,
-                        templateContext,
-                      )
-                    : ""
-                }
+                suggestedOneThing={weeklySuggestions.oneThing}
+                suggestedLeadDomino={weeklySuggestions.leadDomino}
               />
             )}
           </div>
