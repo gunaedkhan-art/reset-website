@@ -52,6 +52,16 @@ describe("shouldOfferWeeklyTracker", () => {
     );
   });
 
+  it("shows for weekly planning score when complete", () => {
+    assert.equal(
+      shouldOfferWeeklyTracker(
+        "weekly-planning-score",
+        completeState({ resultTemplateId: "reactive" }),
+      ),
+      true,
+    );
+  });
+
   it("hides for unrelated tools", () => {
     assert.equal(
       shouldOfferWeeklyTracker("why-am-i-procrastinating", completeState()),

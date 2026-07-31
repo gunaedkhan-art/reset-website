@@ -90,8 +90,16 @@ export const oneThingWeeklyCheckInConfig = {
       body: "Sunday evening or Monday morning works for most people — before meetings and inbox noise claim the calendar. Pair with [Weekly Planning Score](/weekly-planning-score) if you're unsure your planning habits are solid.",
     },
     {
+      title: "Planning score first",
+      body: "First visit? You'll see a prompt to take [Weekly Planning Score](/weekly-planning-score) before starting — it takes about 60 seconds and makes daily check-ins more meaningful.",
+    },
+    {
       title: "Pre-fill from other tools",
       body: "Use **Track this week** on [The Focusing Question](/the-focusing-question), [Goal Setting to the Now](/goal-setting-to-the-now), or [What's My Lead Domino](/whats-my-lead-domino). You can also open with `?oneThing=` and optional `?leadDomino=` in the URL. Then use **Schedule your block** to find calendar time on [Protect Your ONE Thing Time Block](/protect-your-one-thing-time-block).",
+    },
+    {
+      title: "When scores stay low",
+      body: "Two ended weeks below 50% triggers a nudge toward [Four Thieves](/four-thieves-productivity-quiz) or [Fear of Chaos](/fear-of-chaos-quiz) based on your blocker tags — meetings and inbox lean chaos; phone and energy lean the full thief quiz.",
     },
     {
       title: "Keep the ONE Thing small enough",

@@ -24,25 +24,33 @@ import { RichText } from "@/lib/content/rich-text";
 import {
   archiveAndStartWeek,
   buildWeekSummary,
+  buildWeekSummaryText,
   buildWeekVisual,
+  buildSmartNudge,
   buildTimeBlockUrl,
   consumeOneThingPrefill,
   createWeeklyPlan,
+  dismissSmartNudge,
+  dismissWeeklyTrackerPlanningGate,
   formatDayMonth,
   formatWeekdayShort,
   getMondayOfWeek,
+  getSmartNudgeDismissedWeekStart,
   getWeekEndDate,
   hasPendingTodayCheckIn,
   isCheckInDayActive,
   isDayCheckInEnabled,
+  isWeeklyTrackerPlanningGateDismissed,
   loadOneThingWeeklyStore,
   needsWeekReview,
   parsePrefillFromSearchParams,
   saveOneThingWeeklyStore,
+  shouldShowWeeklyTrackerPlanningGate,
   sortCheckInsTodayFirst,
   submitWeekReview,
   todayIsoDate,
   updateCheckIn,
+  WEEKLY_PLANNING_SCORE_PATH,
 } from "@/lib/one-thing-weekly";
 import type {
   BlockerTag,
@@ -196,10 +204,26 @@ export function OneThingWeeklyEngine({
   const [blockerPromptDate, setBlockerPromptDate] = useState<string | null>(null);
   const [reviewOutcome, setReviewOutcome] = useState<WeekOutcome>("partial");
   const [reviewReflection, setReviewReflection] = useState("");
+  const [planningGateDismissed, setPlanningGateDismissed] = useState(() =>
+    typeof window === "undefined" ? true : isWeeklyTrackerPlanningGateDismissed(),
+  );
+  const [smartNudgeDismissedWeek, setSmartNudgeDismissedWeek] = useState(() =>
+    typeof window === "undefined" ? null : getSmartNudgeDismissedWeekStart(),
+  );
+  const [copyMessage, setCopyMessage] = useState<string | null>(null);
+
+  const today = todayIsoDate();
+
+  const showPlanningGate =
+    !planningGateDismissed && shouldShowWeeklyTrackerPlanningGate(store);
+
+  const smartNudge = useMemo(
+    () => buildSmartNudge(store, today, smartNudgeDismissedWeek),
+    [store, today, smartNudgeDismissedWeek],
+  );
 
   const theme = resolveToolTheme(config);
   const iconName = getToolIconName(config);
-  const today = todayIsoDate();
   const activePlan = store.activePlan;
 
   const summary = useMemo(
@@ -346,6 +370,29 @@ export function OneThingWeeklyEngine({
     setBlockerPromptDate(null);
   };
 
+  const handleDismissPlanningGate = () => {
+    dismissWeeklyTrackerPlanningGate();
+    setPlanningGateDismissed(true);
+  };
+
+  const handleDismissSmartNudge = () => {
+    if (!smartNudge) return;
+    dismissSmartNudge(smartNudge.latestWeekStart);
+    setSmartNudgeDismissedWeek(smartNudge.latestWeekStart);
+  };
+
+  const handleCopySummary = async () => {
+    if (!activePlan) return;
+
+    try {
+      await navigator.clipboard.writeText(buildWeekSummaryText(activePlan, today));
+      setCopyMessage("Copied to clipboard");
+      window.setTimeout(() => setCopyMessage(null), 2500);
+    } catch {
+      setCopyMessage("Could not copy — try again or select text manually");
+    }
+  };
+
   const showTodayPrompt = activePlan && hasPendingTodayCheckIn(activePlan, today);
 
   const schemas = [
@@ -404,6 +451,20 @@ export function OneThingWeeklyEngine({
             {summary.eligibleDays === 1 ? "" : "s"} so far.
           </p>
         )}
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={handleCopySummary}
+            className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-200 bg-white px-3 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+          >
+            Copy week summary
+          </button>
+          {copyMessage && (
+            <span className="text-sm text-neutral-600" role="status">
+              {copyMessage}
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
@@ -495,6 +556,29 @@ export function OneThingWeeklyEngine({
           >
             Start next week
           </button>
+        </div>
+      )}
+
+      {smartNudge && (
+        <div className="rounded-2xl border border-violet-200 bg-violet-50/80 p-5">
+          <h3 className="text-sm font-semibold text-violet-950">Pattern spotted</h3>
+          <p className="mt-2 text-sm leading-relaxed text-violet-900/90">{smartNudge.reason}</p>
+          <p className="mt-2 text-sm text-violet-900/80">{smartNudge.description}</p>
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <Link
+              href={smartNudge.href}
+              className="inline-flex h-10 items-center justify-center rounded-xl bg-neutral-900 px-4 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+            >
+              {smartNudge.title}
+            </Link>
+            <button
+              type="button"
+              onClick={handleDismissSmartNudge}
+              className="inline-flex h-10 items-center justify-center rounded-xl border border-violet-200 bg-white px-4 text-sm font-medium text-violet-900 transition-colors hover:bg-violet-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-900 focus-visible:ring-offset-2"
+            >
+              Not now
+            </button>
+          </div>
         </div>
       )}
 
@@ -672,6 +756,30 @@ export function OneThingWeeklyEngine({
               <RichText text={config.guidance[0].body} />
             ) : null}
           </Callout>
+
+          {showPlanningGate && (
+            <Callout variant="warning" title="New here? Score your planning habits first">
+              <p className="text-sm leading-relaxed">
+                This tracker works best when you already review weekly and block time for
+                priorities. Take the 4-question assessment first — about 60 seconds.
+              </p>
+              <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+                <Link
+                  href={WEEKLY_PLANNING_SCORE_PATH}
+                  className="inline-flex h-10 items-center justify-center rounded-xl bg-neutral-900 px-4 text-sm font-medium text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+                >
+                  Take Weekly Planning Score
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleDismissPlanningGate}
+                  className="inline-flex h-10 items-center justify-center rounded-xl border border-neutral-200 bg-white px-4 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+                >
+                  Skip for now
+                </button>
+              </div>
+            </Callout>
+          )}
 
           <form onSubmit={handleStartWeek} noValidate className="mt-8 space-y-8">
             <div className="grid gap-8 lg:grid-cols-[34fr_66fr] lg:items-start">

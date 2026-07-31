@@ -27,6 +27,8 @@ export function shouldOfferWeeklyTracker(
 
   if (toolSlug === "whats-my-lead-domino") return true;
 
+  if (toolSlug === "weekly-planning-score") return true;
+
   if (toolSlug === "the-focusing-question") {
     return (
       state.answers.q_horizon === "week" ||

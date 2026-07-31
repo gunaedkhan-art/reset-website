@@ -14,7 +14,7 @@ import type {
   WeekReview,
   WeeklyPlan,
 } from "./types";
-import { MAX_ARCHIVED_WEEKS } from "./types";
+import { MAX_ARCHIVED_WEEKS, BLOCKER_OPTIONS } from "./types";
 import { parseIsoDate } from "./format";
 
 export interface WeekSummary {
@@ -289,4 +289,65 @@ export function hasPendingTodayCheckIn(plan: WeeklyPlan, asOfDate?: string): boo
   if (!isCheckInDayActive(plan, today)) return false;
   const checkIn = plan.checkIns.find((entry) => entry.date === today);
   return checkIn?.status === "pending" || checkIn?.status === undefined;
+}
+
+function blockerLabel(blocker: BlockerTag): string {
+  return (
+    BLOCKER_OPTIONS.find((option) => option.value === blocker)?.label ?? blocker
+  );
+}
+
+/** Plain-text week summary for clipboard export or journaling. */
+export function buildWeekSummaryText(
+  plan: WeeklyPlan,
+  asOfDate?: string,
+): string {
+  const today = asOfDate ?? todayIsoDate();
+  const summary = buildWeekSummary(plan, today);
+  const lines = [
+    `ONE Thing Weekly Check-In — ${summary.weekLabel}`,
+    "",
+    `ONE Thing: ${plan.oneThing}`,
+  ];
+
+  if (plan.leadDomino) {
+    lines.push(`Lead domino: ${plan.leadDomino}`);
+  }
+
+  lines.push(
+    "",
+    `Protected: ${summary.yesCount} · Partial: ${summary.partialCount} · Missed: ${summary.skippedCount}`,
+  );
+
+  if (summary.scorePercent !== null) {
+    lines.push(`Week score: ${summary.scorePercent}%`);
+  }
+
+  lines.push(`Streak: ${summary.streakDays} days`, "", "Daily log:");
+
+  for (const checkIn of plan.checkIns) {
+    if (checkIn.date > today) continue;
+    if (!isCheckInDayActive(plan, checkIn.date)) continue;
+
+    const statusLabel =
+      checkIn.status === "skipped"
+        ? "missed"
+        : checkIn.status === "pending"
+          ? "pending"
+          : checkIn.status;
+    let line = `- ${formatWeekdayShort(checkIn.date)}: ${statusLabel}`;
+    if (checkIn.blocker) {
+      line += ` (${blockerLabel(checkIn.blocker)})`;
+    }
+    lines.push(line);
+  }
+
+  if (plan.review) {
+    lines.push("", `Week review: ${plan.review.finishedOneThing}`);
+    if (plan.review.reflection.trim()) {
+      lines.push(plan.review.reflection.trim());
+    }
+  }
+
+  return lines.join("\n");
 }

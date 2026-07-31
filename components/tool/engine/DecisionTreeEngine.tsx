@@ -20,6 +20,7 @@ import {
 } from "@/lib/tool-engine/template/render";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { shouldOfferWeeklyTracker, getWeeklyTrackerSuggestions } from "@/lib/one-thing-weekly/integrations";
+import { markWeeklyPlanningScoreComplete } from "@/lib/one-thing-weekly/planning-gate";
 import type { RelatedTool } from "@/types/tool";
 import { cn } from "@/lib/utils";
 
@@ -70,6 +71,9 @@ export function DecisionTreeEngine({
         mode: "decision-tree",
         result_id: state.resultTemplateId,
       });
+      if (config.slug === "weekly-planning-score") {
+        markWeeklyPlanningScoreComplete();
+      }
     }
   }, [state.complete, state.resultTemplateId, config.slug]);
 
