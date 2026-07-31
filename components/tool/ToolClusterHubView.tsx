@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { ThemedToolIconBadge } from "@/components/tool/ThemedToolIconBadge";
 import { ToolClusterHero } from "@/components/tool/ToolClusterHero";
-import { ToolIconForConfig } from "@/components/tool/ToolIcon";
+import { ToolIconForConfig, getToolIconName } from "@/components/tool/ToolIcon";
 import { InfoCard } from "@/components/ui/InfoCard";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { Section } from "@/components/ui/Section";
@@ -27,7 +28,11 @@ export function ToolClusterHubView({ hub }: ToolClusterHubViewProps) {
   return (
     <>
       <Section spacing="md" className="border-b border-neutral-100 bg-neutral-50/50">
-        <ToolClusterHero theme={theme} icon="blocks" title={hub.name} />
+        <ToolClusterHero
+          theme={theme}
+          icon={pillar ? getToolIconName(pillar) : "blocks"}
+          title={hub.name}
+        />
         <PageHeading
           eyebrow="Tool collection"
           title={hub.name}
@@ -42,15 +47,9 @@ export function ToolClusterHubView({ hub }: ToolClusterHubViewProps) {
               href={pillar.seo.canonicalPath}
               eyebrow="Recommended entry point"
               icon={
-                <div
-                  className="flex h-10 w-10 items-center justify-center rounded-xl"
-                  style={{
-                    backgroundColor: theme.muted,
-                    color: theme.primary,
-                  }}
-                >
+                <ThemedToolIconBadge theme={theme}>
                   <ToolIconForConfig config={pillar} size={20} />
-                </div>
+                </ThemedToolIconBadge>
               }
             />
           </div>
@@ -73,15 +72,9 @@ export function ToolClusterHubView({ hub }: ToolClusterHubViewProps) {
                   eyebrow={category?.name}
                   icon={
                     config ? (
-                      <div
-                        className="flex h-10 w-10 items-center justify-center rounded-xl"
-                        style={{
-                          backgroundColor: toolTheme.muted,
-                          color: toolTheme.primary,
-                        }}
-                      >
+                      <ThemedToolIconBadge theme={toolTheme}>
                         <ToolIconForConfig config={config} size={20} />
-                      </div>
+                      </ThemedToolIconBadge>
                     ) : undefined
                   }
                 />

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LogoMark } from "@/components/brand/LogoMark";
 import { siteConfig } from "@/lib/site";
+import { toolClusterHubs } from "@/lib/tools";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -44,6 +45,21 @@ export function Footer() {
                     </Link>
                   </li>
                 ))}
+            </ul>
+            <h3 className="mb-3 mt-8 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+              Collections
+            </h3>
+            <ul className="space-y-2">
+              {toolClusterHubs.map((hub) => (
+                <li key={hub.slug}>
+                  <Link
+                    href={`/tools/${hub.slug}`}
+                    className="rounded text-sm text-neutral-600 transition-colors hover:text-neutral-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+                  >
+                    {hub.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

@@ -44,7 +44,7 @@ export const whyCantIFocusConfig = {
         id: "agitation",
         heading: "Interruptions compound",
         framework: "pas",
-        body: "[UC Irvine interruption research](https://www.ics.uci.edu/~gmark/chi08.pdf) found recovery from some interruptions can take far longer than the interruption itself — so a \"quick check\" costs more than the seconds it takes.",
+        body: "[UC Irvine interruption research](https://www.ics.uci.edu/~gmark/chi08-mark.pdf) found recovery from some interruptions can take far longer than the interruption itself — so a \"quick check\" costs more than the seconds it takes.",
       },
       {
         id: "outcome",

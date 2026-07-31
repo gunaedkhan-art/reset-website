@@ -30,7 +30,7 @@ export const oneThingWeeklyCheckInConfig = {
   content: {
     h1: "ONE Thing Weekly Check-In",
     intro:
-      "Name your ONE Thing for the week, then check in each day you protected time for it. A simple yes / partial / no log — no account required.",
+      "Name your ONE Thing for the week, check in daily with yes / partial / no, tag blockers, and close the week with a short review — saved in your browser.",
     icon: "target",
     proseTitle: "About this tracker",
     sections: [
@@ -52,9 +52,10 @@ export const oneThingWeeklyCheckInConfig = {
         framework: "outcome",
         body: "A saved weekly ONE Thing, daily check-ins you can complete in seconds, and a running score so you see whether the calendar matched the intention.",
         list: [
-          "Set your ONE Thing and week start date",
-          "Log yes, partial, or missed for each day",
-          "Stored locally in your browser — no signup",
+          "Set your ONE Thing, optional lead domino, and week start",
+          "7-day visual strip plus daily check-ins (today first)",
+          "Blocker tags on partial/missed days and end-of-week review",
+          "Stored locally in your browser — no signup required",
         ],
       },
     ],
@@ -87,6 +88,10 @@ export const oneThingWeeklyCheckInConfig = {
     {
       title: "When to set your week",
       body: "Sunday evening or Monday morning works for most people — before meetings and inbox noise claim the calendar. Pair with [Weekly Planning Score](/weekly-planning-score) if you're unsure your planning habits are solid.",
+    },
+    {
+      title: "Pre-fill from other tools",
+      body: "Open from [The Focusing Question](/the-focusing-question) or [Goal Setting to the Now](/goal-setting-to-the-now) with `?oneThing=` and optional `?leadDomino=` in the URL — or use Track this week when those tools add the button.",
     },
     {
       title: "Keep the ONE Thing small enough",

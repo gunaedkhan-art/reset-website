@@ -22,8 +22,12 @@ export const authoritativeSources = {
     href: "https://calnewport.com/books/digital-minimalism/",
   },
   ucIrvineInterruptions: {
-    label: "UC Irvine interruption research",
-    href: "https://www.ics.uci.edu/~gmark/chi08.pdf",
+    label: "Gloria Mark interruption study (CHI 2008)",
+    href: "https://www.ics.uci.edu/~gmark/chi08-mark.pdf",
+  },
+  gloriaMarkResearch: {
+    label: "Gloria Mark (UC Irvine)",
+    href: "https://www.ics.uci.edu/~gmark/",
   },
 } as const;
 
@@ -34,5 +38,6 @@ export const sourceLinks = {
   calNewport: `[Cal Newport](${authoritativeSources.calNewport.href})`,
   deepWork: `[Deep Work](${authoritativeSources.deepWorkBook.href})`,
   digitalMinimalism: `[Digital Minimalism](${authoritativeSources.digitalMinimalismBook.href})`,
-  ucIrvineInterruptions: `[UC Irvine interruption research](${authoritativeSources.ucIrvineInterruptions.href})`,
+  ucIrvineInterruptions: `[Gloria Mark interruption study (CHI 2008)](${authoritativeSources.ucIrvineInterruptions.href})`,
+  gloriaMarkResearch: `[Gloria Mark (UC Irvine)](${authoritativeSources.gloriaMarkResearch.href})`,
 } as const;

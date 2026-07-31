@@ -37,6 +37,7 @@ export {
 export {
   clusterThemes,
   getThemeForCluster,
+  getThemeForCategory,
   type ClusterTheme,
   type ClusterThemeId,
 } from "./cluster-themes";

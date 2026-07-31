@@ -503,11 +503,30 @@ After writing code:
 
 ---
 
-## 16. Version history
+## 17. Future: authenticated user dashboard (planned)
+
+When user accounts ship, repeat-use tools should sync to a **user dashboard**:
+
+| Tool | Dashboard widget |
+|------|------------------|
+| Savings Path Tracker | Current balance vs target path, last check-in, on-track signal |
+| ONE Thing Weekly Check-In | Active week's ONE Thing, week score strip, pending today check-in |
+| (future trackers) | Same pattern — summary on homepage when logged in, full detail in profile |
+
+**Homepage (logged in):** compact cards with live data from the user's active trackers — not generic marketing copy.
+
+**Profile / dashboard:** full charts, history, edit flows — replaces localStorage as source of truth once accounts exist.
+
+Until then, trackers remain **local-first** (`localStorage`) with no signup required.
+
+---
+
+## 18. Version history
 
 | Version | Date | Changes |
 |---------|------|---------|
 | 1.0 | 2026-07-21 | Initial playbook — registry pattern, ToolTemplate standards |
+| 1.1 | 2026-07-26 | §17 user dashboard plan for repeat-use trackers |
 
 ---
 

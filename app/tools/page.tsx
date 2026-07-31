@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ClusterHubCard, ThemedToolIconBadge } from "@/components/tool";
 import { ToolIconForConfig } from "@/components/tool/ToolIcon";
 import { Callout } from "@/components/ui/Callout";
 import { InfoCard } from "@/components/ui/InfoCard";
@@ -9,7 +10,6 @@ import { Section } from "@/components/ui/Section";
 import { getConfigBySlug } from "@/lib/tool-engine/compiler/manifest";
 import { createMetadata } from "@/lib/seo";
 import {
-  clusterThemes,
   getAllTools,
   getCategoryBySlug,
   getRecommendedStarterTools,
@@ -177,39 +177,14 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
               calculators and planners.
             </p>
             <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {toolClusterHubs.map((hub) => {
-                const theme = clusterThemes[hub.themeId];
-                const pillarConfig = getConfigBySlug(hub.pillarSlug);
-                return (
-                  <li key={hub.slug}>
-                    <Link
-                      href={`/tools/${hub.slug}`}
-                      className="group flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition-colors hover:border-neutral-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
-                      style={{
-                        background: `linear-gradient(160deg, ${theme.heroFrom} 0%, white 55%)`,
-                      }}
-                    >
-                      <div
-                        className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl"
-                        style={{
-                          backgroundColor: theme.primary,
-                          color: theme.onPrimary,
-                        }}
-                      >
-                        {pillarConfig ? (
-                          <ToolIconForConfig config={pillarConfig} size={20} />
-                        ) : null}
-                      </div>
-                      <span className="font-semibold text-neutral-900 group-hover:text-neutral-950">
-                        {hub.name}
-                      </span>
-                      <span className="mt-1 text-sm leading-relaxed text-neutral-600">
-                        {hub.description}
-                      </span>
-                    </Link>
-                  </li>
-                );
-              })}
+              {toolClusterHubs.map((hub) => (
+                <li key={hub.slug}>
+                  <ClusterHubCard
+                    hub={hub}
+                    pillarConfig={getConfigBySlug(hub.pillarSlug)}
+                  />
+                </li>
+              ))}
             </ul>
           </div>
         )}
@@ -244,16 +219,9 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
                         {index + 1}
                       </span>
                       {config && (
-                        <span
-                          aria-hidden="true"
-                          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
-                          style={{
-                            backgroundColor: theme?.muted ?? "#f5f5f5",
-                            color: theme?.primary ?? "#404040",
-                          }}
-                        >
+                        <ThemedToolIconBadge theme={theme}>
                           <ToolIconForConfig config={config} size={20} />
-                        </span>
+                        </ThemedToolIconBadge>
                       )}
                       <span className="min-w-0 space-y-1">
                         <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -338,15 +306,9 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
                     eyebrow={category?.name}
                     icon={
                       config ? (
-                        <div
-                          className="flex h-10 w-10 items-center justify-center rounded-xl"
-                          style={{
-                            backgroundColor: theme?.muted ?? "#f5f5f5",
-                            color: theme?.primary ?? "#404040",
-                          }}
-                        >
+                        <ThemedToolIconBadge theme={theme}>
                           <ToolIconForConfig config={config} size={20} />
-                        </div>
+                        </ThemedToolIconBadge>
                       ) : undefined
                     }
                   />

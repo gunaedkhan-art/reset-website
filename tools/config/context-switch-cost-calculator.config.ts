@@ -40,7 +40,7 @@ export const contextSwitchCostCalculatorConfig = {
         id: "problem",
         heading: "The hidden tax on every tab hop",
         framework: "pas",
-        body: "A quick Slack check mid-document feels harmless — but [UC Irvine interruption research](https://www.ics.uci.edu/~gmark/chi08.pdf) shows recovery can take far longer than the interruption itself. Multiply that by dozens of switches daily and hours vanish into refocus, not work.",
+        body: "A quick Slack check mid-document feels harmless — but [UC Irvine interruption research](https://www.ics.uci.edu/~gmark/chi08-mark.pdf) shows recovery can take far longer than the interruption itself. Multiply that by dozens of switches daily and hours vanish into refocus, not work.",
       },
       {
         id: "concept",

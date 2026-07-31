@@ -7,6 +7,7 @@ import { Callout } from "@/components/ui/Callout";
 import { InfoCard } from "@/components/ui/InfoCard";
 import { Input } from "@/components/ui/Input";
 import { Section } from "@/components/ui/Section";
+import { WeekCheckInStrip } from "@/components/ui/WeekCheckInStrip";
 import {
   ToolAppDownload,
   ToolCalculateButton,
@@ -23,21 +24,33 @@ import { RichText } from "@/lib/content/rich-text";
 import {
   archiveAndStartWeek,
   buildWeekSummary,
+  buildWeekVisual,
+  consumeOneThingPrefill,
   createWeeklyPlan,
   formatDayMonth,
   formatWeekdayShort,
   getMondayOfWeek,
+  getWeekEndDate,
+  hasPendingTodayCheckIn,
+  isCheckInDayActive,
   isDayCheckInEnabled,
   loadOneThingWeeklyStore,
+  needsWeekReview,
+  parsePrefillFromSearchParams,
   saveOneThingWeeklyStore,
+  sortCheckInsTodayFirst,
+  submitWeekReview,
   todayIsoDate,
   updateCheckIn,
 } from "@/lib/one-thing-weekly";
 import type {
+  BlockerTag,
   CheckInStatus,
   OneThingWeeklyStore,
+  WeekOutcome,
   WeeklyPlan,
 } from "@/lib/one-thing-weekly";
+import { BLOCKER_OPTIONS } from "@/lib/one-thing-weekly";
 import { siteConfig } from "@/lib/site";
 import {
   breadcrumbSchema,
@@ -58,7 +71,9 @@ interface OneThingWeeklyEngineProps {
 interface EngineState {
   store: OneThingWeeklyStore;
   oneThingDraft: string;
+  leadDominoDraft: string;
   weekStartDraft: string;
+  excludeWeekendsDraft: boolean;
 }
 
 function getInitialState(): EngineState {
@@ -66,7 +81,9 @@ function getInitialState(): EngineState {
   return {
     store: { activePlan: null, archivedWeeks: [] },
     oneThingDraft: "",
+    leadDominoDraft: "",
     weekStartDraft: getMondayOfWeek(today),
+    excludeWeekendsDraft: false,
   };
 }
 
@@ -75,19 +92,46 @@ function getSavedState(): EngineState | null {
   if (!saved.activePlan && saved.archivedWeeks.length === 0) return null;
 
   const today = todayIsoDate();
+  const plan = saved.activePlan;
   return {
     store: saved,
-    oneThingDraft: saved.activePlan?.oneThing ?? "",
-    weekStartDraft: saved.activePlan?.weekStart ?? getMondayOfWeek(today),
+    oneThingDraft: plan?.oneThing ?? "",
+    leadDominoDraft: plan?.leadDomino ?? "",
+    weekStartDraft: plan?.weekStart ?? getMondayOfWeek(today),
+    excludeWeekendsDraft: plan?.excludeWeekends ?? false,
   };
 }
 
 const serverSnapshot = getInitialState();
 let clientSnapshotCache: EngineState | null = null;
 
+function readPrefillDrafts(): Pick<EngineState, "oneThingDraft" | "leadDominoDraft"> {
+  if (typeof window === "undefined") {
+    return { oneThingDraft: "", leadDominoDraft: "" };
+  }
+
+  const fromUrl = parsePrefillFromSearchParams(new URLSearchParams(window.location.search));
+  const fromStore = consumeOneThingPrefill();
+
+  return {
+    oneThingDraft: fromUrl.oneThing ?? fromStore?.oneThing ?? "",
+    leadDominoDraft: fromUrl.leadDomino ?? fromStore?.leadDomino ?? "",
+  };
+}
+
 function getClientSnapshot(): EngineState {
   if (clientSnapshotCache === null) {
-    clientSnapshotCache = getSavedState() ?? getInitialState();
+    const saved = getSavedState() ?? getInitialState();
+    if (saved.store.activePlan) {
+      clientSnapshotCache = saved;
+    } else {
+      const prefill = readPrefillDrafts();
+      clientSnapshotCache = {
+        ...saved,
+        oneThingDraft: prefill.oneThingDraft || saved.oneThingDraft,
+        leadDominoDraft: prefill.leadDominoDraft || saved.leadDominoDraft,
+      };
+    }
   }
   return clientSnapshotCache;
 }
@@ -105,6 +149,12 @@ const STATUS_OPTIONS: {
   { value: "skipped", label: "No" },
 ];
 
+const REVIEW_OUTCOMES: { value: WeekOutcome; label: string }[] = [
+  { value: "yes", label: "Yes — finished or on track" },
+  { value: "partial", label: "Partial — meaningful progress" },
+  { value: "no", label: "No — didn't move the needle" },
+];
+
 function statusButtonClass(
   status: Exclude<CheckInStatus, "pending">,
   active: boolean,
@@ -112,14 +162,15 @@ function statusButtonClass(
   if (!active) {
     return "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300 hover:bg-neutral-50";
   }
-
-  if (status === "yes") {
-    return "border-emerald-600 bg-emerald-600 text-white";
-  }
-  if (status === "partial") {
-    return "border-amber-500 bg-amber-500 text-white";
-  }
+  if (status === "yes") return "border-emerald-600 bg-emerald-600 text-white";
+  if (status === "partial") return "border-amber-500 bg-amber-500 text-white";
   return "border-neutral-500 bg-neutral-500 text-white";
+}
+
+function nextMondayAfter(isoDate: string): string {
+  const date = new Date(isoDate + "T12:00:00");
+  date.setDate(date.getDate() + 1);
+  return getMondayOfWeek(date.toISOString().slice(0, 10));
 }
 
 export function OneThingWeeklyEngine({
@@ -135,8 +186,15 @@ export function OneThingWeeklyEngine({
 
   const [store, setStore] = useState<OneThingWeeklyStore>(persisted.store);
   const [oneThingDraft, setOneThingDraft] = useState(persisted.oneThingDraft);
+  const [leadDominoDraft, setLeadDominoDraft] = useState(persisted.leadDominoDraft);
   const [weekStartDraft, setWeekStartDraft] = useState(persisted.weekStartDraft);
+  const [excludeWeekendsDraft, setExcludeWeekendsDraft] = useState(
+    persisted.excludeWeekendsDraft,
+  );
   const [formError, setFormError] = useState<string | null>(null);
+  const [blockerPromptDate, setBlockerPromptDate] = useState<string | null>(null);
+  const [reviewOutcome, setReviewOutcome] = useState<WeekOutcome>("partial");
+  const [reviewReflection, setReviewReflection] = useState("");
 
   const theme = resolveToolTheme(config);
   const iconName = getToolIconName(config);
@@ -145,6 +203,19 @@ export function OneThingWeeklyEngine({
 
   const summary = useMemo(
     () => (activePlan ? buildWeekSummary(activePlan, today) : null),
+    [activePlan, today],
+  );
+
+  const weekVisual = useMemo(
+    () => (activePlan ? buildWeekVisual(activePlan, today) : []),
+    [activePlan, today],
+  );
+
+  const sortedCheckIns = useMemo(
+    () =>
+      activePlan
+        ? sortCheckInsTodayFirst(activePlan.checkIns, today)
+        : [],
     [activePlan, today],
   );
 
@@ -160,31 +231,42 @@ export function OneThingWeeklyEngine({
     saveOneThingWeeklyStore(nextStore);
   };
 
+  const buildPlanInput = () => ({
+    oneThing: oneThingDraft,
+    leadDomino: leadDominoDraft,
+    weekStart: weekStartDraft,
+    excludeWeekends: excludeWeekendsDraft,
+  });
+
   const handleStartWeek = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setFormError(null);
 
     try {
+      const input = buildPlanInput();
       const sameWeek =
-        activePlan?.weekStart === weekStartDraft &&
-        activePlan.oneThing.trim() === oneThingDraft.trim();
+        activePlan?.weekStart === input.weekStart &&
+        activePlan.oneThing.trim() === input.oneThing.trim() &&
+        (activePlan.leadDomino ?? "") === (input.leadDomino ?? "") &&
+        activePlan.excludeWeekends === input.excludeWeekends;
 
       let nextStore: OneThingWeeklyStore;
       if (activePlan && !sameWeek) {
-        nextStore = archiveAndStartWeek(store, oneThingDraft, weekStartDraft);
+        nextStore = archiveAndStartWeek(store, input);
       } else if (activePlan && sameWeek) {
-        const refreshed = createWeeklyPlan(oneThingDraft, weekStartDraft);
         nextStore = {
           ...store,
           activePlan: {
-            ...refreshed,
-            checkIns: activePlan.checkIns,
+            ...activePlan,
+            oneThing: input.oneThing.trim(),
+            leadDomino: input.leadDomino?.trim() || undefined,
+            excludeWeekends: input.excludeWeekends ?? false,
           },
         };
       } else {
         nextStore = {
           ...store,
-          activePlan: createWeeklyPlan(oneThingDraft, weekStartDraft),
+          activePlan: createWeeklyPlan(input),
         };
       }
 
@@ -202,12 +284,18 @@ export function OneThingWeeklyEngine({
   const handleCheckIn = (
     date: string,
     status: Exclude<CheckInStatus, "pending">,
+    blocker?: BlockerTag,
   ) => {
     if (!activePlan) return;
 
     try {
-      const nextPlan = updateCheckIn(activePlan, date, status);
+      const nextPlan = updateCheckIn(activePlan, date, status, blocker);
       persistStore({ ...store, activePlan: nextPlan });
+      if (status === "partial" || status === "skipped") {
+        setBlockerPromptDate(blocker ? null : date);
+      } else {
+        setBlockerPromptDate(null);
+      }
       trackEvent({
         name: "one_thing_weekly_checkin",
         tool_slug: config.slug,
@@ -218,12 +306,46 @@ export function OneThingWeeklyEngine({
     }
   };
 
+  const handleSubmitReview = () => {
+    if (!activePlan) return;
+    const nextPlan = submitWeekReview(activePlan, reviewOutcome, reviewReflection);
+    persistStore({ ...store, activePlan: nextPlan });
+  };
+
+  const handleStartNextWeek = () => {
+    if (!activePlan) return;
+    const nextStart = nextMondayAfter(getWeekEndDate(activePlan.weekStart));
+    const keepOneThing =
+      activePlan.review?.finishedOneThing !== "no" ? activePlan.oneThing : "";
+
+    const nextStore = archiveAndStartWeek(store, {
+      oneThing: keepOneThing || oneThingDraft,
+      leadDomino: activePlan.leadDomino,
+      weekStart: nextStart,
+      excludeWeekends: activePlan.excludeWeekends,
+    });
+
+    persistStore(nextStore);
+    setOneThingDraft(nextStore.activePlan?.oneThing ?? "");
+    setLeadDominoDraft(nextStore.activePlan?.leadDomino ?? "");
+    setWeekStartDraft(nextStore.activePlan?.weekStart ?? nextStart);
+    setExcludeWeekendsDraft(nextStore.activePlan?.excludeWeekends ?? false);
+    setReviewReflection("");
+    setReviewOutcome("partial");
+    setBlockerPromptDate(null);
+  };
+
   const handleResetWeek = () => {
     persistStore({ activePlan: null, archivedWeeks: store.archivedWeeks });
     setOneThingDraft("");
+    setLeadDominoDraft("");
     setWeekStartDraft(getMondayOfWeek(today));
+    setExcludeWeekendsDraft(false);
     setFormError(null);
+    setBlockerPromptDate(null);
   };
+
+  const showTodayPrompt = activePlan && hasPendingTodayCheckIn(activePlan, today);
 
   const schemas = [
     webApplicationSchema({
@@ -237,6 +359,14 @@ export function OneThingWeeklyEngine({
 
   const resultsPanel = activePlan && summary ? (
     <div className="space-y-4">
+      <WeekCheckInStrip days={weekVisual} />
+
+      {showTodayPrompt && (
+        <Callout variant="warning" title="Today&apos;s check-in">
+          You haven&apos;t logged today yet — mark whether you protected time for your ONE Thing.
+        </Callout>
+      )}
+
       <div
         className={cn(
           "rounded-xl border px-4 py-4 sm:px-5",
@@ -247,12 +377,8 @@ export function OneThingWeeklyEngine({
               : "border-sky-200 bg-sky-50",
         )}
       >
-        <p className="text-sm font-semibold text-neutral-900">
-          {summary.weekLabel}
-        </p>
-        <p className="mt-2 text-sm leading-relaxed text-neutral-700">
-          {summary.message}
-        </p>
+        <p className="text-sm font-semibold text-neutral-900">{summary.weekLabel}</p>
+        <p className="mt-2 text-sm leading-relaxed text-neutral-700">{summary.message}</p>
         <dl className="mt-4 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
           <div>
             <dt className="text-neutral-500">Protected</dt>
@@ -273,7 +399,7 @@ export function OneThingWeeklyEngine({
         </dl>
         {summary.scorePercent !== null && (
           <p className="mt-3 text-xs text-neutral-600">
-            Week score: {summary.scorePercent}% across {summary.eligibleDays} day
+            Week score: {summary.scorePercent}% across {summary.eligibleDays} active day
             {summary.eligibleDays === 1 ? "" : "s"} so far.
           </p>
         )}
@@ -282,19 +408,93 @@ export function OneThingWeeklyEngine({
       <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
         <h3 className="text-base font-semibold text-neutral-900">This week&apos;s ONE Thing</h3>
         <p className="mt-2 text-sm leading-relaxed text-neutral-700">{activePlan.oneThing}</p>
+        {activePlan.leadDomino && (
+          <p className="mt-2 text-sm text-neutral-600">
+            <span className="font-medium text-neutral-800">Lead domino:</span>{" "}
+            {activePlan.leadDomino}
+          </p>
+        )}
       </div>
+
+      {needsWeekReview(activePlan, today) && (
+        <ToolFormSection>
+          <h3 className="text-base font-semibold text-neutral-900">End-of-week review</h3>
+          <p className="mt-1 mb-4 text-sm text-neutral-600">
+            Close the loop before planning next week — what happened with your ONE Thing?
+          </p>
+          <div className="space-y-4">
+            <fieldset>
+              <legend className="mb-2 text-sm font-medium text-neutral-900">
+                Did you finish your ONE Thing this week?
+              </legend>
+              <div className="space-y-2">
+                {REVIEW_OUTCOMES.map((option) => (
+                  <label
+                    key={option.value}
+                    className="flex cursor-pointer items-center gap-2 text-sm text-neutral-700"
+                  >
+                    <input
+                      type="radio"
+                      name="review-outcome"
+                      value={option.value}
+                      checked={reviewOutcome === option.value}
+                      onChange={() => setReviewOutcome(option.value)}
+                      className="h-4 w-4"
+                    />
+                    {option.label}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <div>
+              <label htmlFor="review-reflection" className="mb-1 block text-sm font-medium text-neutral-900">
+                What blocked you or worked well? (optional)
+              </label>
+              <textarea
+                id="review-reflection"
+                rows={3}
+                value={reviewReflection}
+                onChange={(event) => setReviewReflection(event.target.value)}
+                placeholder="Meetings on Tue/Thu, phone after lunch…"
+                className="w-full rounded-xl border border-neutral-200 px-3 py-2 text-sm text-neutral-900 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900"
+              />
+            </div>
+            <ToolCalculateButton
+              label="Save week review"
+              type="button"
+              onClick={handleSubmitReview}
+            />
+          </div>
+        </ToolFormSection>
+      )}
+
+      {activePlan.review && (
+        <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-5">
+          <h3 className="text-sm font-semibold text-emerald-950">Week reviewed</h3>
+          {activePlan.review.reflection && (
+            <p className="mt-2 text-sm text-emerald-900/90">{activePlan.review.reflection}</p>
+          )}
+          <button
+            type="button"
+            onClick={handleStartNextWeek}
+            className="mt-4 inline-flex rounded-xl bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-800"
+          >
+            Start next week
+          </button>
+        </div>
+      )}
 
       {store.archivedWeeks.length > 0 && (
         <div className="rounded-2xl border border-neutral-200 bg-neutral-50/80 p-5">
           <h3 className="text-sm font-semibold text-neutral-900">Recent weeks</h3>
           <ul className="mt-3 space-y-2 text-sm text-neutral-600">
             {store.archivedWeeks.slice(0, 4).map((week: WeeklyPlan) => {
-              const weekSummary = buildWeekSummary(week, week.checkIns[6]?.date ?? today);
+              const weekSummary = buildWeekSummary(week, getWeekEndDate(week.weekStart));
               return (
                 <li key={week.id} className="flex items-start justify-between gap-3">
                   <span className="line-clamp-2">{week.oneThing}</span>
                   <span className="shrink-0 text-neutral-500">
-                    {weekSummary.yesCount}/7 yes
+                    {weekSummary.yesCount}/{weekSummary.eligibleDays} yes
                   </span>
                 </li>
               );
@@ -313,12 +513,26 @@ export function OneThingWeeklyEngine({
     <ToolFormSection>
       <h3 className="text-base font-semibold text-neutral-900">Daily check-ins</h3>
       <p className="mt-1 mb-4 text-sm text-neutral-600">
-        Mark each day you protected time for your ONE Thing.
+        Today is listed first. Mark each active day you protected time for your ONE Thing.
       </p>
       <ul className="space-y-3">
-        {activePlan.checkIns.map((checkIn) => {
-          const enabled = isDayCheckInEnabled(checkIn.date, today);
+        {sortedCheckIns.map((checkIn) => {
+          const enabled =
+            isDayCheckInEnabled(checkIn.date, today) &&
+            isCheckInDayActive(activePlan, checkIn.date);
           const isToday = checkIn.date === today;
+          const isOff = !isCheckInDayActive(activePlan, checkIn.date);
+
+          if (isOff) {
+            return (
+              <li
+                key={checkIn.date}
+                className="rounded-xl border border-dashed border-neutral-200 bg-neutral-50/80 p-4 text-sm text-neutral-500"
+              >
+                {formatWeekdayShort(checkIn.date)} · Weekend off
+              </li>
+            );
+          }
 
           return (
             <li
@@ -348,7 +562,7 @@ export function OneThingWeeklyEngine({
                     key={option.value}
                     type="button"
                     disabled={!enabled}
-                    onClick={() => handleCheckIn(checkIn.date, option.value)}
+                    onClick={() => handleCheckIn(checkIn.date, option.value, checkIn.blocker)}
                     className={cn(
                       "rounded-lg border px-3 py-2 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-40",
                       statusButtonClass(option.value, checkIn.status === option.value),
@@ -358,6 +572,32 @@ export function OneThingWeeklyEngine({
                   </button>
                 ))}
               </div>
+              {(blockerPromptDate === checkIn.date ||
+                ((checkIn.status === "partial" || checkIn.status === "skipped") &&
+                  !checkIn.blocker)) && (
+                <div className="mt-3">
+                  <p className="mb-2 text-xs font-medium text-neutral-600">What got in the way?</p>
+                  <div className="flex flex-wrap gap-2">
+                    {BLOCKER_OPTIONS.map((blocker) => (
+                      <button
+                        key={blocker.value}
+                        type="button"
+                        onClick={() =>
+                          handleCheckIn(checkIn.date, checkIn.status as "partial" | "skipped", blocker.value)
+                        }
+                        className={cn(
+                          "rounded-full border px-2.5 py-1 text-xs font-medium transition-colors",
+                          checkIn.blocker === blocker.value
+                            ? "border-neutral-900 bg-neutral-900 text-white"
+                            : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-300",
+                        )}
+                      >
+                        {blocker.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </li>
           );
         })}
@@ -427,7 +667,8 @@ export function OneThingWeeklyEngine({
                     Set this week&apos;s ONE Thing
                   </h3>
                   <p className="mt-1 mb-4 text-sm text-neutral-600">
-                    Name the one priority that makes everything else easier — then check in daily.
+                    From the Focusing Question or your weekly plan — name one priority, optional
+                    first move, then check in daily.
                   </p>
                   <div className="space-y-4">
                     <Input
@@ -439,6 +680,13 @@ export function OneThingWeeklyEngine({
                       required
                     />
                     <Input
+                      id="lead-domino"
+                      label="Lead domino (optional)"
+                      value={leadDominoDraft}
+                      onChange={(event) => setLeadDominoDraft(event.target.value)}
+                      placeholder="Draft the opening section"
+                    />
+                    <Input
                       id="week-start"
                       type="date"
                       label="Week starting (Monday)"
@@ -448,6 +696,15 @@ export function OneThingWeeklyEngine({
                       }
                       required
                     />
+                    <label className="flex cursor-pointer items-center gap-2 text-sm text-neutral-700">
+                      <input
+                        type="checkbox"
+                        checked={excludeWeekendsDraft}
+                        onChange={(event) => setExcludeWeekendsDraft(event.target.checked)}
+                        className="h-4 w-4 rounded border-neutral-300"
+                      />
+                      I don&apos;t work weekends — exclude Sat/Sun from scoring
+                    </label>
                     {formError && (
                       <p className="text-sm text-red-600" role="alert">
                         {formError}

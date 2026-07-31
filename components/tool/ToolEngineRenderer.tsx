@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import type { ToolConfig } from "@/lib/tool-engine/schema/tool-config";
 import type { RelatedTool } from "@/types/tool";
 import { CalculatorEngine } from "./engine/CalculatorEngine";
@@ -7,6 +8,7 @@ import { DecisionTreeEngine } from "./engine/DecisionTreeEngine";
 import { ProjectionCalculatorEngine } from "./engine/ProjectionCalculatorEngine";
 import { SavingsPathEngine } from "./engine/SavingsPathEngine";
 import { OneThingWeeklyEngine } from "./engine/OneThingWeeklyEngine";
+import { ToolPageSkeleton } from "./ToolPageSkeleton";
 
 interface ToolEngineRendererProps {
   config: ToolConfig;
@@ -42,11 +44,13 @@ export function ToolEngineRenderer({
 
     if (config.flow.engine === "one-thing-weekly") {
       return (
-        <OneThingWeeklyEngine
-          config={config}
-          relatedTools={relatedTools}
-          categoryName={categoryName}
-        />
+        <Suspense fallback={<ToolPageSkeleton />}>
+          <OneThingWeeklyEngine
+            config={config}
+            relatedTools={relatedTools}
+            categoryName={categoryName}
+          />
+        </Suspense>
       );
     }
 

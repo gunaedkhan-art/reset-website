@@ -125,3 +125,16 @@ export function getThemeForCluster(cluster: string): ClusterTheme {
   const themeId = clusterToThemeId[cluster] ?? "default";
   return clusterThemes[themeId];
 }
+
+/** Maps site category slugs to cluster visual themes for browse cards. */
+export const categoryToThemeId: Record<string, ClusterThemeId> = {
+  focus: "deep-work",
+  productivity: "productivity",
+  planning: "one-thing",
+  calculators: "money",
+};
+
+export function getThemeForCategory(categorySlug: string): ClusterTheme {
+  const themeId = categoryToThemeId[categorySlug] ?? "default";
+  return clusterThemes[themeId];
+}
