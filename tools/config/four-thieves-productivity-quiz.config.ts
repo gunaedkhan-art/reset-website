@@ -265,7 +265,7 @@ export const fourThievesProductivityQuizConfig = {
     {
       question: "What are the four thieves of productivity?",
       answer:
-        "Gary Keller's framework from The ONE Thing: inability to say no, fear of chaos, poor health habits, and an environment that doesn't support your goals. Each steals time and energy from your ONE Thing.",
+        "Gary Keller's framework from [The ONE Thing](https://www.the1thing.com/): inability to say no, fear of chaos, poor health habits, and an environment that doesn't support your goals. Each steals time and energy from your ONE Thing.",
     },
     {
       question: "Can I have more than one thief?",

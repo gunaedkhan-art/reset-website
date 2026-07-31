@@ -429,12 +429,12 @@ export const howToDoDeepWorkConfig = {
     {
       question: "How long should a deep work session be?",
       answer:
-        "Start with 45–90 minutes. Newport's research suggests 1–4 hour blocks for experts, but a consistent shorter block beats an occasional marathon.",
+        "Start with 45–90 minutes. [Cal Newport](https://calnewport.com/)'s research in [Deep Work](https://calnewport.com/books/deep-work/) suggests 1–4 hour blocks for experts, but a consistent shorter block beats an occasional marathon.",
     },
     {
       question: "How is this different from \"How to focus at work\"?",
       answer:
-        "That tool targets workplace distractions. This one follows the Deep Work framework — scheduling philosophy, draining shallow work, and building focus rituals.",
+        "That tool targets workplace distractions. This one follows the [Deep Work](https://calnewport.com/books/deep-work/) framework — scheduling philosophy, draining shallow work, and building focus rituals.",
     },
     {
       question: "Can I do deep work with a busy job?",

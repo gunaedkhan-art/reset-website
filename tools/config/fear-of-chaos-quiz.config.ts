@@ -254,7 +254,7 @@ export const fearOfChaosQuizConfig = {
   guidance: [
     {
       title: "Thief #2: fear of chaos",
-      body: "When you concentrate on ONE Thing, other things don't get done — Keller says accepting temporary chaos is the price of extraordinary results.",
+      body: "When you concentrate on ONE Thing, other things don't get done — [Gary Keller](https://www.the1thing.com/) says accepting temporary chaos is the price of extraordinary results.",
       list: [
         "Chaos is batched, not ignored forever",
         "Most anxiety overstates what actually breaks",
@@ -275,7 +275,7 @@ export const fearOfChaosQuizConfig = {
     {
       question: "What is fear of chaos in The ONE Thing?",
       answer:
-        "Keller's second thief of productivity — the worry that focusing on your priority means everything else collapses. The fix is batching \"everything else,\" not abandoning your ONE Thing.",
+        "[Gary Keller](https://www.the1thing.com/)'s second thief of productivity in [The ONE Thing](https://www.the1thing.com/) — the worry that focusing on your priority means everything else collapses. The fix is batching \"everything else,\" not abandoning your ONE Thing.",
     },
     {
       question: "How is this different from the Four Thieves quiz?",

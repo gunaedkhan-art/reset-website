@@ -39,8 +39,8 @@ for (const config of toolConfigManifest.filter((c) => c.status === "published"))
 
   if (config.mode === "calculator" && config.flow.type === "calculator") {
     const flow = config.flow;
-    if (flow.engine === "savings-path") {
-      test("savings path config is registered", () => {
+    if (flow.engine === "savings-path" || flow.engine === "one-thing-weekly") {
+      test(`${flow.engine} config is registered`, () => {
         assert.equal(config.mode, "calculator");
         assert.ok(config.results.emptyMessage);
         assert.ok(config.results.templates.length > 0);

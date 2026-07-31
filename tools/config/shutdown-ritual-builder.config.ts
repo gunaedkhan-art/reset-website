@@ -342,7 +342,7 @@ export const shutdownRitualBuilderConfig = {
   guidance: [
     {
       title: "Why a shutdown ritual works",
-      body: "Cal Newport argues that incomplete plans keep the brain in \"work mode.\" A fixed ritual captures open loops and gives your mind permission to disengage.",
+      body: "[Cal Newport](https://calnewport.com/) argues that incomplete plans keep the brain in \"work mode.\" A fixed ritual captures open loops and gives your mind permission to disengage.",
       list: [
         "Same steps daily — the ritual becomes automatic",
         "The phrase \"Shutdown complete\" is a cognitive off-switch",
@@ -363,7 +363,7 @@ export const shutdownRitualBuilderConfig = {
     {
       question: "What is Cal Newport's shutdown ritual?",
       answer:
-        "A fixed end-of-day routine: review tasks, plan tomorrow, capture open loops, and say \"Shutdown complete\" — signaling that work thinking is done until the next session.",
+        "A fixed end-of-day routine from [Cal Newport](https://calnewport.com/)'s [Deep Work](https://calnewport.com/books/deep-work/): review tasks, plan tomorrow, capture open loops, and say \"Shutdown complete\" — signaling that work thinking is done until the next session.",
     },
     {
       question: "How long should it take?",

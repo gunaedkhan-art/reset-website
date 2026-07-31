@@ -11,6 +11,7 @@ import {
   webApplicationSchema,
 } from "@/lib/seo";
 import { getConfigBySlug } from "@/lib/tool-engine/compiler/manifest";
+import { RichText } from "@/lib/content/rich-text";
 import { resolveToolTheme } from "@/lib/tools/resolve-tool-theme";
 import { cn } from "@/lib/utils";
 import type { ToolTemplateProps } from "@/types/tool";
@@ -267,7 +268,7 @@ export function ToolTemplate({
                     {item.question}
                   </dt>
                   <dd className="mt-2 text-sm leading-relaxed text-neutral-600">
-                    {item.answer}
+                    <RichText text={item.answer} />
                   </dd>
                 </div>
               ))}

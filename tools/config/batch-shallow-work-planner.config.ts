@@ -231,7 +231,7 @@ export const batchShallowWorkPlannerConfig = {
   guidance: [
     {
       title: "Drain the shallows",
-      body: "Cal Newport argues shallow work expands to fill available time unless batched and capped — deep work gets what's left otherwise.",
+      body: "[Cal Newport](https://calnewport.com/) argues shallow work expands to fill available time unless batched and capped — deep work gets what's left otherwise. See [Deep Work](https://calnewport.com/books/deep-work/).",
       list: [
         "Email, Slack, admin = shallow — batch together",
         "Deep work gets protected blocks first",
@@ -252,7 +252,7 @@ export const batchShallowWorkPlannerConfig = {
     {
       question: "What is batching shallow work?",
       answer:
-        "Processing email, Slack, and admin in fixed windows instead of all day — so deep work blocks stay uninterrupted. Core to Newport's \"drain the shallows.\"",
+        "Processing email, Slack, and admin in fixed windows instead of all day — so deep work blocks stay uninterrupted. Core to [Cal Newport](https://calnewport.com/)'s \"drain the shallows\" in [Deep Work](https://calnewport.com/books/deep-work/).",
     },
     {
       question: "How often should I check email?",
@@ -262,7 +262,7 @@ export const batchShallowWorkPlannerConfig = {
     {
       question: "How is this different from the shallow work audit?",
       answer:
-        "The audit quantifies how much is shallow. This tool schedules when to process it — action plan after the numbers.",
+        "The audit quantifies how much is shallow. This tool schedules when to process it — run the [Shallow Work Audit](/shallow-work-audit) first, then batch here.",
     },
   ],
 } satisfies Record<string, unknown>;

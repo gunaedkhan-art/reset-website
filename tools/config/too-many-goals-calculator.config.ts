@@ -185,7 +185,7 @@ export const tooManyGoalsCalculatorConfig = {
     {
       question: "How many goals should I have?",
       answer:
-        "Keller argues for ONE Thing per time horizon per life area — not five equal priorities. Other goals wait their turn in the sequence.",
+        "[Gary Keller](https://www.the1thing.com/) argues for ONE Thing per time horizon per life area — not five equal priorities. Other goals wait their turn in the sequence.",
     },
     {
       question: "Does this mean I can only care about one thing in life?",
@@ -195,7 +195,7 @@ export const tooManyGoalsCalculatorConfig = {
     {
       question: "What do I do with extra goals?",
       answer:
-        "Move them to a \"later\" list. Use Goal Setting to the Now to sequence them — dominoes, not simultaneous pushes.",
+        "Move them to a \"later\" list. Use [Goal Setting to the Now](/goal-setting-to-the-now) to sequence them — dominoes, not simultaneous pushes.",
     },
   ],
 

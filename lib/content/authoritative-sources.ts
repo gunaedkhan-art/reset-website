@@ -26,3 +26,13 @@ export const authoritativeSources = {
     href: "https://www.ics.uci.edu/~gmark/chi08.pdf",
   },
 } as const;
+
+/** Markdown link snippets for FAQ and guidance strings in configs. */
+export const sourceLinks = {
+  garyKeller: `[Gary Keller](${authoritativeSources.garyKeller.href})`,
+  theOneThing: `[The ONE Thing](${authoritativeSources.theOneThingBook.href})`,
+  calNewport: `[Cal Newport](${authoritativeSources.calNewport.href})`,
+  deepWork: `[Deep Work](${authoritativeSources.deepWorkBook.href})`,
+  digitalMinimalism: `[Digital Minimalism](${authoritativeSources.digitalMinimalismBook.href})`,
+  ucIrvineInterruptions: `[UC Irvine interruption research](${authoritativeSources.ucIrvineInterruptions.href})`,
+} as const;

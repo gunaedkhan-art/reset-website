@@ -213,12 +213,12 @@ export const protectYourOneThingTimeBlockConfig = {
     {
       question: "How long should a ONE Thing time block be?",
       answer:
-        "Gary Keller recommends blocking substantial time — often 90 minutes or more for knowledge work. If your calendar is tight, start with 45 minutes daily rather than skipping entirely.",
+        "[Gary Keller](https://www.the1thing.com/) recommends blocking substantial time — often 90 minutes or more for knowledge work. If your calendar is tight, start with 45 minutes daily rather than skipping entirely.",
     },
     {
       question: "When should I schedule my ONE Thing block?",
       answer:
-        "Before everything else — usually first thing in the workday when willpower is highest. Use the When to Do Deep Work tool if you need help picking the clock time.",
+        "Before everything else — usually first thing in the workday when willpower is highest. Use the [When to Do Deep Work](/when-to-do-deep-work) tool if you need help picking the clock time.",
     },
     {
       question: "What if meetings fill my morning?",

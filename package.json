@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "validate:tools": "node --import tsx scripts/validate-tools.ts",
-    "test:tools": "node --import tsx --test lib/tool-engine/**/*.test.ts lib/investment/**/*.test.ts lib/savings-path/**/*.test.ts",
+    "test:tools": "node --import tsx --test lib/tool-engine/**/*.test.ts lib/investment/**/*.test.ts lib/savings-path/**/*.test.ts lib/one-thing-weekly/**/*.test.ts",
     "test:tool-configs": "node --import tsx scripts/test-tool-configs.ts"
   },
   "dependencies": {

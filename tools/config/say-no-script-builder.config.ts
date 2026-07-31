@@ -233,7 +233,7 @@ export const sayNoScriptBuilderConfig = {
   guidance: [
     {
       title: "Thief #1: inability to say no",
-      body: "From The ONE Thing — when you say yes to everything, you go small on what matters most. A no to a request is a yes to your ONE Thing.",
+      body: "From [The ONE Thing](https://www.the1thing.com/) — when you say yes to everything, you go small on what matters most. A no to a request is a yes to your ONE Thing.",
     },
   ],
 

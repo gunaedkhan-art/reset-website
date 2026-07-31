@@ -308,12 +308,12 @@ export const goalSettingToTheNowConfig = {
     {
       question: "What is Goal Setting to the Now?",
       answer:
-        "A method from The ONE Thing that connects your someday goal to today's action by asking the Focusing Question at each time horizon — 5-year, 1-year, monthly, weekly, and daily.",
+        "A method from [The ONE Thing](https://www.the1thing.com/) that connects your someday goal to today's action by asking the [Focusing Question](https://www.the1thing.com/) at each time horizon — 5-year, 1-year, monthly, weekly, and daily.",
     },
     {
       question: "How many goals should I have?",
       answer:
-        "One ONE Thing per domain per horizon. Multiple goals at the same level means going small on all of them — Keller's \"economic reality.\"",
+        "One ONE Thing per domain per horizon. Multiple goals at the same level means going small on all of them — [Gary Keller](https://www.the1thing.com/)'s \"economic reality.\"",
     },
     {
       question: "What if my someday goal changes?",

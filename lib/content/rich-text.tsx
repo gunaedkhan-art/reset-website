@@ -1,9 +1,13 @@
 import Link from "next/link";
 import { Fragment, type ReactNode } from "react";
 
-const LINK_PATTERN = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+const LINK_PATTERN = /\[([^\]]+)\]\((https?:\/\/[^)]+|\/[^)]+)\)/g;
 
-/** Renders plain text with `[label](https://url)` markdown links. */
+function isExternalHref(href: string): boolean {
+  return href.startsWith("http://") || href.startsWith("https://");
+}
+
+/** Renders plain text with `[label](https://url)` or `[label](/path)` markdown links. */
 export function RichText({ text }: { text: string }) {
   const parts: ReactNode[] = [];
   let lastIndex = 0;
@@ -16,16 +20,25 @@ export function RichText({ text }: { text: string }) {
 
     const label = match[1];
     const href = match[2];
+    const linkClassName =
+      "font-medium text-neutral-900 underline decoration-neutral-300 underline-offset-2 hover:decoration-neutral-900";
+
     parts.push(
-      <Link
-        key={`${href}-${match.index}`}
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="font-medium text-neutral-900 underline decoration-neutral-300 underline-offset-2 hover:decoration-neutral-900"
-      >
-        {label}
-      </Link>,
+      isExternalHref(href) ? (
+        <Link
+          key={`${href}-${match.index}`}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={linkClassName}
+        >
+          {label}
+        </Link>
+      ) : (
+        <Link key={`${href}-${match.index}`} href={href} className={linkClassName}>
+          {label}
+        </Link>
+      ),
     );
     lastIndex = match.index + match[0].length;
   }

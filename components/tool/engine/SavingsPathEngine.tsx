@@ -22,6 +22,7 @@ import {
 } from "@/components/tool";
 import { getToolIconName } from "@/components/tool/ToolIcon";
 import { trackEvent } from "@/lib/analytics/track-client";
+import { RichText } from "@/lib/content/rich-text";
 import { siteConfig } from "@/lib/site";
 import {
   breadcrumbSchema,
@@ -823,7 +824,7 @@ export function SavingsPathEngine({
                     {item.question}
                   </dt>
                   <dd className="mt-2 text-sm leading-relaxed text-neutral-600">
-                    {item.answer}
+                    <RichText text={item.answer} />
                   </dd>
                 </div>
               ))}

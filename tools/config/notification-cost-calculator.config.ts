@@ -198,7 +198,7 @@ export const notificationCostCalculatorConfig = {
     {
       question: "Is 5 minutes per notification realistic?",
       answer:
-        "UC Irvine research found ~23 minutes to fully resume deep work after some interruptions. We use 5 minutes as a conservative daily-life average.",
+        "UC Irvine research found ~23 minutes to fully resume deep work after some interruptions. We use 5 minutes as a conservative daily-life average. See [UC Irvine interruption research](https://www.ics.uci.edu/~gmark/chi08.pdf) for the original study.",
     },
     {
       question: "Where does the earnings figure come from?",

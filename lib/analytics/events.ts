@@ -19,6 +19,11 @@ export type ToolAnalyticsEvent =
       tool_slug: string;
     }
   | {
+      name: "one_thing_weekly_checkin";
+      tool_slug: string;
+      status: "yes" | "partial" | "skipped";
+    }
+  | {
       name: "newsletter_signup";
       source: string;
       tool_slug?: string;

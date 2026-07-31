@@ -45,6 +45,10 @@ export const recommendedStarterTools: RecommendedStarterTool[] = [
     reason: "Track savings on one simple line — no spreadsheet required.",
   },
   {
+    slug: "one-thing-weekly-check-in",
+    reason: "Set your ONE Thing for the week and check in daily — yes, partial, or missed.",
+  },
+  {
     slug: "investment-growth-calculator",
     reason: "Project how contributions and growth compound over time.",
   },

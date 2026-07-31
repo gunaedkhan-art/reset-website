@@ -224,7 +224,7 @@ export const deepWorkVsPomodoroConfig = {
     {
       question: "Can I use Pomodoro for deep work?",
       answer:
-        "Pomodoro helps build stamina and fits short calendars. For writing, coding, and strategy, Newport recommends extending into 60–90 minute blocks once you can sustain focus.",
+        "Pomodoro helps build stamina and fits short calendars. For writing, coding, and strategy, [Cal Newport](https://calnewport.com/) recommends extending into 60–90 minute blocks once you can sustain focus — see [Deep Work](https://calnewport.com/books/deep-work/).",
     },
     {
       question: "Which is better for studying?",

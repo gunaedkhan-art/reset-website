@@ -211,7 +211,7 @@ export const fixedScheduleProductivityCalculatorConfig = {
     {
       question: "What is fixed-schedule productivity?",
       answer:
-        "Cal Newport's method: commit to when your workday ends, then fit deep work, meetings, and shallow tasks inside that cap — forcing tradeoffs instead of endless evenings.",
+        "[Cal Newport](https://calnewport.com/)'s method: commit to when your workday ends, then fit deep work, meetings, and shallow tasks inside that cap — forcing tradeoffs instead of endless evenings. See [Deep Work](https://calnewport.com/books/deep-work/) for the fixed-schedule philosophy.",
     },
     {
       question: "What if my schedule doesn't fit?",
@@ -221,7 +221,7 @@ export const fixedScheduleProductivityCalculatorConfig = {
     {
       question: "How is this different from the shallow work audit?",
       answer:
-        "The audit shows shallow vs deep ratio. This calculator tests whether your desired deep hours fit a fixed end time — planning backward from the cap.",
+        "The [Shallow Work Audit](/shallow-work-audit) shows shallow vs deep ratio. This calculator tests whether your desired deep hours fit a fixed end time — planning backward from the cap.",
     },
   ],
 

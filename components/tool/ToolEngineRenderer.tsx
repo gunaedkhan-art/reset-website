@@ -6,6 +6,7 @@ import { CalculatorEngine } from "./engine/CalculatorEngine";
 import { DecisionTreeEngine } from "./engine/DecisionTreeEngine";
 import { ProjectionCalculatorEngine } from "./engine/ProjectionCalculatorEngine";
 import { SavingsPathEngine } from "./engine/SavingsPathEngine";
+import { OneThingWeeklyEngine } from "./engine/OneThingWeeklyEngine";
 
 interface ToolEngineRendererProps {
   config: ToolConfig;
@@ -32,6 +33,16 @@ export function ToolEngineRenderer({
     if (config.flow.engine === "savings-path") {
       return (
         <SavingsPathEngine
+          config={config}
+          relatedTools={relatedTools}
+          categoryName={categoryName}
+        />
+      );
+    }
+
+    if (config.flow.engine === "one-thing-weekly") {
+      return (
+        <OneThingWeeklyEngine
           config={config}
           relatedTools={relatedTools}
           categoryName={categoryName}

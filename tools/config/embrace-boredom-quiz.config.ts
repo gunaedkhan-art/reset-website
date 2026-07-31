@@ -231,7 +231,7 @@ export const embraceBoredomQuizConfig = {
     {
       question: "Why embrace boredom for deep work?",
       answer:
-        "Deep work often feels boring before flow arrives. If you're trained to flee boredom via phone or tabs, you'll never sustain the concentration Newport describes.",
+        "Deep work often feels boring before flow arrives. If you're trained to flee boredom via phone or tabs, you'll never sustain the concentration [Cal Newport](https://calnewport.com/) describes in [Deep Work](https://calnewport.com/books/deep-work/).",
     },
     {
       question: "How long should boredom practice take?",
@@ -241,7 +241,7 @@ export const embraceBoredomQuizConfig = {
     {
       question: "Is boredom the same as meditation?",
       answer:
-        "Related but simpler — Newport's point is tolerating unstimulated moments. Productive meditation is structured; boredom reps can be just waiting without your phone.",
+        "Related but simpler — [Cal Newport](https://calnewport.com/)'s point is tolerating unstimulated moments. Productive meditation is structured; boredom reps can be just waiting without your phone.",
     },
   ],
 } satisfies Record<string, unknown>;
