@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ActiveTrackersSection } from "@/components/home/ActiveTrackersSection";
 import { ClusterHubCard, ThemedToolIconBadge } from "@/components/tool";
 import { ToolIconForConfig } from "@/components/tool/ToolIcon";
 import { Callout } from "@/components/ui/Callout";
@@ -91,6 +92,8 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
           }
         />
       </Section>
+
+      <ActiveTrackersSection />
 
       <Section spacing="md">
         <form

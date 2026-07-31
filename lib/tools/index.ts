@@ -35,6 +35,13 @@ export {
   type ToolClusterHub,
 } from "./cluster-hubs";
 export {
+  getClusterJourney,
+  isRepeatUseTool,
+  REPEAT_USE_TOOL_SLUGS,
+  type ClusterJourney,
+  type ClusterJourneyStep,
+} from "./cluster-journeys";
+export {
   clusterThemes,
   getThemeForCluster,
   getThemeForCategory,

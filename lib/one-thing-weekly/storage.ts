@@ -1,3 +1,4 @@
+import { notifyTrackersUpdated } from "@/lib/trackers/events";
 import type { OneThingWeeklyStore, WeeklyPlan } from "./types";
 import {
   ONE_THING_WEEKLY_STORAGE_KEY,
@@ -56,6 +57,7 @@ export function loadOneThingWeeklyStore(): OneThingWeeklyStore {
 export function saveOneThingWeeklyStore(store: OneThingWeeklyStore): void {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(ONE_THING_WEEKLY_STORAGE_KEY, JSON.stringify(store));
+  notifyTrackersUpdated();
 }
 
 export function clearOneThingWeeklyStore(): void {

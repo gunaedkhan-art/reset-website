@@ -8,13 +8,15 @@ import { loadOneThingWeeklyStore } from "@/lib/one-thing-weekly/storage";
 import { todayIsoDate } from "@/lib/one-thing-weekly/format";
 import { loadSavingsPathPlan } from "@/lib/savings-path/storage";
 import { clusterThemes } from "@/lib/tools/cluster-themes";
+import { TRACKERS_UPDATED_EVENT } from "@/lib/trackers/events";
 import {
   buildHomeTrackerWidgets,
   hasActiveHomeTrackers,
+  type HomeTrackerWidgets,
 } from "@/lib/trackers/home-widgets";
 import { cn } from "@/lib/utils";
 
-const emptyWidgets = { savingsPath: null, oneThingWeekly: null };
+const emptyWidgets: HomeTrackerWidgets = { savingsPath: null, oneThingWeekly: null };
 
 function readHomeTrackerWidgets() {
   if (typeof window === "undefined") return emptyWidgets;
@@ -26,11 +28,36 @@ function readHomeTrackerWidgets() {
   );
 }
 
+function subscribeToTrackerUpdates(onStoreChange: () => void) {
+  const handler = () => onStoreChange();
+  window.addEventListener(TRACKERS_UPDATED_EVENT, handler);
+  window.addEventListener("storage", handler);
+  window.addEventListener("focus", handler);
+  return () => {
+    window.removeEventListener(TRACKERS_UPDATED_EVENT, handler);
+    window.removeEventListener("storage", handler);
+    window.removeEventListener("focus", handler);
+  };
+}
+
+let cachedWidgetsSnapshot = JSON.stringify(emptyWidgets);
+let cachedWidgets: HomeTrackerWidgets = emptyWidgets;
+
+function getTrackerWidgetsSnapshot() {
+  const widgets = readHomeTrackerWidgets();
+  const nextSnapshot = JSON.stringify(widgets);
+  if (nextSnapshot !== cachedWidgetsSnapshot) {
+    cachedWidgetsSnapshot = nextSnapshot;
+    cachedWidgets = widgets;
+  }
+  return cachedWidgets;
+}
+
 /** Shows compact continue cards when repeat-use trackers have saved local data. */
 export function ActiveTrackersSection() {
   const widgets = useSyncExternalStore(
-    () => () => {},
-    readHomeTrackerWidgets,
+    subscribeToTrackerUpdates,
+    getTrackerWidgetsSnapshot,
     () => emptyWidgets,
   );
 

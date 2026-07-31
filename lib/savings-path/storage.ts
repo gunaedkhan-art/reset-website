@@ -1,3 +1,4 @@
+import { notifyTrackersUpdated } from "@/lib/trackers/events";
 import type { SavingsPathPlan } from "./types";
 import { SAVINGS_PATH_STORAGE_KEY } from "./types";
 
@@ -16,6 +17,7 @@ export function loadSavingsPathPlan(): SavingsPathPlan | null {
 export function saveSavingsPathPlan(plan: SavingsPathPlan): void {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(SAVINGS_PATH_STORAGE_KEY, JSON.stringify(plan));
+  notifyTrackersUpdated();
 }
 
 export function clearSavingsPathPlan(): void {
