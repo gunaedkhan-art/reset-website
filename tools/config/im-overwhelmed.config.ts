@@ -30,7 +30,29 @@ export const imOverwhelmedConfig = {
   content: {
     h1: "I'm Overwhelmed",
     intro:
-      "Overwhelm isn't a character flaw — it's too many open loops for one brain. Four questions to find your pattern and a plan to make today manageable.",
+      "Four questions to find your pattern and a plan to make today manageable.",
+    icon: "checklist",
+    proseTitle: "About overwhelm",
+    sections: [
+      {
+        id: "problem",
+        heading: "Too many open loops",
+        framework: "pas",
+        body: "Every obligation screams equally loud — work, home, health, relationships. Your brain can't prioritize under load, so you freeze or scatter while guilt compounds.",
+      },
+      {
+        id: "concept",
+        heading: "Triage before optimization",
+        framework: "concept",
+        body: "Overwhelm isn't solved by a better todo app — it's solved by closing loops: capture everything, pick one thing, defer the rest visibly. Relief comes from a smaller today, not a perfect plan for the month.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your overwhelm pattern plus a relief plan — brain dump, one priority, boundary, or rest — sized to make today survivable.",
+      },
+    ],
     eyebrow: "Interactive relief plan",
   },
 

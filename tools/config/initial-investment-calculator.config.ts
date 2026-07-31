@@ -36,7 +36,29 @@ export const initialInvestmentCalculatorConfig = {
   content: {
     h1: "Initial Investment Calculator",
     intro:
-      "How much do you need to put in today? Enter your goal, timeline, future contributions, and growth assumption — get the upfront amount required to hit your target.",
+      "Enter your goal, timeline, future contributions, and growth assumption — get the upfront lump sum required today.",
+    icon: "coin",
+    proseTitle: "About lump-sum planning",
+    sections: [
+      {
+        id: "problem",
+        heading: "Do I have enough to start?",
+        framework: "pas",
+        body: "You know what you'll contribute monthly — but wonder whether today's balance is too low to reach the target on time, or whether a bigger upfront deposit changes the math materially.",
+      },
+      {
+        id: "concept",
+        heading: "Front-load vs contribute over time",
+        framework: "concept",
+        body: "Starting balance and ongoing contributions interact through compounding — money invested earlier has more time to grow. This calculator solves for the lump sum needed today given your future contribution plan.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Required starting amount, comparison to what you have now, and a year-by-year projection with chart.",
+      },
+    ],
     eyebrow: "Investment",
   },
 

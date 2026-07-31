@@ -36,7 +36,29 @@ export const savingsGoalCalculatorConfig = {
   content: {
     h1: "Savings Goal Calculator",
     intro:
-      "Work backwards from a target balance. Enter your goal, starting amount, timeline, and growth assumption — get the contribution amount required on your chosen schedule.",
+      "Enter your goal, starting amount, timeline, and growth assumption — get the contribution required on your chosen schedule.",
+    icon: "coin",
+    proseTitle: "About this calculator",
+    sections: [
+      {
+        id: "problem",
+        heading: "A target without a monthly number",
+        framework: "pas",
+        body: "\"Save for retirement\" or \"build an emergency fund\" stays vague until you know what to set aside each paycheck — and whether your timeline is realistic.",
+      },
+      {
+        id: "concept",
+        heading: "Work backwards from the goal",
+        framework: "concept",
+        body: "This calculator reverse-engineers required contributions from your target balance, starting point, growth rate, and timeline — so the plan becomes a number you can automate.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Required contribution per period, total deposited, growth from compounding, and a chart showing the path to your goal.",
+      },
+    ],
     eyebrow: "Investment",
   },
 

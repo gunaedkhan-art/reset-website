@@ -30,7 +30,29 @@ export const whatShouldIDoFor15MinutesConfig = {
   content: {
     h1: "What Should I Do for 15 Minutes?",
     intro:
-      "Fifteen minutes is enough for a real win — if you pick the right thing. Three questions, one matched activity, timer-ready.",
+      "Three questions, one matched activity — timer-ready and sized for a real win.",
+    icon: "clock",
+    proseTitle: "About 15-minute wins",
+    sections: [
+      {
+        id: "problem",
+        heading: "A gap with no plan",
+        framework: "pas",
+        body: "You have fifteen minutes — not enough for a big project, too much to waste on scroll. Without a matched activity, the gap defaults to phone or busywork.",
+      },
+      {
+        id: "concept",
+        heading: "Micro-windows compound",
+        framework: "concept",
+        body: "Fifteen minutes is enough for maintenance, one work step, body reset, or connection — if chosen intentionally. Small windows stacked daily beat waiting for a free afternoon.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "One activity matched to your energy, location, and whether you need progress, order, or recovery.",
+      },
+    ],
     eyebrow: "15-minute picker",
   },
 

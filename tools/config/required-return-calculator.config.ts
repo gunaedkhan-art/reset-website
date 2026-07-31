@@ -36,7 +36,29 @@ export const requiredReturnCalculatorConfig = {
   content: {
     h1: "Required Return Calculator",
     intro:
-      "What annual growth rate closes the gap between today and your goal? Enter your target, timeline, starting balance, and contribution plan to see the required return — then compare it to historical market averages.",
+      "Enter your target, timeline, starting balance, and contribution plan — see the annual growth rate required to close the gap.",
+    icon: "calculator",
+    proseTitle: "About required return",
+    sections: [
+      {
+        id: "problem",
+        heading: "Hope is not a growth rate",
+        framework: "pas",
+        body: "Your goal assumes the market cooperates — but you haven't checked whether the required return is realistic given how much you save and how long you have.",
+      },
+      {
+        id: "concept",
+        heading: "Stress-test your assumptions",
+        framework: "concept",
+        body: "This calculator solves for the annual return needed to hit your target. If the number far exceeds historical averages, you adjust timeline, contributions, or expectations — before betting on optimism.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Required annual growth rate, comparison to common benchmark ranges, and projection if you use a more conservative rate instead.",
+      },
+    ],
     eyebrow: "Investment",
   },
 

@@ -30,7 +30,29 @@ export const iCantStickToHabitsConfig = {
   content: {
     h1: "I Can't Stick to Habits",
     intro:
-      "If habits keep dying after a week, the design is wrong — not you. Four questions to find the failure point and rebuild something that lasts.",
+      "Four questions to find the failure point and rebuild something that lasts.",
+    icon: "checklist",
+    proseTitle: "About habit design",
+    sections: [
+      {
+        id: "problem",
+        heading: "Week one enthusiasm, week three silence",
+        framework: "pas",
+        body: "You start strong — gym, journaling, early wake — then life interrupts and the streak dies. Each restart feels like proof you lack discipline.",
+      },
+      {
+        id: "concept",
+        heading: "Habits fail in design, not character",
+        framework: "concept",
+        body: "Sticky habits are tiny, cue-linked, and friction-matched to your life — not aspirational leaps. If it requires daily heroics, the system is too big; shrink the behavior until missing it feels odd.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your failure point — too big, no cue, no reward, environment conflict, or all-or-nothing thinking — plus a rebuild plan.",
+      },
+    ],
     eyebrow: "Habit diagnostic",
   },
 

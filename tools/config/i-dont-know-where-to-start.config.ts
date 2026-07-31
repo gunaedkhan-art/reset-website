@@ -30,7 +30,29 @@ export const iDontKnowWhereToStartConfig = {
   content: {
     h1: "I Don't Know Where to Start",
     intro:
-      "Starting isn't about motivation — it's about making the next step small enough that your brain says yes. Four questions, one first move.",
+      "Four questions, one first move — small enough that your brain says yes.",
+    icon: "blocks",
+    proseTitle: "About getting started",
+    sections: [
+      {
+        id: "problem",
+        heading: "Paralyzed at the starting line",
+        framework: "pas",
+        body: "The project is clear in theory but impossible to begin — too many entry points, no obvious first step, and the gap between zero and done feels uncrossable.",
+      },
+      {
+        id: "concept",
+        heading: "Shrink until you can start",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) treats the lead domino as a physical first action — open the file, write one line, make one call — not \"finish the project.\" Starting is a design problem, not a motivation problem.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "One concrete first move matched to what's blocking you — vagueness, size, fear, or waiting on others.",
+      },
+    ],
     eyebrow: "First-step finder",
   },
 

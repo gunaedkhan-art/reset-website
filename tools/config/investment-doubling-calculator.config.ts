@@ -36,7 +36,29 @@ export const investmentDoublingCalculatorConfig = {
   content: {
     h1: "Investment Doubling Calculator",
     intro:
-      "How long until your money doubles? Enter a starting balance and expected annual growth rate — see the exact compounding timeline and compare it to the quick Rule of 72 estimate.",
+      "Enter starting balance and expected annual growth — see exact doubling time and compare to the Rule of 72.",
+    icon: "chart",
+    proseTitle: "About doubling time",
+    sections: [
+      {
+        id: "problem",
+        heading: "How long until it doubles?",
+        framework: "pas",
+        body: "Doubling is the intuitive milestone for compounding — but mental math with the Rule of 72 is approximate, and small rate changes shift the timeline more than you'd guess.",
+      },
+      {
+        id: "concept",
+        heading: "Rule of 72 vs exact compounding",
+        framework: "concept",
+        body: "Divide 72 by your annual rate for a quick doubling estimate. Exact monthly compounding gives a precise answer — useful when comparing conservative vs optimistic rate assumptions.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Exact doubling time, Rule of 72 estimate, balance at double, and a chart of growth to the doubling point.",
+      },
+    ],
     eyebrow: "Investment",
   },
 

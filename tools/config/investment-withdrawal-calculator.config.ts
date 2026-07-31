@@ -36,7 +36,29 @@ export const investmentWithdrawalCalculatorConfig = {
   content: {
     h1: "Investment Withdrawal Calculator",
     intro:
-      "How long until the account runs out? Enter your starting balance, monthly withdrawal, and an expected growth rate — see how long your money lasts with a year-by-year drawdown projection.",
+      "Enter starting balance, monthly withdrawal, and growth rate — see how long your money lasts with a year-by-year drawdown.",
+    icon: "coin",
+    proseTitle: "About withdrawal duration",
+    sections: [
+      {
+        id: "problem",
+        heading: "Will the money outlast the withdrawals?",
+        framework: "pas",
+        body: "Retirement or sabbatical planning hinges on one question: at this spend rate and return assumption, when does the account hit zero — or does growth keep pace?",
+      },
+      {
+        id: "concept",
+        heading: "Drawdown vs growth",
+        framework: "concept",
+        body: "Monthly withdrawals reduce balance while returns add back. The crossover depends on withdrawal size, rate of return, and sequence of returns — this calculator models a steady draw at your assumed growth rate.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Years until depletion, total withdrawn, remaining balance trajectory, and a year-by-year drawdown table.",
+      },
+    ],
     eyebrow: "Investment",
   },
 

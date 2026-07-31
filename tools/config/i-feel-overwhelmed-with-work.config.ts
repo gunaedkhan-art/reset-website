@@ -30,7 +30,29 @@ export const iFeelOverwhelmedWithWorkConfig = {
   content: {
     h1: "I Feel Overwhelmed With Work",
     intro:
-      "Work overwhelm isn't solved by working harder — it's solved by triage. Four questions to find what's crushing you and a plan to make today survivable.",
+      "Four questions to find what's crushing you and a triage plan to make today survivable.",
+    icon: "checklist",
+    proseTitle: "About work overwhelm",
+    sections: [
+      {
+        id: "problem",
+        heading: "When work won't fit in the week",
+        framework: "pas",
+        body: "Deadlines stack, inbox never empties, and every meeting adds homework. Working harder just adds hours — without clarifying what actually moves the needle today.",
+      },
+      {
+        id: "concept",
+        heading: "Work triage, not heroics",
+        framework: "concept",
+        body: "[Cal Newport](https://calnewport.com/) distinguishes shallow overload from deep priorities — triage means naming what ships today, what waits, and what gets declined, not clearing every notification.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your work-overwhelm type — volume, unclear priorities, people demands, or perfection — plus a same-day triage plan.",
+      },
+    ],
     eyebrow: "Work triage",
   },
 

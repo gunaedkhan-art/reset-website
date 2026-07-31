@@ -30,7 +30,29 @@ export const helpMeStartMyHomeworkConfig = {
   content: {
     h1: "Help Me Start My Homework",
     intro:
-      "Homework feels heavy because starting is the hardest part. Four questions — then one small move to get you in the seat and opening the assignment.",
+      "Four questions — then one small move to get you in the seat and opening the assignment.",
+    icon: "blocks",
+    proseTitle: "About homework activation",
+    sections: [
+      {
+        id: "problem",
+        heading: "The assignment feels heavier than it is",
+        framework: "pas",
+        body: "You know it's due — but opening the LMS, finding the prompt, and facing uncertainty keeps you on your phone or doing anything else. Starting is the bottleneck, not ability.",
+      },
+      {
+        id: "concept",
+        heading: "Micro-start for students",
+        framework: "concept",
+        body: "Homework resistance is usually overwhelm, boredom, or fear of doing it wrong. A two-minute physical start — open doc, read rubric, write a bad outline — breaks the seal without requiring full focus upfront.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "One activation step matched to your blocker — unclear assignment, dread, distraction, or fatigue — plus a short work block plan.",
+      },
+    ],
     eyebrow: "Homework starter",
   },
 

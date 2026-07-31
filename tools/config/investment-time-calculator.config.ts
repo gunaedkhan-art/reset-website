@@ -36,7 +36,29 @@ export const investmentTimeCalculatorConfig = {
   content: {
     h1: "Investment Time Calculator",
     intro:
-      "How long until you hit your target? Enter your goal, what you have today, your contribution plan, and a growth assumption — get the timeline with a year-by-year projection.",
+      "Enter your goal, current balance, contribution plan, and growth assumption — see how long until you get there.",
+    icon: "chart",
+    proseTitle: "About time to goal",
+    sections: [
+      {
+        id: "problem",
+        heading: "When will I actually hit the number?",
+        framework: "pas",
+        body: "You're saving consistently but the finish line feels fuzzy — is it five years or twenty? Without a timeline, it's hard to adjust contributions or expectations.",
+      },
+      {
+        id: "concept",
+        heading: "Time, rate, and contributions trade off",
+        framework: "concept",
+        body: "The same goal arrives sooner with higher contributions, higher growth assumptions, or a lower target. This calculator shows the timeline implied by your current plan.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Years and months to reach your target, final projected balance, and a year-by-year table to stress-test assumptions.",
+      },
+    ],
     eyebrow: "Investment",
   },
 

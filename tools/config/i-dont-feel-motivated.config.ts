@@ -30,7 +30,29 @@ export const iDontFeelMotivatedConfig = {
   content: {
     h1: "I Don't Feel Motivated",
     intro:
-      "Motivation is unreliable — but action creates momentum. Four questions to find what's draining you and a plan that doesn't depend on feeling inspired.",
+      "Four questions to find what's draining you and a plan that doesn't depend on feeling inspired.",
+    icon: "focus",
+    proseTitle: "About motivation",
+    sections: [
+      {
+        id: "problem",
+        heading: "Waiting to feel ready",
+        framework: "pas",
+        body: "You know what to do but can't summon the energy — so tasks slip while you wait for inspiration that doesn't arrive on schedule.",
+      },
+      {
+        id: "concept",
+        heading: "Action before motivation",
+        framework: "concept",
+        body: "Motivation often follows motion, not the reverse. Small starts, fixed cues, and environment design beat waiting to \"feel like it\" — especially for work that matters but isn't exciting.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "What's draining you — fatigue, meaning gap, fear, or habit drift — plus a plan built on action triggers, not willpower.",
+      },
+    ],
     eyebrow: "Motivation diagnostic",
   },
 
