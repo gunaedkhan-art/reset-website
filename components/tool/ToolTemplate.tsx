@@ -10,17 +10,22 @@ import {
   faqSchema,
   webApplicationSchema,
 } from "@/lib/seo";
+import { getConfigBySlug } from "@/lib/tool-engine/compiler/manifest";
+import { resolveToolTheme } from "@/lib/tools/resolve-tool-theme";
 import { cn } from "@/lib/utils";
 import type { ToolTemplateProps } from "@/types/tool";
 import { ToolAppDownload } from "./ToolAppDownload";
 import { ToolCalculateButton } from "./ToolCalculateButton";
+import { ToolClusterHero } from "./ToolClusterHero";
 import {
   ToolContainer,
   ToolFormSection,
   ToolRelatedSection,
   ToolResultsSection,
 } from "./ToolContainer";
+import { ToolIconForConfig, getToolIconName } from "./ToolIcon";
 import { ToolNewsletterSignup } from "./ToolNewsletterSignup";
+import { ToolPageProse } from "./ToolPageProse";
 
 export function ToolTemplate({
   path,
@@ -50,7 +55,10 @@ export function ToolTemplate({
   formId = "tool-form",
   onSubmit,
   className,
+  config,
 }: ToolTemplateProps) {
+  const resolvedTheme = config ? resolveToolTheme(config) : null;
+  const resolvedThemeColor = resolvedTheme?.accent ?? themeColor;
   const toolPath =
     path ??
     (breadcrumbs.length > 0
@@ -129,17 +137,30 @@ export function ToolTemplate({
           </nav>
 
           {category && (
-            <p className="mb-3 text-sm font-medium uppercase tracking-wider text-neutral-500">
+            <p
+              className="mb-3 text-sm font-medium uppercase tracking-wider"
+              style={{ color: resolvedTheme?.primary ?? undefined }}
+            >
               {category}
             </p>
           )}
 
-          <header className="mb-10 space-y-4">
+          {config && resolvedTheme && (
+            <ToolClusterHero
+              theme={resolvedTheme}
+              icon={getToolIconName(config)}
+              title={config.content.h1}
+            />
+          )}
+
+          <header className="mb-8 space-y-4">
             <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
               {title}
             </h1>
             <p className="text-lg leading-relaxed text-neutral-600">{description}</p>
           </header>
+
+          {config && <ToolPageProse config={config} />}
 
           <form id={formId} onSubmit={handleSubmit} noValidate>
             {formContent}
@@ -171,7 +192,7 @@ export function ToolTemplate({
         <ToolAppDownload
           title={appCtaTitle}
           description={appCtaDescription}
-          themeColor={themeColor}
+          themeColor={resolvedThemeColor}
           toolSlug={toolSlug}
         />
       )}
@@ -191,15 +212,34 @@ export function ToolTemplate({
           <ToolRelatedSection>
             {relatedTools.length > 0 ? (
               <ul className="grid gap-4 sm:grid-cols-2">
-                {relatedTools.map((tool) => (
+                {relatedTools.map((tool) => {
+                  const relatedConfig = getConfigBySlug(tool.slug);
+                  const relatedTheme = relatedConfig
+                    ? resolveToolTheme(relatedConfig)
+                    : null;
+                  return (
                   <li key={tool.slug}>
                     <InfoCard
                       title={tool.title}
                       description={tool.description}
                       href={tool.href}
+                      icon={
+                        relatedConfig ? (
+                          <div
+                            className="flex h-10 w-10 items-center justify-center rounded-xl"
+                            style={{
+                              backgroundColor: relatedTheme?.muted ?? "#f5f5f5",
+                              color: relatedTheme?.primary ?? "#404040",
+                            }}
+                          >
+                            <ToolIconForConfig config={relatedConfig} size={20} />
+                          </div>
+                        ) : undefined
+                      }
                     />
                   </li>
-                ))}
+                  );
+                })}
               </ul>
             ) : (
               <p className="text-sm text-neutral-500">

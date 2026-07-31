@@ -31,7 +31,29 @@ export const notificationCostCalculatorConfig = {
   content: {
     h1: "Notification Cost Calculator",
     intro:
-      "Calculate the real cost of phone notifications — interruptions per year, hours lost to refocusing, and what that means for productivity and earnings.",
+      "Your phone pings dozens of times a day — but what's the real cost in lost focus hours? Enter your daily notification count and see the annual impact.",
+    icon: "phone",
+    proseTitle: "About this calculator",
+    sections: [
+      {
+        id: "problem",
+        heading: "Death by a thousand pings",
+        framework: "pas",
+        body: "Each notification breaks concentration — even the ones you ignore. Over a day, those fragments add up to hours spent recovering instead of doing meaningful work.",
+      },
+      {
+        id: "agitation",
+        heading: "What interruptions actually cost",
+        framework: "pas",
+        body: "[UC Irvine interruption research](https://www.ics.uci.edu/~gmark/chi08.pdf) found it can take more than 23 minutes to return to deep work after some interruptions. This calculator uses a conservative 5-minute average per ping — distraction plus refocus time.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "aida",
+        body: "You'll see estimated interruptions per year, hours lost to recovery, work-days equivalent, and an illustrative earnings impact you can scale to your own rate.",
+      },
+    ],
   },
 
   mode: "calculator" as const,

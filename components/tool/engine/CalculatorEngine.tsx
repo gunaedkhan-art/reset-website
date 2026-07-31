@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { ToolTemplate } from "@/components/tool";
-import { Callout } from "@/components/ui/Callout";
 import { Input } from "@/components/ui/Input";
 import { ResultCard } from "@/components/ui/ResultCard";
 import { trackEvent } from "@/lib/analytics/track-client";
@@ -88,23 +87,10 @@ export function CalculatorEngine({
       description={config.content.intro}
       category={categoryName ?? config.content.eyebrow}
       relatedTools={relatedTools}
+      config={config}
       onSubmit={handleSubmit}
-      themeColor={config.theme?.accentColor}
       inputArea={
         <div className="space-y-6">
-          {config.guidance.map((block) => (
-            <Callout key={block.title} title={block.title}>
-              <p className="text-neutral-700">{block.body}</p>
-              {block.list && (
-                <ul className="mt-2 list-inside list-disc space-y-1.5 text-neutral-700">
-                  {block.list.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              )}
-            </Callout>
-          ))}
-
           {flow.inputs.map((field) => (
             <Input
               key={field.id}

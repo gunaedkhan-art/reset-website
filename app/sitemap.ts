@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllPostSlugs } from "@/lib/blog";
 import { siteConfig } from "@/lib/site";
-import { getAllToolSlugs } from "@/lib/tools";
+import { getAllClusterHubSlugs, getAllToolSlugs } from "@/lib/tools";
 import { getToolCanonicalPath } from "@/lib/tools/tool-page";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -29,6 +29,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const clusterHubRoutes: MetadataRoute.Sitemap = getAllClusterHubSlugs().map(
+    (slug) => ({
+      url: `${baseUrl}/tools/${slug}`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    }),
+  );
+
   const blogRoutes: MetadataRoute.Sitemap = getAllPostSlugs().map((slug) => ({
     url: `${baseUrl}/blog/${slug}`,
     lastModified: now,
@@ -36,5 +45,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...toolRoutes, ...blogRoutes];
+  return [...staticRoutes, ...clusterHubRoutes, ...toolRoutes, ...blogRoutes];
 }

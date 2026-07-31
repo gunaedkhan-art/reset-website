@@ -13,11 +13,14 @@ import { Select } from "@/components/ui/Select";
 import {
   ToolAppDownload,
   ToolCalculateButton,
+  ToolClusterHero,
   ToolContainer,
   ToolFormSection,
   ToolNewsletterSignup,
+  ToolPageProse,
   ToolRelatedSection,
 } from "@/components/tool";
+import { getToolIconName } from "@/components/tool/ToolIcon";
 import { trackEvent } from "@/lib/analytics/track-client";
 import { siteConfig } from "@/lib/site";
 import {
@@ -44,6 +47,7 @@ import {
 import type { SavingsPathPlan } from "@/lib/savings-path/types";
 import { SUPPORTED_CURRENCIES } from "@/lib/savings-path/types";
 import type { ToolConfig } from "@/lib/tool-engine/schema/tool-config";
+import { resolveToolTheme } from "@/lib/tools/resolve-tool-theme";
 import type { RelatedTool } from "@/types/tool";
 import { cn } from "@/lib/utils";
 
@@ -143,7 +147,9 @@ export function SavingsPathEngine({
   const [incomeError, setIncomeError] = useState<string | null>(null);
   const [incomeSaved, setIncomeSaved] = useState(false);
   const [mobileView, setMobileView] = useState<MobileView>(persisted.mobileView);
-  const [showHowItWorks, setShowHowItWorks] = useState(false);
+
+  const theme = resolveToolTheme(config);
+  const iconName = getToolIconName(config);
 
   const [targetAmount, setTargetAmount] = useState(persisted.targetAmount);
   const [targetDate, setTargetDate] = useState(persisted.targetDate);
@@ -366,7 +372,6 @@ export function SavingsPathEngine({
                 min={plan.goal.startDate}
                 max={plan.goal.targetDate}
                 value={checkInDate}
-                hint="Click the field to open the calendar."
                 onChange={(e) => {
                   setCheckInSaved(false);
                   setCheckInDate(e.target.value);
@@ -452,7 +457,6 @@ export function SavingsPathEngine({
               type="date"
               value={targetDate}
               onChange={(e) => setTargetDate(e.target.value)}
-              hint="Click the field to open the calendar."
               required
             />
             <Input
@@ -472,7 +476,6 @@ export function SavingsPathEngine({
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              hint="Click the field to open the calendar."
               required
             />
             <Select
@@ -613,49 +616,6 @@ export function SavingsPathEngine({
         )}
 
         <ToolCalculateButton label="Build my path" type="submit" />
-
-        <div className="rounded-2xl border border-neutral-200 bg-white shadow-sm">
-          <button
-            type="button"
-            onClick={() => setShowHowItWorks((open) => !open)}
-            aria-expanded={showHowItWorks}
-            className="flex w-full items-center justify-between gap-3 px-4 py-3.5 text-left text-sm font-semibold text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-neutral-900 sm:px-5"
-          >
-            How it works
-            <span
-              aria-hidden="true"
-              className={cn(
-                "text-neutral-400 transition-transform duration-200",
-                showHowItWorks && "rotate-180",
-              )}
-            >
-              ▾
-            </span>
-          </button>
-
-          {showHowItWorks && (
-            <div className="space-y-4 border-t border-neutral-200 px-4 py-4 sm:px-5">
-              {config.content.explainer && (
-                <p className="text-sm leading-relaxed text-neutral-600">
-                  {config.content.explainer}
-                </p>
-              )}
-
-              {config.guidance.map((block) => (
-                <Callout key={block.title} title={block.title}>
-                  <p className="text-neutral-700">{block.body}</p>
-                  {block.list && (
-                    <ul className="mt-2 list-inside list-disc space-y-1.5 text-neutral-700">
-                      {block.list.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  )}
-                </Callout>
-              ))}
-            </div>
-          )}
-        </div>
       </div>
     </ToolFormSection>
   );
@@ -699,10 +659,15 @@ export function SavingsPathEngine({
           </nav>
 
           {categoryName && (
-            <p className="mb-3 text-sm font-medium uppercase tracking-wider text-neutral-500">
+            <p
+              className="mb-3 text-sm font-medium uppercase tracking-wider"
+              style={{ color: theme.primary }}
+            >
               {categoryName}
             </p>
           )}
+
+          <ToolClusterHero theme={theme} icon={iconName} title={config.content.h1} />
 
           <header className="mb-8 space-y-4 lg:mb-10">
             <h1 className="text-3xl font-semibold tracking-tight text-neutral-900 sm:text-4xl">
@@ -710,6 +675,8 @@ export function SavingsPathEngine({
             </h1>
             <p className="text-lg leading-relaxed text-neutral-600">{config.content.intro}</p>
           </header>
+
+          <ToolPageProse config={config} />
 
           <form id="savings-path-form" onSubmit={handleBuildPath} noValidate>
             <div className="hidden lg:grid lg:grid-cols-[34fr_66fr] lg:items-start lg:gap-8">

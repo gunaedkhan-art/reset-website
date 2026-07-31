@@ -7,6 +7,9 @@ import {
 } from "./registry";
 import { getToolCanonicalPath } from "./tool-page";
 
+export { getRecommendedStarterTools, recommendedStarterTools } from "./starter-tools";
+export type { RecommendedStarterTool } from "./starter-tools";
+
 export const toolCategories: ToolCategory[] = [
   {
     slug: "productivity",
@@ -141,6 +144,13 @@ export function getRelatedTools(
   return [...sameCluster, ...relatedCluster, ...sameCategory]
     .slice(0, limit)
     .map(toRelatedTool);
+}
+
+export function getToolsForClusterHub(clusters: string[]): ToolMetadata[] {
+  return getAllTools().filter((tool) => {
+    const config = getConfigBySlug(tool.slug);
+    return config && clusters.includes(config.taxonomy.cluster);
+  });
 }
 
 export function getCategoryBySlug(

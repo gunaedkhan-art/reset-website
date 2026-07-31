@@ -34,6 +34,16 @@ export const guidanceBlockSchema = z.object({
   list: z.array(z.string()).optional(),
 });
 
+export const contentSectionSchema = z.object({
+  id: z.string().min(1),
+  heading: z.string().min(1),
+  body: z.string().min(1),
+  list: z.array(z.string()).optional(),
+  framework: z
+    .enum(["pas", "aida", "concept", "how-to", "outcome"])
+    .optional(),
+});
+
 export const calculatorProfileSchema = z.enum([
   "future-value",
   "compound-growth",
@@ -244,6 +254,10 @@ export const toolConfigSchema = z.object({
     intro: z.string().min(1),
     explainer: z.string().optional(),
     eyebrow: z.string().optional(),
+    icon: z.string().optional(),
+    proseTitle: z.string().optional(),
+    proseCollapsedDefault: z.boolean().default(true),
+    sections: z.array(contentSectionSchema).optional(),
   }),
 
   mode: toolModeSchema,

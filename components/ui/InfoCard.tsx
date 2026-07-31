@@ -28,11 +28,7 @@ export function InfoCard({
             {eyebrow}
           </p>
         )}
-        {icon && (
-          <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-neutral-100 text-neutral-700">
-            {icon}
-          </div>
-        )}
+        {icon && <div className="mb-3">{icon}</div>}
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>

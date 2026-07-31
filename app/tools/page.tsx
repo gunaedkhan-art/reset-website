@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ToolIconForConfig } from "@/components/tool/ToolIcon";
 import { Callout } from "@/components/ui/Callout";
 import { InfoCard } from "@/components/ui/InfoCard";
 import { Input } from "@/components/ui/Input";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { Section } from "@/components/ui/Section";
+import { getConfigBySlug } from "@/lib/tool-engine/compiler/manifest";
 import { createMetadata } from "@/lib/seo";
 import {
+  clusterThemes,
   getAllTools,
   getCategoryBySlug,
+  getRecommendedStarterTools,
   getToolCanonicalPath,
   getToolsByCategory,
   searchTools,
   toolCategories,
+  toolClusterHubs,
 } from "@/lib/tools";
+import { resolveToolTheme } from "@/lib/tools/resolve-tool-theme";
 import { cn } from "@/lib/utils";
 
 interface ToolsPageProps {
@@ -62,6 +68,8 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
 
   const trimmedQuery = query.trim();
   const hasSearch = trimmedQuery.length > 0;
+  const showStarterGuide = !validCategory && !hasSearch;
+  const starterTools = showStarterGuide ? getRecommendedStarterTools() : [];
 
   return (
     <>
@@ -161,6 +169,115 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
           </ul>
         </div>
 
+        {showStarterGuide && (
+          <div className="mb-12">
+            <h2 className="text-xl font-semibold text-neutral-900">Collections</h2>
+            <p className="mt-1 max-w-3xl text-sm text-neutral-600">
+              Browse tools by topic — each collection links to a dedicated hub with related
+              calculators and planners.
+            </p>
+            <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {toolClusterHubs.map((hub) => {
+                const theme = clusterThemes[hub.themeId];
+                const pillarConfig = getConfigBySlug(hub.pillarSlug);
+                return (
+                  <li key={hub.slug}>
+                    <Link
+                      href={`/tools/${hub.slug}`}
+                      className="group flex h-full flex-col rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition-colors hover:border-neutral-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+                      style={{
+                        background: `linear-gradient(160deg, ${theme.heroFrom} 0%, white 55%)`,
+                      }}
+                    >
+                      <div
+                        className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl"
+                        style={{
+                          backgroundColor: theme.primary,
+                          color: theme.onPrimary,
+                        }}
+                      >
+                        {pillarConfig ? (
+                          <ToolIconForConfig config={pillarConfig} size={20} />
+                        ) : null}
+                      </div>
+                      <span className="font-semibold text-neutral-900 group-hover:text-neutral-950">
+                        {hub.name}
+                      </span>
+                      <span className="mt-1 text-sm leading-relaxed text-neutral-600">
+                        {hub.description}
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
+
+        {showStarterGuide && starterTools.length > 0 && (
+          <div className="mb-12 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
+            <h2 className="text-xl font-semibold text-neutral-900">Start here</h2>
+            <p className="mt-2 max-w-3xl text-sm leading-relaxed text-neutral-600">
+              New to Reset? These ten tools cover the most common jobs — focus now,
+              pick a priority, triage your work, face phone and meeting costs, and
+              plan savings. Each is the best entry point in its cluster, not a
+              duplicate of similar tools below.
+            </p>
+            <ol className="mt-6 grid gap-4 lg:grid-cols-2">
+              {starterTools.map((tool, index) => {
+                const category = getCategoryBySlug(tool.category);
+                const config = getConfigBySlug(tool.slug);
+                const theme = config ? resolveToolTheme(config) : null;
+                return (
+                  <li key={tool.slug}>
+                    <Link
+                      href={getToolCanonicalPath(tool.slug)}
+                      className="group flex h-full gap-4 rounded-xl border border-neutral-200 bg-neutral-50/60 p-4 transition-colors hover:border-neutral-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+                    >
+                      <span
+                        aria-hidden="true"
+                        className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-semibold text-white"
+                        style={{
+                          backgroundColor: theme?.primary ?? "#171717",
+                        }}
+                      >
+                        {index + 1}
+                      </span>
+                      {config && (
+                        <span
+                          aria-hidden="true"
+                          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
+                          style={{
+                            backgroundColor: theme?.muted ?? "#f5f5f5",
+                            color: theme?.primary ?? "#404040",
+                          }}
+                        >
+                          <ToolIconForConfig config={config} size={20} />
+                        </span>
+                      )}
+                      <span className="min-w-0 space-y-1">
+                        <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                          <span className="font-semibold text-neutral-900 group-hover:text-neutral-950">
+                            {tool.title}
+                          </span>
+                          {category && (
+                            <span className="text-xs font-medium uppercase tracking-wide text-neutral-500">
+                              {category.name}
+                            </span>
+                          )}
+                        </span>
+                        <span className="block text-sm leading-relaxed text-neutral-600">
+                          {tool.reason}
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        )}
+
         {tools.length === 0 ? (
           <Callout
             title={
@@ -193,9 +310,25 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
             )}
           </Callout>
         ) : (
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <>
+            {!showStarterGuide && (
+              <h2 className="mb-4 text-xl font-semibold text-neutral-900">
+                {hasSearch ? "Matching tools" : `${activeCategoryMeta?.name ?? "All"} tools`}
+              </h2>
+            )}
+            {showStarterGuide && (
+              <div className="mb-6">
+                <h2 className="text-xl font-semibold text-neutral-900">All tools</h2>
+                <p className="mt-1 text-sm text-neutral-600">
+                  Browse the full library of {tools.length} tools.
+                </p>
+              </div>
+            )}
+            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {tools.map((tool) => {
               const category = getCategoryBySlug(tool.category);
+              const config = getConfigBySlug(tool.slug);
+              const theme = config ? resolveToolTheme(config) : null;
               return (
                 <li key={tool.slug}>
                   <InfoCard
@@ -203,11 +336,25 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
                     description={tool.description}
                     href={getToolCanonicalPath(tool.slug)}
                     eyebrow={category?.name}
+                    icon={
+                      config ? (
+                        <div
+                          className="flex h-10 w-10 items-center justify-center rounded-xl"
+                          style={{
+                            backgroundColor: theme?.muted ?? "#f5f5f5",
+                            color: theme?.primary ?? "#404040",
+                          }}
+                        >
+                          <ToolIconForConfig config={config} size={20} />
+                        </div>
+                      ) : undefined
+                    }
                   />
                 </li>
               );
             })}
           </ul>
+          </>
         )}
       </Section>
     </>

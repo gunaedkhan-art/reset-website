@@ -109,6 +109,7 @@ export function DecisionTreeEngine({
       category={categoryName ?? config.content.eyebrow}
       relatedTools={relatedTools}
       showCalculate={false}
+      config={config}
       inputArea={
         <div className="space-y-6">
           {!state.complete && currentQuestion && progress.total > 1 && (

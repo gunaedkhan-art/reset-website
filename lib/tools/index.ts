@@ -19,12 +19,32 @@ export {
   getAllTools,
   getCategoryBySlug,
   getFeaturedTools,
+  getRecommendedStarterTools,
   getRelatedTools,
   getToolsByCategory,
+  getToolsForClusterHub,
   searchTools,
   toolCategories,
   toolsRegistry,
 } from "./catalog";
+export {
+  getAllClusterHubSlugs,
+  getClusterHub,
+  isClusterHubSlug,
+  toolClusterHubs,
+  type ToolClusterHub,
+} from "./cluster-hubs";
+export {
+  clusterThemes,
+  getThemeForCluster,
+  type ClusterTheme,
+  type ClusterThemeId,
+} from "./cluster-themes";
+export { resolveToolTheme, resolveThemeColor } from "./resolve-tool-theme";
+export {
+  recommendedStarterTools,
+  type RecommendedStarterTool,
+} from "./starter-tools";
 export {
   buildToolPageMetadata,
   getToolCanonicalPath,

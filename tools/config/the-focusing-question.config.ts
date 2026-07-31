@@ -30,9 +30,34 @@ export const theFocusingQuestionConfig = {
   content: {
     h1: "The Focusing Question",
     intro:
-      "Gary Keller's Focusing Question: What's the ONE Thing you can do such that by doing it everything else will be easier or unnecessary? Choose your time horizon and area — we'll narrow to one domino worth knocking over.",
-    explainer:
-      "Extraordinary results come from asking a great question and then living its answer — one time horizon at a time.",
+      "Too many priorities competing for your attention? Answer four quick questions and name the ONE Thing worth your focus right now.",
+    icon: "target",
+    proseTitle: "About the Focusing Question",
+    sections: [
+      {
+        id: "problem",
+        heading: "Why everything feels equally urgent",
+        framework: "pas",
+        body: "When every task feels critical, you spread effort thin and finish nothing that moves the needle. That scatter creates decision fatigue — and the shame of another week without real progress.",
+      },
+      {
+        id: "concept",
+        heading: "The principle behind ONE Thing thinking",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) built [The ONE Thing](https://www.the1thing.com/) around a single question: What's the ONE Thing you can do such that by doing it everything else will be easier or unnecessary? Success is sequential — one domino at a time.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get from this tool",
+        framework: "outcome",
+        body: "In about 60 seconds you'll choose a time horizon, name your domain, and surface the blocker keeping you from one clear priority — plus concrete next steps to protect time for it.",
+        list: [
+          "One sentence answer you can calendar-block today",
+          "Matched ritual for today, this week, or this month",
+          "Links to companion tools like Lead Domino and Goal Setting to the Now",
+        ],
+      },
+    ],
     eyebrow: "ONE Thing finder",
   },
 
@@ -279,7 +304,7 @@ export const theFocusingQuestionConfig = {
     {
       question: "What is the Focusing Question?",
       answer:
-        "From The ONE Thing by Gary Keller: \"What's the ONE Thing I can do such that by doing it everything else will be easier or unnecessary?\" It's asked for each time horizon — today through someday.",
+        "From [The ONE Thing](https://www.the1thing.com/) by [Gary Keller](https://www.the1thing.com/): \"What's the ONE Thing I can do such that by doing it everything else will be easier or unnecessary?\" It's asked for each time horizon — today through someday.",
     },
     {
       question: "How is this different from a to-do list?",

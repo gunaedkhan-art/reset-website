@@ -1,5 +1,6 @@
 import type { FormEventHandler, ReactNode } from "react";
 import type { ToolThemeColor } from "@/lib/tool-theme";
+import type { ToolConfig } from "@/lib/tool-engine/schema/tool-config";
 import type { FAQItem } from "./seo";
 
 export interface RelatedTool {
@@ -82,6 +83,8 @@ export interface ToolTemplateProps {
   formId?: string;
   onSubmit?: FormEventHandler<HTMLFormElement>;
   className?: string;
+  /** When set, enables cluster theme, hero graphic, icons, and collapsible prose. */
+  config?: ToolConfig;
 }
 
 export interface ToolCategory {

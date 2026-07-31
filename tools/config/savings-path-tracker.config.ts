@@ -32,9 +32,34 @@ export const savingsPathTrackerConfig = {
   content: {
     h1: "Simple Savings Path",
     intro:
-      "One line from where you are today to where you want to be. Log your balance when you check in — above the line means on track, below means catch up. No monthly formulas, no spreadsheet required.",
-    explainer:
-      "Most savers do not fail from bad math — they fail from tools that are too complicated. Budgets with dozens of categories, apps that guilt-trip you after one off month, and plans you stop opening because they feel like homework. The result is decision fatigue, shame spirals, and goals that quietly drift. This tracker does the opposite: one target path, optional income markers, and a clear visual cue you can read in seconds.",
+      "One line from where you are today to where you want to be. Log your balance when you check in — above the line means on track, below means catch up.",
+    icon: "path",
+    proseTitle: "About this tracker",
+    sections: [
+      {
+        id: "problem",
+        heading: "Why most savings plans fail",
+        framework: "pas",
+        body: "Spreadsheets with dozens of categories, apps that guilt-trip you after one off month, and plans you stop opening because they feel like homework. The result is decision fatigue and goals that quietly drift.",
+      },
+      {
+        id: "concept",
+        heading: "The one-line method",
+        framework: "concept",
+        body: "This tracker draws a straight path from today's balance to your target date. Optional income markers show when money typically arrives. Your job is simple: stay at or above the line.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A visual chart you can read in seconds, balance check-ins that update your progress line, and a clear on-track signal — no formulas to maintain.",
+        list: [
+          "Target path from start date to goal date",
+          "Balance updates plotted on your chart",
+          "Saved locally in your browser — no signup required",
+        ],
+      },
+    ],
     eyebrow: "Savings",
   },
 
