@@ -1,3 +1,5 @@
+export { TrackOneThingWeekPanel } from "./TrackOneThingWeekPanel";
+export type { TrackOneThingWeekPanelProps } from "./TrackOneThingWeekPanel";
 export { ToolAppDownload } from "./ToolAppDownload";
 export type { ToolAppDownloadProps } from "./ToolAppDownload";
 export { ToolCalculateButton } from "./ToolCalculateButton";

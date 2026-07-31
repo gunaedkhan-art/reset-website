@@ -24,6 +24,10 @@ export type ToolAnalyticsEvent =
       status: "yes" | "partial" | "skipped";
     }
   | {
+      name: "one_thing_weekly_prefill";
+      tool_slug: string;
+    }
+  | {
       name: "newsletter_signup";
       source: string;
       tool_slug?: string;

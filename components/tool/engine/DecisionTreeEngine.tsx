@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ToolTemplate } from "@/components/tool";
+import { TrackOneThingWeekPanel } from "@/components/tool/TrackOneThingWeekPanel";
 import { Button } from "@/components/ui/Button";
 import { ResultCard } from "@/components/ui/ResultCard";
 import { trackEvent } from "@/lib/analytics/track-client";
@@ -18,6 +19,7 @@ import {
   renderTemplate,
 } from "@/lib/tool-engine/template/render";
 import { ProgressBar } from "@/components/ui/ProgressBar";
+import { shouldOfferWeeklyTracker } from "@/lib/one-thing-weekly/integrations";
 import type { RelatedTool } from "@/types/tool";
 import { cn } from "@/lib/utils";
 
@@ -84,6 +86,16 @@ export function DecisionTreeEngine({
   const recommendation = state.complete
     ? evaluateRecommendationRules(config.recommendations, templateContext)
     : null;
+
+  const showWeeklyTracker = shouldOfferWeeklyTracker(config.slug, state);
+
+  const suggestedOneThing =
+    resultTemplate?.cards?.find((card) => /one thing/i.test(card.title)) ??
+    resultTemplate?.cards?.[0];
+
+  const suggestedLeadDomino = resultTemplate?.cards?.find((card) =>
+    /fix|lead|ask|today/i.test(card.title),
+  );
 
   const handleOption = (optionId: string) => {
     setError(undefined);
@@ -190,6 +202,26 @@ export function DecisionTreeEngine({
                   ))}
                 </ol>
               </div>
+            )}
+
+            {showWeeklyTracker && (
+              <TrackOneThingWeekPanel
+                key={state.resultTemplateId}
+                toolSlug={config.slug}
+                suggestedOneThing={
+                  suggestedOneThing
+                    ? renderTemplate(suggestedOneThing.valueTemplate, templateContext)
+                    : ""
+                }
+                suggestedLeadDomino={
+                  suggestedLeadDomino?.descriptionTemplate
+                    ? renderTemplate(
+                        suggestedLeadDomino.descriptionTemplate,
+                        templateContext,
+                      )
+                    : ""
+                }
+              />
             )}
           </div>
         )
