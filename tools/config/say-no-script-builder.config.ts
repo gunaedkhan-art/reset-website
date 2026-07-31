@@ -30,7 +30,29 @@ export const sayNoScriptBuilderConfig = {
   content: {
     h1: "Say No Script Builder",
     intro:
-      "Keller's first thief of productivity is the inability to say no — every yes to something else is a no to your ONE Thing. Four questions to build a decline script that fits your relationship and stakes.",
+      "Four questions to build a decline script that fits your relationship and stakes — words you can use today.",
+    icon: "shield",
+    proseTitle: "About saying no",
+    sections: [
+      {
+        id: "problem",
+        heading: "Every yes is a no to your ONE Thing",
+        framework: "pas",
+        body: "Meetings, favors, and \"quick questions\" fill the calendar because declining feels rude or risky. Each automatic yes steals time from the work only you can do.",
+      },
+      {
+        id: "concept",
+        heading: "Thief #1: inability to say no",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) lists inability to say no as the first thief of productivity. A prepared script lowers the social friction — you protect the ONE Thing without improvising under pressure.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A tailored decline script for your situation — boss, colleague, client, or friend — with tone matched to relationship and stakes.",
+      },
+    ],
     eyebrow: "Script builder",
   },
 

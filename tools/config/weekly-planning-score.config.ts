@@ -30,7 +30,29 @@ export const weeklyPlanningScoreConfig = {
   content: {
     h1: "Weekly Planning Score",
     intro:
-      "Good planning isn't more lists — it's the right system for how you work. Four questions to see where you are and what to fix this week.",
+      "Four questions to see where your weekly planning stands — reactive, over-planning, or ready to level up.",
+    icon: "calendar",
+    proseTitle: "About weekly planning",
+    sections: [
+      {
+        id: "problem",
+        heading: "Weeks that happen to you",
+        framework: "pas",
+        body: "Monday arrives and you're already behind — reacting to inbox and meetings without a protected block for what matters. Sunday planning feels optional until another week disappears.",
+      },
+      {
+        id: "concept",
+        heading: "Plan the week, protect the ONE Thing",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) connects weekly planning to the Focusing Question: what's the ONE Thing I can do this week such that everything else becomes easier? Good planning isn't more lists — it's time blocked before noise arrives.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A planning score and specific fixes — review habits, time blocking, priority clarity, or over-planning traps — for this week.",
+      },
+    ],
     eyebrow: "Interactive assessment",
   },
 

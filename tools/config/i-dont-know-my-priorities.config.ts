@@ -30,7 +30,29 @@ export const iDontKnowMyPrioritiesConfig = {
   content: {
     h1: "I Don't Know My Priorities",
     intro:
-      "When everything feels urgent, nothing is. Four questions to cut through noise and name what actually deserves your energy this week.",
+      "Four questions to cut through noise and name what actually deserves your energy this week.",
+    icon: "target",
+    proseTitle: "About priority confusion",
+    sections: [
+      {
+        id: "problem",
+        heading: "When everything is urgent",
+        framework: "pas",
+        body: "Ten things demand attention — boss, family, health, side project, inbox. Without a filter, you react to the loudest signal and finish the week without moving what matters.",
+      },
+      {
+        id: "concept",
+        heading: "Priorities come from questions, not lists",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) uses the [Focusing Question](https://www.the1thing.com/) to collapse options: what's the ONE Thing such that by doing it everything else becomes easier? Clarity is sequential — pick one horizon, then one answer.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "A simple priority framework for this week — one top focus plus what to defer, batch, or drop.",
+      },
+    ],
     eyebrow: "Priority finder",
   },
 

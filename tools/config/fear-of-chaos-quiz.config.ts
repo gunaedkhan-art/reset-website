@@ -30,7 +30,29 @@ export const fearOfChaosQuizConfig = {
   content: {
     h1: "Fear of Chaos Quiz",
     intro:
-      "Keller's thief #2: fear of chaos — when you focus on your ONE Thing, everything else feels like it will collapse. Four questions to name your chaos pattern and batch the mess without abandoning your priority.",
+      "Four questions to name your chaos pattern and batch the mess without abandoning your priority.",
+    icon: "quiz",
+    proseTitle: "About fear of chaos",
+    sections: [
+      {
+        id: "problem",
+        heading: "If I focus on one thing, everything else will collapse",
+        framework: "pas",
+        body: "Inbox piles up, laundry waits, Slack explodes — the moment you protect ONE Thing time, anxiety screams that you're neglecting the rest. So you stay reactive and the priority never wins.",
+      },
+      {
+        id: "concept",
+        heading: "Thief #2: fear of chaos",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) calls this the fear of chaos — mistaking busy maintenance for progress. The fix is batching shallow work into defined windows so ONE Thing time doesn't require pretending chaos doesn't exist.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your chaos pattern — inbox, home, work requests, or guilt — plus a batching plan that protects priority time without denial.",
+      },
+    ],
     eyebrow: "Chaos diagnostic",
   },
 

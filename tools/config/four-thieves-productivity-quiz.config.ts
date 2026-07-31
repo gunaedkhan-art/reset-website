@@ -30,7 +30,29 @@ export const fourThievesProductivityQuizConfig = {
   content: {
     h1: "Four Thieves of Productivity Quiz",
     intro:
-      "Gary Keller names four thieves that steal your ONE Thing: inability to say no, fear of chaos, poor health habits, and an environment that doesn't support your goals. Four questions — identify your thief and how to stop it.",
+      "Four questions — identify which thief is stealing your ONE Thing and how to stop it.",
+    icon: "quiz",
+    proseTitle: "About the four thieves",
+    sections: [
+      {
+        id: "problem",
+        heading: "When your ONE Thing never gets time",
+        framework: "pas",
+        body: "You know the priority — yet meetings, requests, anxiety, and clutter win every week. Something systemic is pulling you off the domino before it falls.",
+      },
+      {
+        id: "concept",
+        heading: "Keller's four thieves",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) names four thieves in [The ONE Thing](https://www.the1thing.com/): inability to say no, fear of chaos, poor health habits, and an environment that doesn't support your goals. Each requires a different counter-move.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll get",
+        framework: "outcome",
+        body: "Your primary thief plus matched fixes — scripts to decline, chaos batching, health boundaries, or environment changes.",
+      },
+    ],
     eyebrow: "Thief finder",
   },
 

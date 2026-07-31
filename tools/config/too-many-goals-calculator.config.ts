@@ -32,7 +32,29 @@ export const tooManyGoalsCalculatorConfig = {
   content: {
     h1: "Too Many Goals Calculator",
     intro:
-      "Keller's economic reality: you can go small or go big, but not both. Split focus across many goals and each gets a fraction of your best effort. Enter your numbers — see the dilution.",
+      "Enter your active goals and focus hours — see goal dilution and why Keller says you must go small to go big.",
+    icon: "calculator",
+    proseTitle: "About goal dilution",
+    sections: [
+      {
+        id: "problem",
+        heading: "Simultaneous goals, fractional progress",
+        framework: "pas",
+        body: "Five goals feel responsible — until each gets twenty percent of your best effort and none move. Spread too thin, you go small on everything instead of big on one thing.",
+      },
+      {
+        id: "concept",
+        heading: "Keller's economic reality",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) argues you can go small or go big — not both at once. In [The ONE Thing](https://www.the1thing.com/), simultaneous priorities mean diluted dominoes and sequential success never starts.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "outcome",
+        body: "Hours per goal at your current load, dilution percentage, and how many goals your available focus time can actually support.",
+      },
+    ],
   },
 
   mode: "calculator" as const,

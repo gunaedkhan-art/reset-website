@@ -32,7 +32,29 @@ export const protectYourOneThingTimeBlockConfig = {
   content: {
     h1: "Protect Your ONE Thing Time Block",
     intro:
-      "Keller's rule: time-block your ONE Thing before anything else gets your calendar. Enter your typical day — see how much time you can protect, where it fits, and what percentage of your day should be sacred.",
+      "Enter your typical day — see how much time you can protect, where it fits, and what must wait until after.",
+    icon: "shield",
+    proseTitle: "About time blocking",
+    sections: [
+      {
+        id: "problem",
+        heading: "Priority without protected time is a wish",
+        framework: "pas",
+        body: "You named your ONE Thing but the calendar filled anyway — meetings, comms, and reactive work ate the morning before your priority got a slot.",
+      },
+      {
+        id: "concept",
+        heading: "Time-block the ONE Thing first",
+        framework: "concept",
+        body: "[Gary Keller](https://www.the1thing.com/) teaches time blocking your ONE Thing before anything else lands on the calendar. The block is non-negotiable infrastructure — not leftover time after everyone else's requests.",
+      },
+      {
+        id: "outcome",
+        heading: "What you'll learn",
+        framework: "outcome",
+        body: "Minimum viable block size, best slot in your day, percentage of work hours to protect, and what shallow work must batch around it.",
+      },
+    ],
   },
 
   mode: "calculator" as const,
