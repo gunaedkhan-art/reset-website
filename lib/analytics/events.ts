@@ -28,6 +28,11 @@ export type ToolAnalyticsEvent =
       tool_slug: string;
     }
   | {
+      name: "one_thing_time_block_click";
+      tool_slug: string;
+      source?: string;
+    }
+  | {
       name: "newsletter_signup";
       source: string;
       tool_slug?: string;

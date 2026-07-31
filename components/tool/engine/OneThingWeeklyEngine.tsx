@@ -25,6 +25,7 @@ import {
   archiveAndStartWeek,
   buildWeekSummary,
   buildWeekVisual,
+  buildTimeBlockUrl,
   consumeOneThingPrefill,
   createWeeklyPlan,
   formatDayMonth,
@@ -414,6 +415,19 @@ export function OneThingWeeklyEngine({
             {activePlan.leadDomino}
           </p>
         )}
+        <Link
+          href={buildTimeBlockUrl({ oneThing: activePlan.oneThing })}
+          onClick={() =>
+            trackEvent({
+              name: "one_thing_time_block_click",
+              tool_slug: config.slug,
+              source: "weekly-tracker",
+            })
+          }
+          className="mt-4 inline-flex h-10 items-center justify-center rounded-xl border border-neutral-200 bg-white px-4 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+        >
+          Schedule your block
+        </Link>
       </div>
 
       {needsWeekReview(activePlan, today) && (

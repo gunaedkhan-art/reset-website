@@ -91,7 +91,7 @@ export const oneThingWeeklyCheckInConfig = {
     },
     {
       title: "Pre-fill from other tools",
-      body: "Use **Track this week** on [The Focusing Question](/the-focusing-question), [Goal Setting to the Now](/goal-setting-to-the-now), or [What's My Lead Domino](/whats-my-lead-domino). You can also open with `?oneThing=` and optional `?leadDomino=` in the URL.",
+      body: "Use **Track this week** on [The Focusing Question](/the-focusing-question), [Goal Setting to the Now](/goal-setting-to-the-now), or [What's My Lead Domino](/whats-my-lead-domino). You can also open with `?oneThing=` and optional `?leadDomino=` in the URL. Then use **Schedule your block** to find calendar time on [Protect Your ONE Thing Time Block](/protect-your-one-thing-time-block).",
     },
     {
       title: "Keep the ONE Thing small enough",

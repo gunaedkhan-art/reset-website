@@ -1,10 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { ToolTemplate } from "@/components/tool";
 import { Input } from "@/components/ui/Input";
+import { Callout } from "@/components/ui/Callout";
 import { ResultCard } from "@/components/ui/ResultCard";
 import { trackEvent } from "@/lib/analytics/track-client";
+import { parsePrefillFromSearchParams } from "@/lib/one-thing-weekly/prefill";
 import type { ToolConfig } from "@/lib/tool-engine/schema/tool-config";
 import { runCalculatorFlow } from "@/lib/tool-engine/modes/calculator";
 import {
@@ -18,6 +20,14 @@ interface CalculatorEngineProps {
   config: ToolConfig;
   relatedTools: RelatedTool[];
   categoryName?: string;
+}
+
+function readFocusOneThing(slug: string): string | null {
+  if (typeof window === "undefined" || slug !== "protect-your-one-thing-time-block") {
+    return null;
+  }
+
+  return parsePrefillFromSearchParams(new URLSearchParams(window.location.search)).oneThing ?? null;
 }
 
 export function CalculatorEngine({
@@ -35,6 +45,12 @@ export function CalculatorEngine({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [result, setResult] = useState<ReturnType<typeof runCalculatorFlow> | null>(
     null,
+  );
+
+  const focusOneThing = useSyncExternalStore(
+    () => () => {},
+    () => readFocusOneThing(config.slug),
+    () => null,
   );
 
   if (flow.type !== "calculator") return null;
@@ -91,6 +107,14 @@ export function CalculatorEngine({
       onSubmit={handleSubmit}
       inputArea={
         <div className="space-y-6">
+          {focusOneThing && (
+            <Callout variant="info" title="Block time for this ONE Thing">
+              <p className="text-sm leading-relaxed">
+                You&apos;re scheduling protected time for:{" "}
+                <span className="font-medium text-neutral-900">{focusOneThing}</span>
+              </p>
+            </Callout>
+          )}
           {flow.inputs.map((field) => (
             <Input
               key={field.id}

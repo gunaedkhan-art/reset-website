@@ -65,3 +65,12 @@ export function buildWeeklyTrackerUrl(options: {
   }
   return `/one-thing-weekly-check-in?${params.toString()}`;
 }
+
+export const ONE_THING_TIME_BLOCK_PATH = "/protect-your-one-thing-time-block";
+
+/** Deep link to the time-block calculator with ONE Thing context in the query string. */
+export function buildTimeBlockUrl(options: { oneThing: string }): string {
+  const params = new URLSearchParams();
+  params.set("oneThing", options.oneThing.trim());
+  return `${ONE_THING_TIME_BLOCK_PATH}?${params.toString()}`;
+}

@@ -12,7 +12,7 @@ import {
   updateCheckIn,
 } from "./calculate";
 import { getMondayOfWeek, getWeekDays } from "./format";
-import { buildWeeklyTrackerUrl, parsePrefillFromSearchParams } from "./prefill";
+import { buildWeeklyTrackerUrl, buildTimeBlockUrl, parsePrefillFromSearchParams } from "./prefill";
 
 describe("getMondayOfWeek", () => {
   it("returns Monday for a mid-week date", () => {
@@ -120,6 +120,11 @@ describe("prefill helpers", () => {
     });
     assert.match(url, /oneThing=Launch/);
     assert.match(url, /leadDomino=Draft/);
+  });
+
+  it("builds time block URL with oneThing param", () => {
+    const url = buildTimeBlockUrl({ oneThing: "Finish chapter draft" });
+    assert.equal(url, "/protect-your-one-thing-time-block?oneThing=Finish+chapter+draft");
   });
 
   it("parses search params", () => {
