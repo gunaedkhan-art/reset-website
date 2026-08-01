@@ -1,13 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { ToolTemplate } from "@/components/tool";
+import { Callout } from "@/components/ui/Callout";
 import { DataTable } from "@/components/ui/DataTable";
 import { Input } from "@/components/ui/Input";
 import { ProjectionChart } from "@/components/ui/ProjectionChart";
 import { ResultCard } from "@/components/ui/ResultCard";
 import { Select } from "@/components/ui/Select";
 import { trackEvent } from "@/lib/analytics/track-client";
+import {
+  isSavingsPathCalculatorPrefill,
+  parseInvestmentPrefillFromSearchParams,
+} from "@/lib/savings-path/prefill";
 import {
   formatCurrency,
   parseInvestmentInputs,
@@ -45,18 +50,56 @@ function buildTemplateContext(
   };
 }
 
+function readSavingsPathPrefill(): {
+  values: Record<string, string>;
+  fromSavingsPath: boolean;
+} {
+  if (typeof window === "undefined") {
+    return { values: {}, fromSavingsPath: false };
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  return {
+    values: parseInvestmentPrefillFromSearchParams(params),
+    fromSavingsPath: isSavingsPathCalculatorPrefill(params),
+  };
+}
+
 export function ProjectionCalculatorEngine({
   config,
   relatedTools,
   categoryName,
 }: ProjectionCalculatorEngineProps) {
   const flow = config.flow;
+  const defaults = useMemo(
+    () =>
+      flow.type === "calculator" ? buildInvestmentInputDefaults(flow.inputs) : {},
+    [flow],
+  );
 
-  const [values, setValues] = useState<Record<string, string>>(() =>
-    flow.type === "calculator" ? buildInvestmentInputDefaults(flow.inputs) : {},
+  const urlPrefill = useSyncExternalStore(
+    () => () => {},
+    () => readSavingsPathPrefill(),
+    () => ({ values: {}, fromSavingsPath: false }),
+  );
+
+  const [overrides, setOverrides] = useState<Record<string, string>>({});
+  const values = useMemo(
+    () => ({ ...defaults, ...urlPrefill.values, ...overrides }),
+    [defaults, overrides, urlPrefill.values],
   );
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [projection, setProjection] = useState<ProjectionResult | null>(null);
+  const trackedPrefillRef = useRef(false);
+
+  useEffect(() => {
+    if (!urlPrefill.fromSavingsPath || trackedPrefillRef.current) return;
+    trackedPrefillRef.current = true;
+    trackEvent({
+      name: "savings_path_calculator_prefill",
+      tool_slug: config.slug,
+    });
+  }, [config.slug, urlPrefill.fromSavingsPath]);
 
   if (flow.type !== "calculator" || flow.engine !== "projection" || !flow.calculatorProfile) {
     return null;
@@ -145,6 +188,15 @@ export function ProjectionCalculatorEngine({
       legalDisclaimer={config.legalDisclaimer}
       inputArea={
         <div className="space-y-6">
+          {urlPrefill.fromSavingsPath && (
+            <Callout variant="info" title="Prefilled from your Savings Path">
+              <p className="text-sm leading-relaxed">
+                Target, balance, and timeline come from your latest check-in. Adjust
+                any field and calculate to see what it would take to get back on
+                track.
+              </p>
+            </Callout>
+          )}
           {flow.inputs.map((field) =>
             field.type === "select" ? (
               <Select
@@ -155,7 +207,7 @@ export function ProjectionCalculatorEngine({
                 options={field.options ?? []}
                 value={values[field.id] ?? ""}
                 onChange={(e) =>
-                  setValues((prev) => ({ ...prev, [field.id]: e.target.value }))
+                  setOverrides((prev) => ({ ...prev, [field.id]: e.target.value }))
                 }
                 error={
                   errors[field.id] ??
@@ -177,7 +229,7 @@ export function ProjectionCalculatorEngine({
                 hint={field.hint}
                 value={values[field.id] ?? ""}
                 onChange={(e) =>
-                  setValues((prev) => ({ ...prev, [field.id]: e.target.value }))
+                  setOverrides((prev) => ({ ...prev, [field.id]: e.target.value }))
                 }
                 error={
                   errors[field.id] ??

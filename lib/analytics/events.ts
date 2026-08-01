@@ -74,6 +74,10 @@ export type ToolAnalyticsEvent =
       link_slug: string;
     }
   | {
+      name: "savings_path_calculator_prefill";
+      tool_slug: string;
+    }
+  | {
       name: "newsletter_signup";
       source: string;
       tool_slug?: string;

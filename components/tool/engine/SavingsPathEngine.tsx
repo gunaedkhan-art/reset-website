@@ -45,7 +45,6 @@ import {
   buildSavingsPathShareMailtoUrl,
   buildSavingsPathShareText,
 } from "@/lib/savings-path/share";
-import { getToolCanonicalPath } from "@/lib/tools";
 import {
   formatChartDate,
   formatCurrency,
@@ -438,7 +437,7 @@ export function SavingsPathEngine({
             {recoveryLinks.map((link) => (
               <li key={link.slug}>
                 <Link
-                  href={getToolCanonicalPath(link.slug)}
+                  href={link.href}
                   onClick={() => {
                     trackEvent({
                       name: "savings_path_recovery_link_click",

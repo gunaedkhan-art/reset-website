@@ -37,6 +37,8 @@ describe("getSavingsPathRecoveryLinks", () => {
 
     assert.equal(links.length, 2);
     assert.equal(links[0]?.slug, "savings-goal-calculator");
+    assert.match(links[0]?.href ?? "", /source=savings-path/);
+    assert.match(links[0]?.href ?? "", /starting_balance=2000/);
   });
 
   it("omits growth calculator when the target date is near", () => {
