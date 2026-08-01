@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ActiveTrackersSection } from "@/components/home/ActiveTrackersSection";
+import { ClusterHubPillarLink } from "@/components/tool/ClusterHubPillarLink";
 import { ClusterJourneyStepLink } from "@/components/tool/ClusterJourneyStepLink";
 import { ThemedToolIconBadge } from "@/components/tool/ThemedToolIconBadge";
 import { ToolClusterHero } from "@/components/tool/ToolClusterHero";
@@ -56,17 +57,23 @@ export function ToolClusterHubView({ hub }: ToolClusterHubViewProps) {
         {pillar && (
           <div className="mt-8">
             <p className="mb-3 text-sm font-semibold text-neutral-900">Start here</p>
-            <InfoCard
-              title={pillar.content.h1}
-              description={pillar.content.intro}
+            <ClusterHubPillarLink
+              hubSlug={hub.slug}
+              toolSlug={hub.pillarSlug}
               href={pillar.seo.canonicalPath}
-              eyebrow="Recommended entry point"
-              icon={
-                <ThemedToolIconBadge theme={theme}>
-                  <ToolIconForConfig config={pillar} size={20} />
-                </ThemedToolIconBadge>
-              }
-            />
+              className="block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+            >
+              <InfoCard
+                title={pillar.content.h1}
+                description={pillar.content.intro}
+                eyebrow="Recommended entry point"
+                icon={
+                  <ThemedToolIconBadge theme={theme}>
+                    <ToolIconForConfig config={pillar} size={20} />
+                  </ThemedToolIconBadge>
+                }
+              />
+            </ClusterHubPillarLink>
           </div>
         )}
       </Section>

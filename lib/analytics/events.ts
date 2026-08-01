@@ -40,6 +40,15 @@ export type ToolAnalyticsEvent =
       optional: "true" | "false";
     }
   | {
+      name: "cluster_hub_pillar_click";
+      hub_slug: string;
+      tool_slug: string;
+    }
+  | {
+      name: "tracker_continue_click";
+      tracker_kind: "savings-path" | "one-thing-weekly";
+    }
+  | {
       name: "one_thing_weekly_copy_summary";
       tool_slug: string;
       includes_trends: "true" | "false";

@@ -39,4 +39,22 @@ describe("analyticsEventParams", () => {
     assert.equal(params.event, "one_thing_weekly_share_summary");
     assert.equal(params.method, "native");
   });
+
+  it("maps hub pillar and tracker continue clicks", () => {
+    assert.equal(
+      analyticsEventParams({
+        name: "cluster_hub_pillar_click",
+        hub_slug: "one-thing",
+        tool_slug: "the-focusing-question",
+      }).event,
+      "cluster_hub_pillar_click",
+    );
+    assert.equal(
+      analyticsEventParams({
+        name: "tracker_continue_click",
+        tracker_kind: "one-thing-weekly",
+      }).tracker_kind,
+      "one-thing-weekly",
+    );
+  });
 });

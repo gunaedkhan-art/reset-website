@@ -8,6 +8,7 @@
  */
 
 import type { BlogPost } from "@/types/blog";
+import { siteConfig } from "@/lib/site";
 
 export const BLOG_CONTENT_DIR = "content/blog";
 
@@ -38,7 +39,7 @@ export function parseMarkdownPost(
     description: frontmatter.description,
     publishedAt: frontmatter.publishedAt,
     updatedAt: frontmatter.updatedAt,
-    author: frontmatter.author ?? "Reset Team",
+    author: frontmatter.author ?? siteConfig.author,
     tags: frontmatter.tags ?? [],
     featured: frontmatter.featured ?? false,
     draft: frontmatter.draft ?? false,

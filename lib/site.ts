@@ -11,7 +11,7 @@ export const siteConfig = {
     "Reset Goals offers free online productivity, focus, planning, and calculator tools designed to help you work smarter.",
   url: getSiteUrl(),
   locale: "en_US",
-  author: "Reset Team",
+  author: "Reset Goals Team",
   email: "hello@resetgoals.com",
   social: {
     twitter: "@resetgoals",

@@ -15,6 +15,7 @@ import {
   type HomeTrackerWidgets,
 } from "@/lib/trackers/home-widgets";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics/track-client";
 
 const emptyWidgets: HomeTrackerWidgets = { savingsPath: null, oneThingWeekly: null };
 
@@ -82,6 +83,12 @@ export function ActiveTrackersSection() {
           <li>
             <Link
               href={widgets.savingsPath.href}
+              onClick={() => {
+                trackEvent({
+                  name: "tracker_continue_click",
+                  tracker_kind: "savings-path",
+                });
+              }}
               className="group block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
             >
               <div className="flex items-start justify-between gap-3">
@@ -121,6 +128,12 @@ export function ActiveTrackersSection() {
           <li>
             <Link
               href={widgets.oneThingWeekly.href}
+              onClick={() => {
+                trackEvent({
+                  name: "tracker_continue_click",
+                  tracker_kind: "one-thing-weekly",
+                });
+              }}
               className="group block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
             >
               <div className="flex items-start justify-between gap-3">

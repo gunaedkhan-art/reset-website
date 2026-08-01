@@ -10,6 +10,7 @@ import { PageHeading } from "@/components/ui/PageHeading";
 import { Section } from "@/components/ui/Section";
 import { getConfigBySlug } from "@/lib/tool-engine/compiler/manifest";
 import { createMetadata } from "@/lib/seo";
+import { siteConfig } from "@/lib/site";
 import {
   getAllTools,
   getCategoryBySlug,
@@ -196,7 +197,7 @@ export default async function ToolsPage({ searchParams }: ToolsPageProps) {
           <div className="mb-12 rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
             <h2 className="text-xl font-semibold text-neutral-900">Start here</h2>
             <p className="mt-2 max-w-3xl text-sm leading-relaxed text-neutral-600">
-              New to Reset? These ten tools cover the most common jobs — focus now,
+              New to {siteConfig.name}? These ten tools cover the most common jobs — focus now,
               pick a priority, triage your work, face phone and meeting costs, and
               plan savings. Each is the best entry point in its cluster, not a
               duplicate of similar tools below.

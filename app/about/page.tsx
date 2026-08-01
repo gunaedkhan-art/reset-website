@@ -4,11 +4,11 @@ import { InfoCard } from "@/components/ui/InfoCard";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { Section } from "@/components/ui/Section";
 import { createMetadata } from "@/lib/seo";
+import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = createMetadata({
   title: "About",
-  description:
-    "Reset builds free productivity, focus, and planning tools designed to help you work smarter — no accounts required.",
+  description: siteConfig.description,
   path: "/about",
 });
 
@@ -19,7 +19,7 @@ export default function AboutPage() {
         <PageHeading
           eyebrow="Our mission"
           title="Tools that respect your time"
-          description="Reset exists to give everyone access to high-quality productivity utilities — no accounts required, no clutter, no compromise on performance."
+          description={`${siteConfig.name} exists to give everyone access to high-quality productivity utilities — no accounts required, no clutter, no compromise on performance.`}
         />
       </Section>
 
@@ -27,8 +27,8 @@ export default function AboutPage() {
         <div className="prose mx-auto max-w-3xl">
           <p>
             We believe the best tools are invisible. They load instantly, work
-            everywhere, and help you move forward without friction. Reset is
-            building a library of focused utilities for productivity, planning,
+            everywhere, and help you move forward without friction. {siteConfig.name}{" "}
+            is building a library of focused utilities for productivity, planning,
             and everyday decisions — all free to use in your browser.
           </p>
         </div>

@@ -38,7 +38,7 @@ export default function HomePage() {
         <PageHeading
           eyebrow="Free online tools"
           title="Work smarter with simple, fast tools"
-          description="Reset is building a library of free productivity, focus, and planning tools — designed to load instantly, work on any device, and stay out of your way."
+          description={`${siteConfig.name} is building a library of free productivity, focus, and planning tools — designed to load instantly, work on any device, and stay out of your way.`}
           align="center"
         />
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -159,8 +159,8 @@ export default function HomePage() {
         <Section spacing="md">
           <CTACard
             variant="dark"
-            title="Take Reset everywhere"
-            description="The Reset app brings your favorite tools offline, with sync and focus modes built in."
+            title={`Take ${siteConfig.name} everywhere`}
+            description={`The ${siteConfig.app.name} brings your favorite tools offline, with sync and focus modes built in.`}
             primaryAction={{ label: "Download the app", href: "/app" }}
             secondaryAction={{ label: "Contact us", href: "/contact" }}
           />

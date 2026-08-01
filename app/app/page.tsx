@@ -25,8 +25,8 @@ export default function AppPage() {
           align="center"
         />
         <p className="mx-auto mt-10 max-w-md text-center text-sm text-neutral-600">
-          The Reset mobile app is coming soon. All tools are available free in
-          your browser today.
+          The {siteConfig.app.name} is coming soon. All tools are available free in
+          your browser today on {siteConfig.name}.
         </p>
       </Section>
 
