@@ -9,7 +9,7 @@
     "lint": "eslint",
     "validate:tools": "node --import tsx scripts/validate-tools.ts",
     "validate:links": "node --import tsx scripts/validate-external-links.ts",
-    "test:tools": "node --import tsx --test lib/tool-engine/**/*.test.ts lib/investment/**/*.test.ts lib/savings-path/**/*.test.ts lib/one-thing-weekly/**/*.test.ts lib/trackers/**/*.test.ts lib/tools/**/*.test.ts",
+    "test:tools": "node --import tsx --test lib/tool-engine/**/*.test.ts lib/investment/**/*.test.ts lib/savings-path/**/*.test.ts lib/one-thing-weekly/**/*.test.ts lib/trackers/**/*.test.ts lib/tools/**/*.test.ts lib/analytics/**/*.test.ts",
     "test:tool-configs": "node --import tsx scripts/test-tool-configs.ts"
   },
   "dependencies": {

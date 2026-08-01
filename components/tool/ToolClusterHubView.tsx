@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ActiveTrackersSection } from "@/components/home/ActiveTrackersSection";
+import { ClusterJourneyStepLink } from "@/components/tool/ClusterJourneyStepLink";
 import { ThemedToolIconBadge } from "@/components/tool/ThemedToolIconBadge";
 import { ToolClusterHero } from "@/components/tool/ToolClusterHero";
 import { ToolIconForConfig, getToolIconName } from "@/components/tool/ToolIcon";
@@ -85,7 +86,11 @@ export function ToolClusterHubView({ hub }: ToolClusterHubViewProps) {
               const href = getToolCanonicalPath(step.slug);
               return (
                 <li key={step.slug}>
-                  <Link
+                  <ClusterJourneyStepLink
+                    hubSlug={hub.slug}
+                    stepSlug={step.slug}
+                    stepNumber={index + 1}
+                    optional={step.optional}
                     href={href}
                     className="group flex gap-4 rounded-xl border border-neutral-200 bg-neutral-50/60 p-4 transition-colors hover:border-neutral-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
                   >
@@ -121,7 +126,7 @@ export function ToolClusterHubView({ hub }: ToolClusterHubViewProps) {
                         {step.description}
                       </span>
                     </span>
-                  </Link>
+                  </ClusterJourneyStepLink>
                 </li>
               );
             })}

@@ -33,6 +33,18 @@ export type ToolAnalyticsEvent =
       source?: string;
     }
   | {
+      name: "cluster_journey_step_click";
+      hub_slug: string;
+      tool_slug: string;
+      step_number: string;
+      optional: "true" | "false";
+    }
+  | {
+      name: "one_thing_weekly_copy_summary";
+      tool_slug: string;
+      includes_trends: "true" | "false";
+    }
+  | {
       name: "newsletter_signup";
       source: string;
       tool_slug?: string;

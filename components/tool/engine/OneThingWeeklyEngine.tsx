@@ -395,6 +395,11 @@ export function OneThingWeeklyEngine({
       await navigator.clipboard.writeText(
         buildWeeklyExportText(store, activePlan, today),
       );
+      trackEvent({
+        name: "one_thing_weekly_copy_summary",
+        tool_slug: config.slug,
+        includes_trends: includesTrends ? "true" : "false",
+      });
       setCopyMessage(
         includesTrends ? "Copied week summary + trends" : "Copied to clipboard",
       );
