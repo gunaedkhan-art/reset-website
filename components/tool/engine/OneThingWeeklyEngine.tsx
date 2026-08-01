@@ -29,6 +29,9 @@ import {
   buildWeekVisual,
   buildSmartNudge,
   buildTimeBlockUrl,
+  buildWeeklyShareMailtoUrl,
+  buildWeeklyShareText,
+  buildWeeklyShareTitle,
   consumeOneThingPrefill,
   createWeeklyPlan,
   dismissSmartNudge,
@@ -390,11 +393,10 @@ export function OneThingWeeklyEngine({
     if (!activePlan) return;
 
     const includesTrends = historyTrends.weeks.length >= 2;
+    const exportText = buildWeeklyExportText(store, activePlan, today);
 
     try {
-      await navigator.clipboard.writeText(
-        buildWeeklyExportText(store, activePlan, today),
-      );
+      await navigator.clipboard.writeText(exportText);
       trackEvent({
         name: "one_thing_weekly_copy_summary",
         tool_slug: config.slug,
@@ -407,6 +409,52 @@ export function OneThingWeeklyEngine({
     } catch {
       setCopyMessage("Could not copy — try again or select text manually");
     }
+  };
+
+  const handleShareSummary = async () => {
+    if (!activePlan || !summary) return;
+
+    const includesTrends = historyTrends.weeks.length >= 2;
+    const exportText = buildWeeklyExportText(store, activePlan, today);
+    const trackerUrl = `${siteConfig.url}${toolPath}`;
+    const shareOptions = {
+      exportText,
+      weekLabel: summary.weekLabel,
+      trackerUrl,
+    };
+    const shareText = buildWeeklyShareText(shareOptions);
+    const shareTitle = buildWeeklyShareTitle(summary.weekLabel);
+
+    if (typeof navigator.share === "function") {
+      try {
+        const shareData: ShareData = { title: shareTitle, text: shareText };
+        if (navigator.canShare && !navigator.canShare(shareData)) {
+          throw new Error("Native share unavailable for this content");
+        }
+        await navigator.share(shareData);
+        trackEvent({
+          name: "one_thing_weekly_share_summary",
+          tool_slug: config.slug,
+          method: "native",
+          includes_trends: includesTrends ? "true" : "false",
+        });
+        setCopyMessage("Shared");
+        window.setTimeout(() => setCopyMessage(null), 2500);
+        return;
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") return;
+      }
+    }
+
+    window.location.href = buildWeeklyShareMailtoUrl(shareOptions);
+    trackEvent({
+      name: "one_thing_weekly_share_summary",
+      tool_slug: config.slug,
+      method: "email",
+      includes_trends: includesTrends ? "true" : "false",
+    });
+    setCopyMessage("Opening email…");
+    window.setTimeout(() => setCopyMessage(null), 2500);
   };
 
   const showTodayPrompt = activePlan && hasPendingTodayCheckIn(activePlan, today);
@@ -474,6 +522,13 @@ export function OneThingWeeklyEngine({
             className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-200 bg-white px-3 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
           >
             Copy week summary
+          </button>
+          <button
+            type="button"
+            onClick={handleShareSummary}
+            className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-200 bg-white px-3 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+          >
+            Share week summary
           </button>
           {copyMessage && (
             <span className="text-sm text-neutral-600" role="status">

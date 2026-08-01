@@ -1,3 +1,4 @@
+export * from "./share";
 export * from "./history";
 export * from "./integrations";
 export * from "./calculate";

@@ -45,6 +45,12 @@ export type ToolAnalyticsEvent =
       includes_trends: "true" | "false";
     }
   | {
+      name: "one_thing_weekly_share_summary";
+      tool_slug: string;
+      method: "native" | "email";
+      includes_trends: "true" | "false";
+    }
+  | {
       name: "newsletter_signup";
       source: string;
       tool_slug?: string;

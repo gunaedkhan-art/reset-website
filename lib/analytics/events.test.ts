@@ -27,4 +27,16 @@ describe("analyticsEventParams", () => {
     assert.equal(params.event, "one_thing_weekly_copy_summary");
     assert.equal(params.includes_trends, "true");
   });
+
+  it("maps weekly share summary", () => {
+    const params = analyticsEventParams({
+      name: "one_thing_weekly_share_summary",
+      tool_slug: "one-thing-weekly-check-in",
+      method: "native",
+      includes_trends: "false",
+    });
+
+    assert.equal(params.event, "one_thing_weekly_share_summary");
+    assert.equal(params.method, "native");
+  });
 });
