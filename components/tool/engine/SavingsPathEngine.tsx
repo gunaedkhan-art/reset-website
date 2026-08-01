@@ -40,10 +40,12 @@ import {
   buildSavingsPathExportText,
   buildSavingsPathShareTitle,
 } from "@/lib/savings-path/export";
+import { getSavingsPathRecoveryLinks } from "@/lib/savings-path/recovery-links";
 import {
   buildSavingsPathShareMailtoUrl,
   buildSavingsPathShareText,
 } from "@/lib/savings-path/share";
+import { getToolCanonicalPath } from "@/lib/tools";
 import {
   formatChartDate,
   formatCurrency,
@@ -191,6 +193,11 @@ export function SavingsPathEngine({
   );
 
   const status = chartModel?.status;
+
+  const recoveryLinks = useMemo(() => {
+    if (!plan || !status) return [];
+    return getSavingsPathRecoveryLinks(plan, status);
+  }, [plan, status]);
 
   const buildPlanFromForm = (existingCheckIns = plan?.checkIns ?? []) => {
     const { goal } = parseSavingsPathInput({
@@ -420,6 +427,46 @@ export function SavingsPathEngine({
             </span>
           )}
         </div>
+      )}
+      {recoveryLinks.length > 0 && (
+        <Callout variant="warning" title="Below your path — try these next">
+          <p className="text-sm leading-relaxed">
+            You&apos;re under the target line. These money tools can help you
+            adjust the plan or see what it takes to catch up.
+          </p>
+          <ul className="mt-4 space-y-3">
+            {recoveryLinks.map((link) => (
+              <li key={link.slug}>
+                <Link
+                  href={getToolCanonicalPath(link.slug)}
+                  onClick={() => {
+                    trackEvent({
+                      name: "savings_path_recovery_link_click",
+                      tool_slug: config.slug,
+                      link_slug: link.slug,
+                    });
+                  }}
+                  className="group block rounded-xl border border-amber-200/80 bg-white/80 p-3 transition-colors hover:border-amber-300 hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+                >
+                  <span className="font-medium text-neutral-900 group-hover:text-neutral-950">
+                    {link.title}
+                  </span>
+                  <span className="mt-1 block text-sm text-neutral-600">
+                    {link.description}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <p className="mt-4 text-sm">
+            <Link
+              href="/tools/money"
+              className="font-medium text-neutral-900 underline"
+            >
+              Browse all money tools
+            </Link>
+          </p>
+        </Callout>
       )}
       {plan && chartModel ? (
         <SavingsPathChart model={chartModel} goal={plan.goal} />

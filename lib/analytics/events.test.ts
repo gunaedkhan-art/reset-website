@@ -56,5 +56,13 @@ describe("analyticsEventParams", () => {
       }).tracker_kind,
       "one-thing-weekly",
     );
+    assert.equal(
+      analyticsEventParams({
+        name: "savings_path_recovery_link_click",
+        tool_slug: "savings-path-tracker",
+        link_slug: "savings-goal-calculator",
+      }).link_slug,
+      "savings-goal-calculator",
+    );
   });
 });

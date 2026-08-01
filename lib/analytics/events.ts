@@ -69,6 +69,11 @@ export type ToolAnalyticsEvent =
       method: "native" | "email";
     }
   | {
+      name: "savings_path_recovery_link_click";
+      tool_slug: string;
+      link_slug: string;
+    }
+  | {
       name: "newsletter_signup";
       source: string;
       tool_slug?: string;
