@@ -2,6 +2,8 @@ export interface WeeklyShareOptions {
   exportText: string;
   weekLabel: string;
   trackerUrl: string;
+  /** Override default "ONE Thing Weekly — …" subject/title. */
+  shareTitle?: string;
 }
 
 const MAX_MAILTO_BODY_CHARS = 1500;
@@ -20,7 +22,9 @@ function truncateForMailto(text: string): string {
 }
 
 export function buildWeeklyShareMailtoUrl(options: WeeklyShareOptions): string {
-  const subject = encodeURIComponent(buildWeeklyShareTitle(options.weekLabel));
+  const subject = encodeURIComponent(
+    options.shareTitle ?? buildWeeklyShareTitle(options.weekLabel),
+  );
   const body = encodeURIComponent(
     truncateForMailto(buildWeeklyShareText(options)),
   );

@@ -37,6 +37,14 @@ import {
   parseSavingsPathInput,
 } from "@/lib/savings-path/calculate";
 import {
+  buildSavingsPathExportText,
+  buildSavingsPathShareTitle,
+} from "@/lib/savings-path/export";
+import {
+  buildSavingsPathShareMailtoUrl,
+  buildSavingsPathShareText,
+} from "@/lib/savings-path/share";
+import {
   formatChartDate,
   formatCurrency,
   todayIsoDate,
@@ -163,6 +171,7 @@ export function SavingsPathEngine({
   const [checkInDate, setCheckInDate] = useState(persisted.checkInDate);
   const [checkInError, setCheckInError] = useState<string | null>(null);
   const [checkInSaved, setCheckInSaved] = useState(false);
+  const [exportMessage, setExportMessage] = useState<string | null>(null);
 
   const toolPath = config.seo.canonicalPath;
   const breadcrumbItems = [
@@ -285,6 +294,61 @@ export function SavingsPathEngine({
     }
   };
 
+  const handleCopySummary = async () => {
+    if (!plan) return;
+
+    try {
+      await navigator.clipboard.writeText(buildSavingsPathExportText(plan));
+      trackEvent({
+        name: "savings_path_copy_summary",
+        tool_slug: config.slug,
+      });
+      setExportMessage("Copied to clipboard");
+      window.setTimeout(() => setExportMessage(null), 2500);
+    } catch {
+      setExportMessage("Could not copy — try again or select text manually");
+    }
+  };
+
+  const handleShareSummary = async () => {
+    if (!plan) return;
+
+    const exportText = buildSavingsPathExportText(plan);
+    const title = buildSavingsPathShareTitle(plan);
+    const trackerUrl = `${siteConfig.url}${toolPath}`;
+    const shareOptions = { exportText, title, trackerUrl };
+    const shareText = buildSavingsPathShareText(shareOptions);
+
+    if (typeof navigator.share === "function") {
+      try {
+        const shareData: ShareData = { title, text: shareText };
+        if (navigator.canShare && !navigator.canShare(shareData)) {
+          throw new Error("Native share unavailable for this content");
+        }
+        await navigator.share(shareData);
+        trackEvent({
+          name: "savings_path_share_summary",
+          tool_slug: config.slug,
+          method: "native",
+        });
+        setExportMessage("Shared");
+        window.setTimeout(() => setExportMessage(null), 2500);
+        return;
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") return;
+      }
+    }
+
+    window.location.href = buildSavingsPathShareMailtoUrl(shareOptions);
+    trackEvent({
+      name: "savings_path_share_summary",
+      tool_slug: config.slug,
+      method: "email",
+    });
+    setExportMessage("Opening email…");
+    window.setTimeout(() => setExportMessage(null), 2500);
+  };
+
   const statusModule =
     plan && chartModel ? (
       plan.checkIns.length === 0 ? (
@@ -334,6 +398,29 @@ export function SavingsPathEngine({
   const chartPanel = (
     <div className="space-y-5">
       {statusModule}
+      {plan && chartModel && (
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            type="button"
+            onClick={handleCopySummary}
+            className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-200 bg-white px-3 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+          >
+            Copy path summary
+          </button>
+          <button
+            type="button"
+            onClick={handleShareSummary}
+            className="inline-flex h-9 items-center justify-center rounded-lg border border-neutral-200 bg-white px-3 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+          >
+            Share path summary
+          </button>
+          {exportMessage && (
+            <span className="text-sm text-neutral-600" role="status">
+              {exportMessage}
+            </span>
+          )}
+        </div>
+      )}
       {plan && chartModel ? (
         <SavingsPathChart model={chartModel} goal={plan.goal} />
       ) : (

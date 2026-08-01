@@ -1,14 +1,14 @@
 import { getSiteUrl } from "@/lib/env";
 
 export const siteConfig = {
-  name: "Reset",
+  name: "Reset Goals",
   /** Set `showAppDownload` to true when the mobile app ships on Google Play. */
   features: {
     showAppDownload: false,
   },
   tagline: "Free productivity, focus, and planning tools",
   description:
-    "Reset offers free online productivity, focus, planning, and calculator tools designed to help you work smarter.",
+    "Reset Goals offers free online productivity, focus, planning, and calculator tools designed to help you work smarter.",
   url: getSiteUrl(),
   locale: "en_US",
   author: "Reset Team",

@@ -51,6 +51,15 @@ export type ToolAnalyticsEvent =
       includes_trends: "true" | "false";
     }
   | {
+      name: "savings_path_copy_summary";
+      tool_slug: string;
+    }
+  | {
+      name: "savings_path_share_summary";
+      tool_slug: string;
+      method: "native" | "email";
+    }
+  | {
       name: "newsletter_signup";
       source: string;
       tool_slug?: string;
