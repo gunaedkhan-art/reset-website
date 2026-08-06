@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reset Privacy Policy</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --text: #1a1a1a;
+      --muted: #555;
+      --border: #ddd;
+      --bg: #fff;
+      --link: #1565c0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #eee;
+        --muted: #aaa;
+        --border: #333;
+        --bg: #111;
+        --link: #64b5f6;
+      }
+    }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      line-height: 1.6;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 24px 20px 48px;
+      color: var(--text);
+      background: var(--bg);
+    }
+    h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.15rem; margin-top: 2rem; }
+    p, li { color: var(--text); }
+    .meta { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+    a { color: var(--link); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      margin: 1rem 0;
+    }
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th { background: rgba(127,127,127,0.08); }
+  </style>
+</head>
+<body>
+  <h1>Reset Privacy Policy</h1>
+  <p class="meta">
+    <strong>Last updated:</strong> August 2026<br>
+    <strong>Data controller:</strong> Junaed Khan, Greater Manchester, United Kingdom<br>
+    <strong>Contact:</strong> <a href="mailto:gunaedkhan@gmail.com">gunaedkhan@gmail.com</a><br>
+    <strong>Website:</strong> <a href="https://www.resetgoals.com/">resetgoals.com</a>
+  </p>
+
+  <h2>Overview</h2>
+  <p>
+    Reset ("we", "us", "the app") is an Android distraction-intervention app. This policy explains
+    what personal data we collect, why we use it, who we share it with, and your choices.
+  </p>
+  <p>
+    Reset is intended for adults aged <strong>18 and over</strong>. We do not knowingly collect data
+    from anyone under 18.
+  </p>
+
+  <h2>Data we collect</h2>
+  <table>
+    <thead>
+      <tr><th>Data</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Email address</td><td>Account sign-in and support via Supabase Auth</td></tr>
+      <tr><td>Goals (title, reason, target date)</td><td>Personalize intervention reflections</td></tr>
+      <tr><td>Distracting app package names</td><td>Detect when to trigger an intervention</td></tr>
+      <tr><td>Intervention answers and outcomes</td><td>Reflection history and in-app analytics</td></tr>
+      <tr><td>App settings</td><td>Provide the service you configure</td></tr>
+      <tr><td>Optional Premium coaching text</td><td>Personalized messages when Premium is enabled</td></tr>
+      <tr><td>Feature suggestions (optional)</td><td>Improve the product when you submit feedback</td></tr>
+      <tr><td>Google Play purchase status</td><td>Enable or restore Reset Premium features</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Data we do not collect</h2>
+  <ul>
+    <li>Screen content, keystrokes, passwords, or text inside other apps</li>
+    <li>Contacts, photos, files, or precise location</li>
+    <li>Browsing history or message content</li>
+    <li>Advertising identifiers or analytics/crash-reporting data</li>
+  </ul>
+  <p>
+    Detection uses <strong>foreground app package names only</strong> via Android Accessibility
+    (primary) and Usage Stats (fallback). The accessibility service is configured not to read window
+    content.
+  </p>
+
+  <h2>How we use your data</h2>
+  <p>We use your data to provide your account, run interventions and timers, store your settings and
+    history, process Premium subscriptions, generate optional Premium coaching, and respond to support
+    requests.</p>
+  <p>We do <strong>not</strong> sell your personal data and we do <strong>not</strong> show ads.</p>
+
+  <h2>Legal basis (United Kingdom)</h2>
+  <p>If UK data protection law applies, we rely on contract (to provide the service), legitimate
+    interests (security and reliability), and consent where required for optional Premium AI coaching
+    and Android permissions you grant in system settings.</p>
+
+  <h2>Permissions</h2>
+  <ul>
+    <li><strong>Accessibility service</strong> — foreground app detection; package name only</li>
+    <li><strong>Usage access</strong> — fallback foreground detection</li>
+    <li><strong>Notifications</strong> — foreground-service notification while monitoring</li>
+    <li><strong>Internet</strong> — sync with Supabase; Premium coaching API calls</li>
+    <li><strong>Wake lock (optional)</strong> — keep screen on during focus timers when enabled</li>
+  </ul>
+
+  <h2>Storage, security, and location</h2>
+  <p>
+    Account and app data are stored in <strong>Supabase (PostgreSQL)</strong> in the
+    <strong>Canada (ca-central-1)</strong> region, protected by row-level security.
+  </p>
+  <p>
+    Premium coaching sends intervention context (goal, trigger app, your answers) to our API at
+    <strong>reset-api-fajrsociety.fly.dev</strong> over HTTPS; that service uses
+    <strong>Google Gemini</strong> to generate responses. We do not send your email address to Gemini
+    for coaching.
+  </p>
+
+  <h2>Data retention and deletion</h2>
+  <p>
+    We retain your data while your account is active. You can <strong>delete your account in the
+    app</strong> from <strong>Settings → Delete account</strong>. Deletion removes your account and
+    associated data from our database.
+  </p>
+  <p>
+    Active Google Play subscriptions are managed by Google. Deleting your Reset account does not
+    automatically cancel billing — cancel in Google Play → Payments &amp; subscriptions if needed.
+  </p>
+
+  <h2>Third parties</h2>
+  <table>
+    <thead>
+      <tr><th>Provider</th><th>Role</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Supabase</td><td>Authentication and database hosting (Canada)</td></tr>
+      <tr><td>Fly.io</td><td>Hosts our Premium coaching API</td></tr>
+      <tr><td>Google (Gemini)</td><td>Generates Premium coaching text</td></tr>
+      <tr><td>Google Play</td><td>Subscription billing and purchase verification</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Subscriptions</h2>
+  <p>
+    Reset Premium is an optional subscription through Google Play. Plans include
+    <strong>weekly</strong>, <strong>annual</strong> (includes a <strong>3-day free trial</strong>
+    where offered), and optionally <strong>monthly</strong>. Payment is processed by Google; we receive
+    purchase status to unlock Premium features. Cancel anytime in your Google Play account settings.
+  </p>
+
+  <h2>Your rights</h2>
+  <p>
+    Depending on where you live, you may have rights to access, correct, delete, or restrict use of
+    your personal data. UK users may complain to the Information Commissioner's Office (ICO).
+    Delete your account in Settings or email
+    <a href="mailto:gunaedkhan@gmail.com">gunaedkhan@gmail.com</a>.
+  </p>
+
+  <h2>International transfers</h2>
+  <p>
+    Your data is stored in Canada (Supabase). Premium coaching may be processed in regions where our
+    API and Google Gemini operate. We use providers that apply appropriate safeguards for cross-border
+    transfers.
+  </p>
+
+  <h2>Changes</h2>
+  <p>
+    We may update this policy from time to time. Material changes will be reflected on this page and
+    in the in-app About screen.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    <strong>Junaed Khan</strong><br>
+    Greater Manchester, United Kingdom<br>
+    Email: <a href="mailto:gunaedkhan@gmail.com">gunaedkhan@gmail.com</a>
+  </p>
+</body>
+</html>

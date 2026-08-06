@@ -71,7 +71,7 @@ export function ProjectionCalculatorEngine({
   categoryName,
 }: ProjectionCalculatorEngineProps) {
   const flow = config.flow;
-  const defaults = useMemo(
+  const defaults = useMemo<Record<string, string>>(
     () =>
       flow.type === "calculator" ? buildInvestmentInputDefaults(flow.inputs) : {},
     [flow],
@@ -84,7 +84,7 @@ export function ProjectionCalculatorEngine({
   );
 
   const [overrides, setOverrides] = useState<Record<string, string>>({});
-  const values = useMemo(
+  const values = useMemo<Record<string, string>>(
     () => ({ ...defaults, ...urlPrefill.values, ...overrides }),
     [defaults, overrides, urlPrefill.values],
   );
