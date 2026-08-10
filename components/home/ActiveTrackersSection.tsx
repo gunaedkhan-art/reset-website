@@ -7,6 +7,7 @@ import { Section } from "@/components/ui/Section";
 import { loadOneThingWeeklyStore } from "@/lib/one-thing-weekly/storage";
 import { todayIsoDate } from "@/lib/one-thing-weekly/format";
 import { loadSavingsPathPlan } from "@/lib/savings-path/storage";
+import { loadRuleOf100Store } from "@/lib/rule-of-100/storage";
 import { clusterThemes } from "@/lib/tools/cluster-themes";
 import { TRACKERS_UPDATED_EVENT } from "@/lib/trackers/events";
 import {
@@ -17,7 +18,11 @@ import {
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics/track-client";
 
-const emptyWidgets: HomeTrackerWidgets = { savingsPath: null, oneThingWeekly: null };
+const emptyWidgets: HomeTrackerWidgets = {
+  savingsPath: null,
+  oneThingWeekly: null,
+  ruleOf100: null,
+};
 
 function readHomeTrackerWidgets() {
   if (typeof window === "undefined") return emptyWidgets;
@@ -25,6 +30,7 @@ function readHomeTrackerWidgets() {
   return buildHomeTrackerWidgets(
     loadSavingsPathPlan(),
     loadOneThingWeeklyStore(),
+    loadRuleOf100Store(),
     todayIsoDate(),
   );
 }
@@ -66,6 +72,14 @@ export function ActiveTrackersSection() {
 
   const savingsTheme = clusterThemes.money;
   const weeklyTheme = clusterThemes["one-thing"];
+  const ruleOf100Theme = clusterThemes.productivity;
+
+  const bandBadgeClass = (band: "complete" | "partial" | "low" | "none") => {
+    if (band === "complete") return "bg-emerald-50 text-emerald-800";
+    if (band === "partial") return "bg-amber-50 text-amber-900";
+    if (band === "low") return "bg-rose-50 text-rose-800";
+    return "bg-neutral-100 text-neutral-600";
+  };
 
   return (
     <Section spacing="md" className="border-b border-neutral-100 bg-white">
@@ -78,7 +92,7 @@ export function ActiveTrackersSection() {
         </p>
       </div>
 
-      <ul className="grid gap-4 lg:grid-cols-2">
+      <ul className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
         {widgets.savingsPath && (
           <li>
             <Link
@@ -169,6 +183,48 @@ export function ActiveTrackersSection() {
                 </p>
               )}
 
+              <p className="mt-4 text-sm font-medium text-neutral-700 group-hover:text-neutral-900">
+                Open tracker →
+              </p>
+            </Link>
+          </li>
+        )}
+
+        {widgets.ruleOf100 && (
+          <li>
+            <Link
+              href={widgets.ruleOf100.href}
+              onClick={() => {
+                trackEvent({
+                  name: "tracker_continue_click",
+                  tracker_kind: "rule-of-100",
+                });
+              }}
+              className="group block rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm transition-colors hover:border-neutral-300 hover:bg-neutral-50/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p
+                    className="text-xs font-semibold uppercase tracking-wider"
+                    style={{ color: ruleOf100Theme.primary }}
+                  >
+                    Rule of 100
+                  </p>
+                  <p className="mt-2 line-clamp-2 text-base font-semibold text-neutral-900">
+                    {widgets.ruleOf100.taskName}
+                  </p>
+                  <p className="mt-1 text-sm text-neutral-600">Today&apos;s reps</p>
+                </div>
+                <span
+                  className={cn(
+                    "shrink-0 rounded-full px-2.5 py-1 text-xs font-medium",
+                    bandBadgeClass(widgets.ruleOf100.band),
+                  )}
+                >
+                  {widgets.ruleOf100.countLabel}
+                </span>
+              </div>
+              <p className="mt-4 text-sm text-neutral-600">{widgets.ruleOf100.statusLabel}</p>
               <p className="mt-4 text-sm font-medium text-neutral-700 group-hover:text-neutral-900">
                 Open tracker →
               </p>

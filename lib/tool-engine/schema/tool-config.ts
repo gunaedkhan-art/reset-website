@@ -111,7 +111,7 @@ export const resultTemplateSchema = z.object({
 export const calculatorFlowSchema = z
   .object({
     type: z.literal("calculator"),
-    engine: z.enum(["expression", "projection", "savings-path", "one-thing-weekly"]).default("expression"),
+    engine: z.enum(["expression", "projection", "savings-path", "one-thing-weekly", "rule-of-100"]).default("expression"),
     calculatorProfile: calculatorProfileSchema.optional(),
     inputs: z.array(inputFieldSchema),
     constants: z.record(z.string(), z.number()).optional(),
@@ -149,6 +149,15 @@ export const calculatorFlowSchema = z
         ctx.addIssue({
           code: "custom",
           message: "ONE Thing weekly tools do not use expressions",
+          path: ["expressions"],
+        });
+      }
+    }
+    if (flow.engine === "rule-of-100") {
+      if (flow.expressions && Object.keys(flow.expressions).length > 0) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Rule of 100 tools do not use expressions",
           path: ["expressions"],
         });
       }

@@ -8,6 +8,7 @@ import { DecisionTreeEngine } from "./engine/DecisionTreeEngine";
 import { ProjectionCalculatorEngine } from "./engine/ProjectionCalculatorEngine";
 import { SavingsPathEngine } from "./engine/SavingsPathEngine";
 import { OneThingWeeklyEngine } from "./engine/OneThingWeeklyEngine";
+import { RuleOf100Engine } from "./engine/RuleOf100Engine";
 import { ToolPageSkeleton } from "./ToolPageSkeleton";
 
 interface ToolEngineRendererProps {
@@ -51,6 +52,16 @@ export function ToolEngineRenderer({
             categoryName={categoryName}
           />
         </Suspense>
+      );
+    }
+
+    if (config.flow.engine === "rule-of-100") {
+      return (
+        <RuleOf100Engine
+          config={config}
+          relatedTools={relatedTools}
+          categoryName={categoryName}
+        />
       );
     }
 

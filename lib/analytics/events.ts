@@ -46,7 +46,7 @@ export type ToolAnalyticsEvent =
     }
   | {
       name: "tracker_continue_click";
-      tracker_kind: "savings-path" | "one-thing-weekly";
+      tracker_kind: "savings-path" | "one-thing-weekly" | "rule-of-100";
     }
   | {
       name: "one_thing_weekly_copy_summary";
@@ -72,6 +72,11 @@ export type ToolAnalyticsEvent =
       name: "savings_path_recovery_link_click";
       tool_slug: string;
       link_slug: string;
+    }
+  | {
+      name: "rule_of_100_rep_logged";
+      tool_slug: string;
+      delta: string;
     }
   | {
       name: "savings_path_calculator_prefill";

@@ -21,6 +21,7 @@ describe("getClusterJourney", () => {
 describe("isRepeatUseTool", () => {
   it("flags repeat-use trackers", () => {
     assert.equal(isRepeatUseTool("one-thing-weekly-check-in"), true);
+    assert.equal(isRepeatUseTool("rule-of-100-tracker"), true);
     assert.equal(isRepeatUseTool("the-focusing-question"), false);
   });
 });

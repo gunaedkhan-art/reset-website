@@ -188,6 +188,7 @@ export function getClusterJourney(hubSlug: string): ClusterJourney | undefined {
 export const REPEAT_USE_TOOL_SLUGS = new Set([
   "one-thing-weekly-check-in",
   "savings-path-tracker",
+  "rule-of-100-tracker",
 ]);
 
 export function isRepeatUseTool(slug: string): boolean {

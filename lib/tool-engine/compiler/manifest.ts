@@ -66,6 +66,7 @@ import { investmentDoublingCalculatorConfig } from "@/tools/config/investment-do
 import { investmentWithdrawalCalculatorConfig } from "@/tools/config/investment-withdrawal-calculator.config";
 import { savingsPathTrackerConfig } from "@/tools/config/savings-path-tracker.config";
 import { oneThingWeeklyCheckInConfig } from "@/tools/config/one-thing-weekly-check-in.config";
+import { ruleOf100TrackerConfig } from "@/tools/config/rule-of-100-tracker.config";
 import type { ToolConfig } from "../schema/tool-config";
 import { parseToolConfig } from "../schema/tool-config";
 
@@ -138,6 +139,7 @@ const rawConfigs = [
   investmentWithdrawalCalculatorConfig,
   savingsPathTrackerConfig,
   oneThingWeeklyCheckInConfig,
+  ruleOf100TrackerConfig,
 ] as const;
 
 export const toolConfigManifest: ToolConfig[] = rawConfigs.map((config) =>

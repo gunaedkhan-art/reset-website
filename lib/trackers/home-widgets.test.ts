@@ -2,9 +2,11 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { createWeeklyPlan, updateCheckIn } from "@/lib/one-thing-weekly/calculate";
 import type { SavingsPathPlan } from "@/lib/savings-path/types";
+import { createChallenge } from "@/lib/rule-of-100/calculate";
 import {
   buildHomeTrackerWidgets,
   buildOneThingWeeklyHomeWidget,
+  buildRuleOf100HomeWidget,
   buildSavingsPathHomeWidget,
   hasActiveHomeTrackers,
 } from "./home-widgets";
@@ -66,10 +68,38 @@ describe("buildOneThingWeeklyHomeWidget", () => {
   });
 });
 
+describe("buildRuleOf100HomeWidget", () => {
+  it("returns null without an active challenge", () => {
+    assert.equal(
+      buildRuleOf100HomeWidget({ activeChallenge: null, archivedChallenges: [] }, "2026-08-01"),
+      null,
+    );
+  });
+
+  it("includes today's count and status band", () => {
+    const challenge = createChallenge({
+      taskName: "Message prospects",
+      startDate: "2026-08-01",
+    });
+    const widget = buildRuleOf100HomeWidget(
+      { activeChallenge: challenge, archivedChallenges: [] },
+      "2026-08-01",
+    );
+
+    assert.ok(widget);
+    assert.equal(widget.taskName, "Message prospects");
+    assert.equal(widget.countLabel, "0 / 100");
+    assert.equal(widget.band, "none");
+  });
+});
+
 describe("buildHomeTrackerWidgets", () => {
   it("detects when at least one tracker is active", () => {
-    const widgets = buildHomeTrackerWidgets(sampleSavingsPlan, null, "2026-07-01");
+    const widgets = buildHomeTrackerWidgets(sampleSavingsPlan, null, null, "2026-07-01");
     assert.equal(hasActiveHomeTrackers(widgets), true);
-    assert.equal(hasActiveHomeTrackers({ savingsPath: null, oneThingWeekly: null }), false);
+    assert.equal(
+      hasActiveHomeTrackers({ savingsPath: null, oneThingWeekly: null, ruleOf100: null }),
+      false,
+    );
   });
 });
