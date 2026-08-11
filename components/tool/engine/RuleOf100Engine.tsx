@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Callout } from "@/components/ui/Callout";
 import { InfoCard } from "@/components/ui/InfoCard";
 import { Input } from "@/components/ui/Input";
+import { RuleOf100FocusMode } from "@/components/ui/RuleOf100FocusMode";
 import { RuleOf100Gauge } from "@/components/ui/RuleOf100Gauge";
 import { RuleOf100HistoryChart } from "@/components/ui/RuleOf100HistoryChart";
 import { Section } from "@/components/ui/Section";
@@ -117,6 +118,7 @@ export function RuleOf100Engine({
   const [manualCount, setManualCount] = useState("");
   const [timerRunning, setTimerRunning] = useState(false);
   const [sessionSeconds, setSessionSeconds] = useState(0);
+  const [focusModeOpen, setFocusModeOpen] = useState(false);
 
   const today = todayIsoDate();
   const challenge = store.activeChallenge;
@@ -194,6 +196,18 @@ export function RuleOf100Engine({
       tool_slug: config.slug,
       delta: String(delta),
     });
+  };
+
+  const openFocusMode = () => {
+    setFocusModeOpen(true);
+    trackEvent({
+      name: "rule_of_100_focus_mode_open",
+      tool_slug: config.slug,
+    });
+  };
+
+  const closeFocusMode = () => {
+    setFocusModeOpen(false);
   };
 
   const handleManualSet = () => {
@@ -284,6 +298,13 @@ export function RuleOf100Engine({
         </div>
 
         <div className="mt-6 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={openFocusMode}
+            className="inline-flex h-12 w-full items-center justify-center rounded-xl border-2 border-neutral-900 bg-neutral-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 sm:w-auto"
+          >
+            Enter focus mode
+          </button>
           {[1, 5, 10].map((delta) => (
             <button
               key={delta}
@@ -570,6 +591,19 @@ export function RuleOf100Engine({
             </dl>
           </ToolContainer>
         </Section>
+      )}
+
+      {challenge && summary && (
+        <RuleOf100FocusMode
+          open={focusModeOpen}
+          onClose={closeFocusMode}
+          taskName={challenge.taskName}
+          count={summary.count}
+          target={summary.target}
+          percent={summary.percent}
+          band={summary.band}
+          onIncrement={() => handleIncrement(1)}
+        />
       )}
     </article>
   );

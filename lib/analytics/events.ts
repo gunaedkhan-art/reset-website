@@ -79,6 +79,10 @@ export type ToolAnalyticsEvent =
       delta: string;
     }
   | {
+      name: "rule_of_100_focus_mode_open";
+      tool_slug: string;
+    }
+  | {
       name: "savings_path_calculator_prefill";
       tool_slug: string;
     }
