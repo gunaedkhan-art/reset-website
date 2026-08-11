@@ -23,7 +23,7 @@ describe("buildSavingsPathExportText", () => {
     assert.match(text, /Target: \$10,000/);
     assert.match(text, /Latest balance: \$4,500/);
     assert.match(text, /Check-ins:/);
-    assert.match(text, /1 Jun: \$4,500/);
+    assert.match(text, /Jun 1: \$4,500/);
   });
 });
 

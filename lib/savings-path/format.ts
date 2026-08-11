@@ -1,11 +1,13 @@
 import type { SupportedCurrency } from "./types";
 
+const locale = "en-US";
+
 export function formatCurrency(
   amount: number,
   currency: SupportedCurrency,
   options?: { precise?: boolean },
 ): string {
-  return amount.toLocaleString(undefined, {
+  return amount.toLocaleString(locale, {
     style: "currency",
     currency,
     maximumFractionDigits: options?.precise ? 2 : 0,
@@ -17,7 +19,7 @@ export function formatCompactCurrency(
   amount: number,
   currency: SupportedCurrency,
 ): string {
-  return new Intl.NumberFormat(undefined, {
+  return new Intl.NumberFormat(locale, {
     style: "currency",
     currency,
     notation: "compact",
@@ -27,7 +29,7 @@ export function formatCompactCurrency(
 
 export function formatChartDate(isoDate: string): string {
   const date = parseIsoDate(isoDate);
-  return date.toLocaleDateString(undefined, {
+  return date.toLocaleDateString(locale, {
     month: "short",
     day: "numeric",
     year: date.getFullYear() !== new Date().getFullYear() ? "numeric" : undefined,
