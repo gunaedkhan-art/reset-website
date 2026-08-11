@@ -83,6 +83,11 @@ export type ToolAnalyticsEvent =
       tool_slug: string;
     }
   | {
+      name: "rule_of_100_day_saved";
+      tool_slug: string;
+      count: string;
+    }
+  | {
       name: "savings_path_calculator_prefill";
       tool_slug: string;
     }

@@ -29,7 +29,9 @@ import {
   buildDayHistoryVisual,
   buildTodaySummary,
   createChallenge,
-  incrementDayCount,
+  getCompletionPercent,
+  getDayScoreBand,
+  getTodayCount,
   loadRuleOf100Store,
   resetDay,
   saveRuleOf100Store,
@@ -40,6 +42,7 @@ import {
 import type { RuleOf100Challenge, RuleOf100Store } from "@/lib/rule-of-100";
 import { DEFAULT_DAILY_TARGET, MAX_DAILY_TARGET, MIN_DAILY_TARGET } from "@/lib/rule-of-100";
 import { formatDayMonth, formatTimerDuration } from "@/lib/rule-of-100/format";
+import { TRACKERS_UPDATED_EVENT } from "@/lib/trackers/events";
 import { siteConfig } from "@/lib/site";
 import {
   breadcrumbSchema,
@@ -57,47 +60,35 @@ interface RuleOf100EngineProps {
   categoryName?: string;
 }
 
-interface EngineState {
-  store: RuleOf100Store;
-  taskNameDraft: string;
-  dailyTargetDraft: string;
-}
-
-function getInitialState(): EngineState {
+function buildWorkingSummary(
+  count: number,
+  target: number,
+): {
+  count: number;
+  target: number;
+  percent: number;
+  band: ReturnType<typeof getDayScoreBand>;
+} {
   return {
-    store: { activeChallenge: null, archivedChallenges: [] },
-    taskNameDraft: "",
-    dailyTargetDraft: String(DEFAULT_DAILY_TARGET),
+    count,
+    target,
+    percent: getCompletionPercent(count, target),
+    band: getDayScoreBand(count, target),
   };
 }
 
-function getSavedState(): EngineState | null {
-  const saved = loadRuleOf100Store();
-  if (!saved.activeChallenge) return null;
+const emptyStore: RuleOf100Store = {
+  activeChallenge: null,
+  archivedChallenges: [],
+};
 
-  return {
-    store: saved,
-    taskNameDraft: saved.activeChallenge.taskName,
-    dailyTargetDraft: String(saved.activeChallenge.dailyTarget),
+function subscribeToStore(onStoreChange: () => void) {
+  window.addEventListener(TRACKERS_UPDATED_EVENT, onStoreChange);
+  window.addEventListener("storage", onStoreChange);
+  return () => {
+    window.removeEventListener(TRACKERS_UPDATED_EVENT, onStoreChange);
+    window.removeEventListener("storage", onStoreChange);
   };
-}
-
-const serverSnapshot = getInitialState();
-let clientSnapshotCache: EngineState | null = null;
-
-function getClientSnapshot(): EngineState {
-  if (clientSnapshotCache === null) {
-    clientSnapshotCache = getSavedState() ?? getInitialState();
-  }
-  return clientSnapshotCache;
-}
-
-function getServerSnapshot(): EngineState {
-  return serverSnapshot;
-}
-
-function invalidateClientSnapshot(): void {
-  clientSnapshotCache = null;
 }
 
 export function RuleOf100Engine({
@@ -105,43 +96,58 @@ export function RuleOf100Engine({
   relatedTools,
   categoryName,
 }: RuleOf100EngineProps) {
-  const persisted = useSyncExternalStore(
-    () => () => {},
-    getClientSnapshot,
-    getServerSnapshot,
+  const store = useSyncExternalStore(
+    subscribeToStore,
+    loadRuleOf100Store,
+    () => emptyStore,
   );
-
-  const [store, setStore] = useState<RuleOf100Store>(persisted.store);
-  const [taskNameDraft, setTaskNameDraft] = useState(persisted.taskNameDraft);
-  const [dailyTargetDraft, setDailyTargetDraft] = useState(persisted.dailyTargetDraft);
+  const [taskOverride, setTaskOverride] = useState<{
+    name?: string;
+    target?: string;
+  } | null>(null);
+  const [sessionDelta, setSessionDelta] = useState(0);
   const [formError, setFormError] = useState<string | null>(null);
   const [manualCount, setManualCount] = useState("");
   const [timerRunning, setTimerRunning] = useState(false);
   const [sessionSeconds, setSessionSeconds] = useState(0);
   const [focusModeOpen, setFocusModeOpen] = useState(false);
+  const [countSavedMessage, setCountSavedMessage] = useState<string | null>(null);
 
   const today = todayIsoDate();
   const challenge = store.activeChallenge;
+  const taskNameDraft = taskOverride?.name ?? challenge?.taskName ?? "";
+  const dailyTargetDraft =
+    taskOverride?.target ??
+    (challenge ? String(challenge.dailyTarget) : String(DEFAULT_DAILY_TARGET));
+  const savedCount = challenge ? getTodayCount(challenge, today) : 0;
+  const workingCount = savedCount + sessionDelta;
+  const hasUnsavedCount = sessionDelta !== 0;
   const summary = useMemo(
     () => (challenge ? buildTodaySummary(challenge, today) : null),
     [challenge, today],
+  );
+  const workingSummary = useMemo(
+    () => (challenge ? buildWorkingSummary(workingCount, challenge.dailyTarget) : null),
+    [challenge, workingCount],
   );
   const history = useMemo(
     () => (challenge ? buildDayHistoryVisual(challenge, today, 14) : []),
     [challenge, today],
   );
 
-  const persistStore = (next: RuleOf100Store) => {
-    invalidateClientSnapshot();
-    setStore(next);
+  const persistStore = (
+    updater: RuleOf100Store | ((previous: RuleOf100Store) => RuleOf100Store),
+  ) => {
+    const previous = loadRuleOf100Store();
+    const next = typeof updater === "function" ? updater(previous) : updater;
     saveRuleOf100Store(next);
   };
 
   const persistChallenge = (nextChallenge: RuleOf100Challenge) => {
-    persistStore({
-      ...store,
+    persistStore((previous) => ({
+      ...previous,
       activeChallenge: nextChallenge,
-    });
+    }));
   };
 
   useEffect(() => {
@@ -166,8 +172,7 @@ export function RuleOf100Engine({
           dailyTarget: target,
         });
         persistChallenge(updated);
-        setTaskNameDraft(updated.taskName);
-        setDailyTargetDraft(String(updated.dailyTarget));
+        setTaskOverride(null);
         return;
       }
 
@@ -180,8 +185,8 @@ export function RuleOf100Engine({
         ...store,
         activeChallenge: created,
       });
-      setTaskNameDraft(created.taskName);
-      setDailyTargetDraft(String(created.dailyTarget));
+      setTaskOverride(null);
+      setSessionDelta(0);
     } catch (error) {
       setFormError(error instanceof Error ? error.message : "Invalid input");
     }
@@ -189,13 +194,37 @@ export function RuleOf100Engine({
 
   const handleIncrement = (delta: number) => {
     if (!challenge) return;
-    const updated = incrementDayCount(challenge, today, delta);
-    persistChallenge(updated);
+    setCountSavedMessage(null);
+    setSessionDelta((previous) => previous + delta);
     trackEvent({
       name: "rule_of_100_rep_logged",
       tool_slug: config.slug,
       delta: String(delta),
     });
+  };
+
+  const handleSaveDailyCount = () => {
+    if (!challenge) return;
+    setFormError(null);
+
+    try {
+      let nextChallenge = challenge;
+      if (sessionSeconds > 0) {
+        nextChallenge = addTimerSeconds(nextChallenge, today, sessionSeconds);
+        setSessionSeconds(0);
+      }
+      nextChallenge = setDayCount(nextChallenge, today, workingCount);
+      persistChallenge(nextChallenge);
+      setSessionDelta(0);
+      setCountSavedMessage("Today's count saved on this device.");
+      trackEvent({
+        name: "rule_of_100_day_saved",
+        tool_slug: config.slug,
+        count: String(workingCount),
+      });
+    } catch (error) {
+      setFormError(error instanceof Error ? error.message : "Could not save today's count");
+    }
   };
 
   const openFocusMode = () => {
@@ -213,11 +242,14 @@ export function RuleOf100Engine({
   const handleManualSet = () => {
     if (!challenge) return;
     setFormError(null);
+    setCountSavedMessage(null);
 
     try {
       const count = Number(manualCount);
-      const updated = setDayCount(challenge, today, count);
-      persistChallenge(updated);
+      if (!Number.isFinite(count)) {
+        throw new Error("Count must be a number.");
+      }
+      setSessionDelta(Math.max(0, Math.round(count)) - savedCount);
       setManualCount("");
     } catch (error) {
       setFormError(error instanceof Error ? error.message : "Invalid count");
@@ -227,6 +259,8 @@ export function RuleOf100Engine({
   const handleResetToday = () => {
     if (!challenge) return;
     persistChallenge(resetDay(challenge, today));
+    setSessionDelta(0);
+    setCountSavedMessage(null);
     setSessionSeconds(0);
     setTimerRunning(false);
   };
@@ -234,8 +268,9 @@ export function RuleOf100Engine({
   const handleArchive = () => {
     if (!challenge) return;
     persistStore(archiveChallenge(store, challenge));
-    setTaskNameDraft("");
-    setDailyTargetDraft(String(DEFAULT_DAILY_TARGET));
+    setTaskOverride(null);
+    setSessionDelta(0);
+    setCountSavedMessage(null);
     setSessionSeconds(0);
     setTimerRunning(false);
   };
@@ -280,7 +315,7 @@ export function RuleOf100Engine({
     faqSchema(config.faq),
   ].filter((schema): schema is NonNullable<typeof schema> => schema !== null);
 
-  const counterPanel = challenge && summary && (
+  const counterPanel = challenge && summary && workingSummary && (
     <div className="space-y-6">
       <div className="rounded-2xl border border-neutral-200 bg-white p-5 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-3">
@@ -297,13 +332,43 @@ export function RuleOf100Engine({
           )}
         </div>
 
+        <div className="mt-6 rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-5 text-center">
+          <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">
+            Current session count
+          </p>
+          <p className="mt-2 text-5xl font-semibold tabular-nums text-neutral-900">
+            {workingCount}
+          </p>
+          <p className="mt-1 text-sm text-neutral-600">
+            Saved today: {savedCount} / {challenge.dailyTarget}
+          </p>
+        </div>
+
+        {hasUnsavedCount && (
+          <p className="mt-4 text-sm text-amber-800">
+            You have unsaved reps. Save before leaving this page to keep today&apos;s count.
+          </p>
+        )}
+
         <div className="mt-6 flex flex-wrap gap-3">
           <button
             type="button"
-            onClick={openFocusMode}
-            className="inline-flex h-12 w-full items-center justify-center rounded-xl border-2 border-neutral-900 bg-neutral-900 px-5 text-sm font-semibold text-white transition-colors hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 sm:w-auto"
+            onClick={handleSaveDailyCount}
+            className={cn(
+              "inline-flex h-12 w-full items-center justify-center rounded-xl px-5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2 sm:w-auto",
+              hasUnsavedCount
+                ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                : "border border-neutral-200 bg-white text-neutral-900 hover:bg-neutral-50",
+            )}
           >
-            Enter focus mode
+            Save daily count
+          </button>
+          <button
+            type="button"
+            onClick={openFocusMode}
+            className="inline-flex h-12 items-center justify-center rounded-xl border border-neutral-200 bg-white px-5 text-sm font-semibold text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
+          >
+            Focus mode
           </button>
           {[1, 5, 10].map((delta) => (
             <button
@@ -317,23 +382,29 @@ export function RuleOf100Engine({
           ))}
         </div>
 
+        {countSavedMessage && (
+          <p className="mt-4 text-sm text-emerald-700" role="status">
+            {countSavedMessage}
+          </p>
+        )}
+
         <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_auto]">
           <Input
-            label="Set count manually"
+            label="Set session count"
             type="number"
             min={0}
             step={1}
             inputMode="numeric"
             value={manualCount}
             onChange={(event) => setManualCount(event.target.value)}
-            placeholder={`Current: ${summary.count}`}
+            placeholder={`Session count: ${workingCount}`}
           />
           <button
             type="button"
             onClick={handleManualSet}
             className="self-end inline-flex h-11 items-center justify-center rounded-xl border border-neutral-200 bg-white px-4 text-sm font-medium text-neutral-900 transition-colors hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2"
           >
-            Update count
+            Update session
           </button>
         </div>
       </div>
@@ -489,7 +560,12 @@ export function RuleOf100Engine({
                     label="Task name"
                     name="taskName"
                     value={taskNameDraft}
-                    onChange={(event) => setTaskNameDraft(event.target.value)}
+                    onChange={(event) =>
+                      setTaskOverride((previous) => ({
+                        ...previous,
+                        name: event.target.value,
+                      }))
+                    }
                     placeholder="e.g. Message prospects, Record content minutes"
                     required
                   />
@@ -503,7 +579,12 @@ export function RuleOf100Engine({
                     inputMode="numeric"
                     hint={`${MIN_DAILY_TARGET}–${MAX_DAILY_TARGET}`}
                     value={dailyTargetDraft}
-                    onChange={(event) => setDailyTargetDraft(event.target.value)}
+                    onChange={(event) =>
+                      setTaskOverride((previous) => ({
+                        ...previous,
+                        target: event.target.value,
+                      }))
+                    }
                     required
                   />
                 </div>
@@ -593,15 +674,15 @@ export function RuleOf100Engine({
         </Section>
       )}
 
-      {challenge && summary && (
+      {challenge && workingSummary && (
         <RuleOf100FocusMode
           open={focusModeOpen}
           onClose={closeFocusMode}
           taskName={challenge.taskName}
-          count={summary.count}
-          target={summary.target}
-          percent={summary.percent}
-          band={summary.band}
+          count={workingSummary.count}
+          target={workingSummary.target}
+          percent={workingSummary.percent}
+          band={workingSummary.band}
           onIncrement={() => handleIncrement(1)}
         />
       )}
