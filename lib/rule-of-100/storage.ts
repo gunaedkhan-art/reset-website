@@ -7,6 +7,10 @@ const emptyStore: RuleOf100Store = {
   archivedChallenges: [],
 };
 
+/** Keeps a stable object reference for useSyncExternalStore getSnapshot. */
+let cachedRaw: string | null | undefined;
+let cachedStore: RuleOf100Store = emptyStore;
+
 function parseStore(raw: string): RuleOf100Store | null {
   try {
     const parsed = JSON.parse(raw) as RuleOf100Store;
@@ -23,18 +27,30 @@ export function loadRuleOf100Store(): RuleOf100Store {
   if (typeof window === "undefined") return emptyStore;
 
   const raw = window.localStorage.getItem(RULE_OF_100_STORAGE_KEY);
-  if (!raw) return emptyStore;
+  if (raw === cachedRaw) return cachedStore;
 
-  return parseStore(raw) ?? emptyStore;
+  cachedRaw = raw;
+  if (!raw) {
+    cachedStore = emptyStore;
+    return cachedStore;
+  }
+
+  cachedStore = parseStore(raw) ?? emptyStore;
+  return cachedStore;
 }
 
 export function saveRuleOf100Store(store: RuleOf100Store): void {
   if (typeof window === "undefined") return;
-  window.localStorage.setItem(RULE_OF_100_STORAGE_KEY, JSON.stringify(store));
+  const serialized = JSON.stringify(store);
+  window.localStorage.setItem(RULE_OF_100_STORAGE_KEY, serialized);
+  cachedRaw = serialized;
+  cachedStore = store;
   notifyTrackersUpdated();
 }
 
 export function clearRuleOf100Store(): void {
   if (typeof window === "undefined") return;
   window.localStorage.removeItem(RULE_OF_100_STORAGE_KEY);
+  cachedRaw = null;
+  cachedStore = emptyStore;
 }
